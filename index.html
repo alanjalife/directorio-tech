@@ -332,6 +332,68 @@ main { flex: 1; padding: 1.25rem; }
 .tag:hover { border-color: var(--red); color: var(--red); }
 .tag.hl { background: var(--red-dim); border-color: var(--red-dim2); color: #ff6666; }
 
+.card-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.btn-action {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .15s;
+  border: 1px solid var(--border);
+}
+.btn-li {
+  background: transparent;
+  color: var(--gray);
+  border-color: var(--border);
+}
+.btn-li:hover {
+  background: rgba(10,102,194,0.15);
+  border-color: rgba(10,102,194,0.5);
+  color: #5badff;
+}
+.btn-search {
+  background: var(--red-dim);
+  color: #ff6666;
+  border-color: var(--red-dim2);
+}
+.btn-search:hover {
+  background: rgba(204,0,0,0.25);
+  border-color: rgba(204,0,0,0.5);
+  color: #ff4444;
+}
+.card-role {
+  font-size: 11px;
+  color: var(--gray2);
+  margin-top: 6px;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  line-height: 1.4;
+}
+.role-label {
+  color: var(--red);
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin-top: 1px;
+}
 .no-results {
   grid-column: 1/-1;
   text-align: center;
@@ -387,14 +449,14 @@ footer span strong { color: var(--red); }
     Tech<span class="logo-accent">Dir</span>&nbsp;España
   </div>
   <div class="header-pills">
-    <div class="hpill"><strong>51</strong> empresas</div>
-    <div class="hpill">Perfiles IT · <strong>2026</strong></div>
+    <div class="hpill"><strong>50</strong> empresas</div>
+    <div class="hpill">Perfiles IT · <strong>2025</strong></div>
   </div>
 </header>
 
 <div class="hero">
   <h1>Directorio de Empresas<br><span>Tech</span> en España</h1>
-  <p>51 empresas medianas y grandes que demandan perfiles IT. Filtrá por industria, tecnología y ciudad.</p>
+  <p>50 empresas medianas y grandes que demandan perfiles IT. Filtrá por industria, tecnología y ciudad.</p>
 </div>
 
 <div class="stats-bar">
@@ -474,57 +536,57 @@ const SECTOR_LABEL = {
 const TECHS = ["Java","Python","Angular","React","DevOps","QA","IA","Murex",".NET","PM"];
 
 const DATA = [
-  {n:"Santander",s:"banca",city:"Madrid",size:"grande",desc:"Uno de los mayores bancos del mundo con intensa inversión en transformación digital y plataformas de pagos globales.",t:["Java","Python","Angular","React","DevOps","QA","IA","Murex",".NET","PM"]},
-  {n:"BBVA",s:"banca",city:"Madrid",size:"grande",desc:"Banco global líder en digitalización financiera y desarrollo de APIs abiertas.",t:["Java","Python","Angular","React","DevOps","QA","IA","Murex","PM"]},
-  {n:"CaixaBank",s:"banca",city:"Barcelona",size:"grande",desc:"Principal banco doméstico en España con gran inversión en banca móvil y atención omnicanal.",t:["Java","Python","Angular","DevOps","QA","IA","Murex",".NET","PM"]},
-  {n:"Banco Sabadell",s:"banca",city:"Barcelona",size:"grande",desc:"Banco con fuerte presencia en pymes y banca corporativa en activo proceso de modernización tecnológica.",t:["Java",".NET","Python","QA","DevOps","Murex","PM"]},
-  {n:"Bankinter",s:"banca",city:"Madrid",size:"mediana",desc:"Banco especializado en banca privada y pymes con alta apuesta por productos 100% digitales.",t:["Java","Python","Angular","DevOps","QA","IA","Murex","PM"]},
-  {n:"Abanca",s:"banca",city:"A Coruña",size:"mediana",desc:"Banco gallego con creciente presencia nacional. Modernización del core bancario y canales digitales.",t:["Java",".NET","Python","DevOps","QA","Murex","PM"]},
-  {n:"Mapfre",s:"seguros",city:"Madrid",size:"grande",desc:"Mayor aseguradora de España con presencia en más de 50 países. Digitalización de productos y atención al cliente.",t:["Java",".NET","Python","Angular","QA","DevOps","PM"]},
-  {n:"Generali España",s:"seguros",city:"Madrid",size:"mediana",desc:"Filial de la aseguradora italiana Generali. Modernización del core de seguros y canales digitales.",t:["Java",".NET","QA","DevOps","Python","PM"]},
-  {n:"Grupo AXA España",s:"seguros",city:"Madrid",size:"mediana",desc:"Transformación digital de productos de seguros de vida, auto y salud.",t:["Java",".NET","Python","DevOps","QA","Murex","PM"]},
-  {n:"Telefónica",s:"telco",city:"Madrid",size:"grande",desc:"Telco líder en España y Latinoamérica. Redes, cloud, ciberseguridad e IA aplicada a gran escala.",t:["Java","Python","Angular","React","DevOps","QA","IA","PM"]},
-  {n:"Vodafone España",s:"telco",city:"Madrid",size:"grande",desc:"Operadora con fuerte inversión en 5G, IoT y digitalización de la experiencia de cliente.",t:["Java","Python","DevOps","QA","IA","PM"]},
-  {n:"MásMóvil",s:"telco",city:"Madrid",size:"mediana",desc:"Cuarto operador de España en crecimiento acelerado con necesidad de escalar plataformas tecnológicas.",t:["Java","Python","DevOps","React","QA","PM"]},
-  {n:"Indra",s:"consulting",city:"Madrid",size:"grande",desc:"Gran empresa de tecnología y defensa. Proyectos en transporte, defensa, administración pública y banca.",t:["Java","Python",".NET","Angular","React","DevOps","QA","IA","PM"]},
-  {n:"Capgemini España",s:"consulting",city:"Madrid",size:"grande",desc:"Consultora tecnológica global. Proyectos de transformación digital para grandes corporaciones.",t:["Java","Python",".NET","Angular","React","DevOps","QA","IA","Murex","PM"]},
-  {n:"Accenture España",s:"consulting",city:"Madrid",size:"grande",desc:"Líder mundial en consultoría y servicios tecnológicos. Transformación digital en todos los sectores.",t:["Java","Python",".NET","Angular","React","DevOps","QA","IA","PM"]},
-  {n:"Everis / NTT Data",s:"consulting",city:"Madrid",size:"grande",desc:"Consultora TI con fuerte presencia en banca, seguros y sector público. Parte del grupo NTT Data.",t:["Java","Python",".NET","Angular","DevOps","QA","Murex","PM"]},
-  {n:"Sopra Steria España",s:"consulting",city:"Madrid",size:"mediana",desc:"Consultora europea especialista en sistemas de misión crítica para banca y sector público.",t:["Java",".NET","Python","DevOps","QA","Murex","PM"]},
-  {n:"GMV",s:"consulting",city:"Madrid",size:"mediana",desc:"Empresa tecnológica española especializada en espacio, defensa, transporte y salud.",t:["Java","Python",".NET","DevOps","QA","IA","PM"]},
-  {n:"ISDI",s:"consulting",city:"Madrid",size:"mediana",desc:"Escuela de negocios digitales y consultora. Proyectos de transformación digital para medianas y grandes empresas.",t:["Python","React","Angular","DevOps","QA","PM"]},
-  {n:"Repsol",s:"energia",city:"Madrid",size:"grande",desc:"Energética global en transición renovable. Digitalización de operaciones, IoT industrial e IA para optimización.",t:["Python","Java","DevOps","IA","Angular","QA","PM"]},
-  {n:"Iberdrola",s:"energia",city:"Bilbao",size:"grande",desc:"Líder mundial en energía renovable. Redes eléctricas inteligentes y plataformas de gestión energética.",t:["Java","Python","DevOps","IA","Angular","QA","PM"]},
-  {n:"Endesa",s:"energia",city:"Madrid",size:"grande",desc:"Segunda eléctrica española. Transformación digital, contadores inteligentes y plataformas de cliente.",t:["Java","Python",".NET","DevOps","QA","PM"]},
-  {n:"Naturgy",s:"energia",city:"Barcelona",size:"grande",desc:"Grupo energético de gas y electricidad. Modernización de sistemas ERP y digitalización del servicio.",t:["Java",".NET","Python","DevOps","QA","PM"]},
-  {n:"Holaluz",s:"energia",city:"Barcelona",size:"mediana",desc:"Comercializadora de energía renovable 100% digital. Plataforma propia de gestión de contratos y consumo.",t:["Python","React","DevOps","QA","IA","PM"]},
-  {n:"El Corte Inglés Tech",s:"retail",city:"Madrid",size:"grande",desc:"Mayor grupo retail de España. Transformación del comercio omnicanal, ecommerce y logística inteligente.",t:["Java",".NET","Python","Angular","React","DevOps","QA","PM"]},
-  {n:"Inditex",s:"retail",city:"A Coruña",size:"grande",desc:"Mayor retailer de moda del mundo. Supply chain, RFID, ecommerce y data analytics a escala global.",t:["Java","Python","React","DevOps","QA","IA","PM"]},
-  {n:"Mercadona Tech",s:"retail",city:"Valencia",size:"grande",desc:"Supermercado líder con fuerte apuesta tecnológica interna y robotización de almacenes.",t:["Java","Python","DevOps","QA","IA","React","PM"]},
-  {n:"Glovo",s:"retail",city:"Barcelona",size:"grande",desc:"Plataforma de delivery líder en Europa y África. IA para logística y equipos de ingeniería de alto volumen.",t:["Python","Java","React","DevOps","QA","IA","PM"]},
-  {n:"Amadeus IT",s:"fintech",city:"Madrid",size:"grande",desc:"Líder mundial en tecnología para la industria de viajes. Reservas, revenue management y distribución.",t:["Java","Python",".NET","Angular","DevOps","QA","IA","PM"]},
-  {n:"Wizink Bank",s:"fintech",city:"Madrid",size:"mediana",desc:"Banco digital especializado en tarjetas y depósitos. Operación 100% digital con equipos ágiles.",t:["Java","Python","React","DevOps","QA","IA","PM"]},
-  {n:"Cabify",s:"fintech",city:"Madrid",size:"mediana",desc:"Plataforma de movilidad urbana. Microservicios e IA para pricing dinámico.",t:["Python","Java","React","DevOps","QA","IA","PM"]},
-  {n:"Flywire",s:"fintech",city:"Barcelona",size:"mediana",desc:"Fintech global de pagos internacionales para educación, salud y viajes. Fuerte crecimiento en Europa.",t:["Java","Python","React","DevOps","QA","IA","PM"]},
-  {n:"Idealista",s:"fintech",city:"Madrid",size:"mediana",desc:"Plataforma inmobiliaria líder en España e Italia. Data e IA aplicada a valoraciones y experiencia digital.",t:["Python","Java","React","DevOps","QA","IA","PM"]},
-  {n:"Ferrovial",s:"industria",city:"Madrid",size:"grande",desc:"Infraestructuras globales. Digitalización de autopistas, aeropuertos y proyectos de ciudades inteligentes.",t:["Java","Python",".NET","DevOps","IA","QA","PM"]},
-  {n:"ACS Tecnologías",s:"industria",city:"Madrid",size:"mediana",desc:"División tecnológica del grupo ACS. Sistemas para infraestructuras críticas, transporte y administración.",t:["Java",".NET","Python","DevOps","QA","PM"]},
-  {n:"Sanitas / Bupa",s:"salud",city:"Madrid",size:"mediana",desc:"Aseguradora sanitaria líder. Digitalización clínica, telemedicina y plataformas de gestión de salud.",t:["Java",".NET","Python","React","DevOps","QA","IA","PM"]},
-  {n:"Fresenius Medical Care",s:"salud",city:"Madrid",size:"mediana",desc:"Líder en tratamientos de diálisis. Monitorización de pacientes, IoT médico e integración con HIS.",t:["Java","Python",".NET","DevOps","QA","PM"]},
-  {n:"Logista",s:"logistica",city:"Madrid",size:"grande",desc:"Mayor operador logístico del sur de Europa. Digitalización de cadena de suministro y última milla.",t:["Java",".NET","Python","DevOps","QA","PM"]},
-  {n:"DHL IT Hub España",s:"logistica",city:"Madrid",size:"grande",desc:"Centro tecnológico global de DHL. Plataformas de tracking, IA logística y automatización.",t:["Java","Python","React","DevOps","QA","IA","PM"]},
-  {n:"Correos",s:"logistica",city:"Madrid",size:"grande",desc:"Operador postal y logístico del Estado. Transformación digital de servicios y ecommerce logístico.",t:["Java",".NET","Python","Angular","DevOps","QA","PM"]},
-  {n:"Baleària",s:"logistica",city:"Dénia",size:"mediana",desc:"Naviera y operadora marítima. Digitalización de operaciones, venta online y gestión de flotas con IoT.",t:["Java",".NET","Python","DevOps","QA","PM"]},
-  {n:"Adevinta / Milanuncios",s:"media",city:"Barcelona",size:"grande",desc:"Mayor grupo de marketplaces online en Europa. Fotocasa, InfoJobs, Milanuncios. Cultura de producto.",t:["Python","Java","React","DevOps","QA","IA","PM"]},
-  {n:"Mediaset España",s:"media",city:"Madrid",size:"grande",desc:"Grupo audiovisual con plataformas digitales. Streaming, publicidad digital y data analytics.",t:["Java","Python","React","DevOps","QA","PM"]},
-  {n:"RTVE Digital",s:"media",city:"Madrid",size:"grande",desc:"Corporación pública audiovisual. Transformación digital de contenidos, streaming y plataformas de distribución.",t:["Java","Python","Angular","DevOps","QA","PM"]},
-  {n:"Grupo Prisa",s:"media",city:"Madrid",size:"grande",desc:"Grupo de comunicación con El País y Cadena SER. Publicidad digital, suscripciones y datos.",t:["Python","Java","React","DevOps","QA","PM"]},
-  {n:"Airbus España",s:"aeroespacial",city:"Madrid",size:"grande",desc:"Centros de ingeniería en Getafe y Sevilla. Sistemas embebidos, gemelos digitales y software de ingeniería.",t:["Java","Python",".NET","DevOps","QA","IA","PM"]},
-  {n:"Leonardo DRS España",s:"aeroespacial",city:"Madrid",size:"mediana",desc:"Sistemas de defensa, simulación y electrónica. Perfiles de ingeniería de software especializado.",t:["Java","Python",".NET","DevOps","QA","PM"]},
-  {n:"NH Hotel Group",s:"turismo",city:"Madrid",size:"grande",desc:"Cadena hotelera global. Revenue management digital, reservas y fidelización.",t:["Java","Python","React","DevOps","QA","IA","PM"]},
-  {n:"Meliá Hotels International",s:"turismo",city:"Palma",size:"grande",desc:"Segunda cadena hotelera española. Digitalización de reservas, revenue, loyalty y operaciones hoteleras.",t:["Java",".NET","Python","React","DevOps","QA","PM"]},
-  {n:"Paradores de Turismo",s:"turismo",city:"Madrid",size:"mediana",desc:"Red pública de turismo de lujo. Digitalización de reservas, CRM y experiencia del huésped.",t:["Java",".NET","Python","QA","DevOps","PM"]},
-  {n:"Publicis Groupe España",s:"pubtech",city:"Madrid",size:"grande",desc:"Grupo de comunicación y Ad-Tech. Plataformas de AdTech, datos y automatización de campañas.",t:["Python","React","DevOps","QA","IA","PM"]},
+  {n:"Santander",s:"banca",city:"Madrid",size:"grande",desc:"Uno de los mayores bancos del mundo con intensa inversión en transformación digital y plataformas de pagos globales.",t:["Java","Python","Angular","React","DevOps","QA","IA","Murex",".NET","PM"],li:"https://www.linkedin.com/company/banco-santander/",role:"IT Sourcing Manager / Head of Technology Procurement"},
+  {n:"BBVA",s:"banca",city:"Madrid",size:"grande",desc:"Banco global líder en digitalización financiera y desarrollo de APIs abiertas.",t:["Java","Python","Angular","React","DevOps","QA","IA","Murex","PM"],li:"https://www.linkedin.com/company/bbva/",role:"Engineering Manager / Technology Talent Acquisition"},
+  {n:"CaixaBank",s:"banca",city:"Barcelona",size:"grande",desc:"Principal banco doméstico en España con gran inversión en banca móvil y atención omnicanal.",t:["Java","Python","Angular","DevOps","QA","IA","Murex",".NET","PM"],li:"https://www.linkedin.com/company/caixabank/",role:"Responsable de Compras TI / IT Vendor Manager"},
+  {n:"Banco Sabadell",s:"banca",city:"Barcelona",size:"grande",desc:"Banco con fuerte presencia en pymes y banca corporativa en activo proceso de modernización tecnológica.",t:["Java",".NET","Python","QA","DevOps","Murex","PM"],li:"https://www.linkedin.com/company/banco-sabadell/",role:"IT Procurement Manager / CTO Office"},
+  {n:"Bankinter",s:"banca",city:"Madrid",size:"mediana",desc:"Banco especializado en banca privada y pymes con alta apuesta por productos 100% digitales.",t:["Java","Python","Angular","DevOps","QA","IA","Murex","PM"],li:"https://www.linkedin.com/company/bankinter/",role:"Director de Tecnología / IT Sourcing"},
+  {n:"Abanca",s:"banca",city:"A Coruña",size:"mediana",desc:"Banco gallego con creciente presencia nacional. Modernización del core bancario y canales digitales.",t:["Java",".NET","Python","DevOps","QA","Murex","PM"],li:"https://www.linkedin.com/company/abanca/",role:"Responsable TI / IT Vendor Manager"},
+  {n:"Mapfre",s:"seguros",city:"Madrid",size:"grande",desc:"Mayor aseguradora de España con presencia en más de 50 países. Digitalización de productos y atención al cliente.",t:["Java",".NET","Python","Angular","QA","DevOps","PM"],li:"https://www.linkedin.com/company/mapfre/",role:"IT Sourcing Manager / Director de Transformación Digital"},
+  {n:"Generali España",s:"seguros",city:"Madrid",size:"mediana",desc:"Filial de la aseguradora italiana Generali. Modernización del core de seguros y canales digitales.",t:["Java",".NET","QA","DevOps","Python","PM"],li:"https://www.linkedin.com/company/generali-espana/",role:"Head of IT / Responsable de Compras Tecnológicas"},
+  {n:"Grupo AXA España",s:"seguros",city:"Madrid",size:"mediana",desc:"Transformación digital de productos de seguros de vida, auto y salud.",t:["Java",".NET","Python","DevOps","QA","Murex","PM"],li:"https://www.linkedin.com/company/axa/",role:"IT Sourcing / Technology Delivery Manager"},
+  {n:"Telefónica",s:"telco",city:"Madrid",size:"grande",desc:"Telco líder en España y Latinoamérica. Redes, cloud, ciberseguridad e IA aplicada a gran escala.",t:["Java","Python","Angular","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/telefonica/",role:"Technology Procurement / Head of Engineering"},
+  {n:"Vodafone España",s:"telco",city:"Madrid",size:"grande",desc:"Operadora con fuerte inversión en 5G, IoT y digitalización de la experiencia de cliente.",t:["Java","Python","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/vodafone-espana/",role:"IT Vendor Manager / Technology Sourcing Lead"},
+  {n:"MásMóvil",s:"telco",city:"Madrid",size:"mediana",desc:"Cuarto operador de España en crecimiento acelerado con necesidad de escalar plataformas tecnológicas.",t:["Java","Python","DevOps","React","QA","PM"],li:"https://www.linkedin.com/company/masmovil/",role:"CTO / Head of Engineering"},
+  {n:"Indra",s:"consulting",city:"Madrid",size:"grande",desc:"Gran empresa de tecnología y defensa. Proyectos en transporte, defensa, administración pública y banca.",t:["Java","Python",".NET","Angular","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/indra/",role:"Talent Acquisition IT / Resource Manager"},
+  {n:"Capgemini España",s:"consulting",city:"Madrid",size:"grande",desc:"Consultora tecnológica global. Proyectos de transformación digital para grandes corporaciones.",t:["Java","Python",".NET","Angular","React","DevOps","QA","IA","Murex","PM"],li:"https://www.linkedin.com/company/capgemini/",role:"Talent Acquisition Manager / Staffing Lead"},
+  {n:"Accenture España",s:"consulting",city:"Madrid",size:"grande",desc:"Líder mundial en consultoría y servicios tecnológicos. Transformación digital en todos los sectores.",t:["Java","Python",".NET","Angular","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/accenture/",role:"Recruitment Lead / Technology Resourcing Manager"},
+  {n:"Everis / NTT Data",s:"consulting",city:"Madrid",size:"grande",desc:"Consultora TI con fuerte presencia en banca, seguros y sector público. Parte del grupo NTT Data.",t:["Java","Python",".NET","Angular","DevOps","QA","Murex","PM"],li:"https://www.linkedin.com/company/ntt-data-europe-latam/",role:"Staffing Manager / Talent Acquisition IT"},
+  {n:"Sopra Steria España",s:"consulting",city:"Madrid",size:"mediana",desc:"Consultora europea especialista en sistemas de misión crítica para banca y sector público.",t:["Java",".NET","Python","DevOps","QA","Murex","PM"],li:"https://www.linkedin.com/company/sopra-steria/",role:"Delivery Manager / IT Resourcing Lead"},
+  {n:"GMV",s:"consulting",city:"Madrid",size:"mediana",desc:"Empresa tecnológica española especializada en espacio, defensa, transporte y salud.",t:["Java","Python",".NET","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/gmv/",role:"Responsable de RRHH TI / Business Development Manager"},
+  {n:"ISDI",s:"consulting",city:"Madrid",size:"mediana",desc:"Escuela de negocios digitales y consultora. Proyectos de transformación digital para medianas y grandes empresas.",t:["Python","React","Angular","DevOps","QA","PM"],li:"https://www.linkedin.com/company/isdi/",role:"Director de Proyectos / Head of Consulting"},
+  {n:"Repsol",s:"energia",city:"Madrid",size:"grande",desc:"Energética global en transición renovable. Digitalización de operaciones, IoT industrial e IA para optimización.",t:["Python","Java","DevOps","IA","Angular","QA","PM"],li:"https://www.linkedin.com/company/repsol/",role:"IT Procurement / Digital Transformation Manager"},
+  {n:"Iberdrola",s:"energia",city:"Bilbao",size:"grande",desc:"Líder mundial en energía renovable. Redes eléctricas inteligentes y plataformas de gestión energética.",t:["Java","Python","DevOps","IA","Angular","QA","PM"],li:"https://www.linkedin.com/company/iberdrola/",role:"Responsable de Compras TI / Digital Solutions Manager"},
+  {n:"Endesa",s:"energia",city:"Madrid",size:"grande",desc:"Segunda eléctrica española. Transformación digital, contadores inteligentes y plataformas de cliente.",t:["Java","Python",".NET","DevOps","QA","PM"],li:"https://www.linkedin.com/company/endesa/",role:"IT Vendor Manager / Compras Tecnológicas"},
+  {n:"Naturgy",s:"energia",city:"Barcelona",size:"grande",desc:"Grupo energético de gas y electricidad. Modernización de sistemas ERP y digitalización del servicio.",t:["Java",".NET","Python","DevOps","QA","PM"],li:"https://www.linkedin.com/company/naturgy/",role:"IT Sourcing Manager / CIO Office"},
+  {n:"Holaluz",s:"energia",city:"Barcelona",size:"mediana",desc:"Comercializadora de energía renovable 100% digital. Plataforma propia de gestión de contratos y consumo.",t:["Python","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/holaluz/",role:"CTO / Head of Product & Engineering"},
+  {n:"El Corte Inglés Tech",s:"retail",city:"Madrid",size:"grande",desc:"Mayor grupo retail de España. Transformación del comercio omnicanal, ecommerce y logística inteligente.",t:["Java",".NET","Python","Angular","React","DevOps","QA","PM"],li:"https://www.linkedin.com/company/el-corte-ingles/",role:"Director de Tecnología / IT Procurement Manager"},
+  {n:"Inditex",s:"retail",city:"A Coruña",size:"grande",desc:"Mayor retailer de moda del mundo. Supply chain, RFID, ecommerce y data analytics a escala global.",t:["Java","Python","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/inditex/",role:"Technology Sourcing / Engineering Lead"},
+  {n:"Mercadona Tech",s:"retail",city:"Valencia",size:"grande",desc:"Supermercado líder con fuerte apuesta tecnológica interna y robotización de almacenes.",t:["Java","Python","DevOps","QA","IA","React","PM"],li:"https://www.linkedin.com/company/mercadona/",role:"Head of Technology / IT Talent Acquisition"},
+  {n:"Glovo",s:"retail",city:"Barcelona",size:"grande",desc:"Plataforma de delivery líder en Europa y África. IA para logística y equipos de ingeniería de alto volumen.",t:["Python","Java","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/glovoapp/",role:"Engineering Manager / Technical Recruiter"},
+  {n:"Amadeus IT",s:"fintech",city:"Madrid",size:"grande",desc:"Líder mundial en tecnología para la industria de viajes. Reservas, revenue management y distribución.",t:["Java","Python",".NET","Angular","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/amadeus/",role:"IT Vendor Manager / Talent Acquisition Lead"},
+  {n:"Wizink Bank",s:"fintech",city:"Madrid",size:"mediana",desc:"Banco digital especializado en tarjetas y depósitos. Operación 100% digital con equipos ágiles.",t:["Java","Python","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/wizink-bank/",role:"CTO / Head of Engineering"},
+  {n:"Cabify",s:"fintech",city:"Madrid",size:"mediana",desc:"Plataforma de movilidad urbana. Microservicios e IA para pricing dinámico.",t:["Python","Java","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/cabify/",role:"Engineering Manager / Technical Recruiter"},
+  {n:"Flywire",s:"fintech",city:"Barcelona",size:"mediana",desc:"Fintech global de pagos internacionales para educación, salud y viajes. Fuerte crecimiento en Europa.",t:["Java","Python","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/flywire/",role:"Head of Engineering / IT Sourcing"},
+  {n:"Idealista",s:"fintech",city:"Madrid",size:"mediana",desc:"Plataforma inmobiliaria líder en España e Italia. Data e IA aplicada a valoraciones y experiencia digital.",t:["Python","Java","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/idealista/",role:"CTO / Engineering Manager"},
+  {n:"Ferrovial",s:"industria",city:"Madrid",size:"grande",desc:"Infraestructuras globales. Digitalización de autopistas, aeropuertos y proyectos de ciudades inteligentes.",t:["Java","Python",".NET","DevOps","IA","QA","PM"],li:"https://www.linkedin.com/company/ferrovial/",role:"IT Procurement / Digital Innovation Manager"},
+  {n:"ACS Tecnologías",s:"industria",city:"Madrid",size:"mediana",desc:"División tecnológica del grupo ACS. Sistemas para infraestructuras críticas, transporte y administración.",t:["Java",".NET","Python","DevOps","QA","PM"],li:"https://www.linkedin.com/company/grupo-acs/",role:"Responsable de TI / IT Project Manager"},
+  {n:"Sanitas / Bupa",s:"salud",city:"Madrid",size:"mediana",desc:"Aseguradora sanitaria líder. Digitalización clínica, telemedicina y plataformas de gestión de salud.",t:["Java",".NET","Python","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/sanitas/",role:"IT Sourcing Manager / Director Digital"},
+  {n:"Fresenius Medical Care",s:"salud",city:"Madrid",size:"mediana",desc:"Líder en tratamientos de diálisis. Monitorización de pacientes, IoT médico e integración con HIS.",t:["Java","Python",".NET","DevOps","QA","PM"],li:"https://www.linkedin.com/company/fresenius-medical-care/",role:"IT Manager / Technology Procurement"},
+  {n:"Logista",s:"logistica",city:"Madrid",size:"grande",desc:"Mayor operador logístico del sur de Europa. Digitalización de cadena de suministro y última milla.",t:["Java",".NET","Python","DevOps","QA","PM"],li:"https://www.linkedin.com/company/logista/",role:"IT Sourcing / Director de Sistemas"},
+  {n:"DHL IT Hub España",s:"logistica",city:"Madrid",size:"grande",desc:"Centro tecnológico global de DHL. Plataformas de tracking, IA logística y automatización.",t:["Java","Python","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/dhl/",role:"IT Vendor Manager / Engineering Lead"},
+  {n:"Correos",s:"logistica",city:"Madrid",size:"grande",desc:"Operador postal y logístico del Estado. Transformación digital de servicios y ecommerce logístico.",t:["Java",".NET","Python","Angular","DevOps","QA","PM"],li:"https://www.linkedin.com/company/correos/",role:"Responsable de Compras TI / Director de Transformación Digital"},
+  {n:"Baleària",s:"logistica",city:"Dénia",size:"mediana",desc:"Naviera y operadora marítima. Digitalización de operaciones, venta online y gestión de flotas con IoT.",t:["Java",".NET","Python","DevOps","QA","PM"],li:"https://www.linkedin.com/company/balearia/",role:"CIO / Responsable de Sistemas"},
+  {n:"Adevinta / Milanuncios",s:"media",city:"Barcelona",size:"grande",desc:"Mayor grupo de marketplaces online en Europa. Fotocasa, InfoJobs, Milanuncios. Cultura de producto.",t:["Python","Java","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/adevinta/",role:"Engineering Manager / Technical Recruiter"},
+  {n:"Mediaset España",s:"media",city:"Madrid",size:"grande",desc:"Grupo audiovisual con plataformas digitales. Streaming, publicidad digital y data analytics.",t:["Java","Python","React","DevOps","QA","PM"],li:"https://www.linkedin.com/company/mediaset-espana/",role:"Director de Tecnología / IT Manager"},
+  {n:"RTVE Digital",s:"media",city:"Madrid",size:"grande",desc:"Corporación pública audiovisual. Transformación digital de contenidos, streaming y plataformas de distribución.",t:["Java","Python","Angular","DevOps","QA","PM"],li:"https://www.linkedin.com/company/rtve/",role:"Responsable de Sistemas / Director Digital"},
+  {n:"Grupo Prisa",s:"media",city:"Madrid",size:"grande",desc:"Grupo de comunicación con El País y Cadena SER. Publicidad digital, suscripciones y datos.",t:["Python","Java","React","DevOps","QA","PM"],li:"https://www.linkedin.com/company/grupo-prisa/",role:"CTO / IT Sourcing Manager"},
+  {n:"Airbus España",s:"aeroespacial",city:"Madrid",size:"grande",desc:"Centros de ingeniería en Getafe y Sevilla. Sistemas embebidos, gemelos digitales y software de ingeniería.",t:["Java","Python",".NET","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/airbus/",role:"IT Procurement / Engineering Staffing Manager"},
+  {n:"Leonardo DRS España",s:"aeroespacial",city:"Madrid",size:"mediana",desc:"Sistemas de defensa, simulación y electrónica. Perfiles de ingeniería de software especializado.",t:["Java","Python",".NET","DevOps","QA","PM"],li:"https://www.linkedin.com/company/leonardo-drs/",role:"Responsable de Ingeniería / IT Manager"},
+  {n:"NH Hotel Group",s:"turismo",city:"Madrid",size:"grande",desc:"Cadena hotelera global. Revenue management digital, reservas y fidelización.",t:["Java","Python","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/nh-hotel-group/",role:"CIO / Digital Transformation Manager"},
+  {n:"Meliá Hotels International",s:"turismo",city:"Palma",size:"grande",desc:"Segunda cadena hotelera española. Digitalización de reservas, revenue, loyalty y operaciones hoteleras.",t:["Java",".NET","Python","React","DevOps","QA","PM"],li:"https://www.linkedin.com/company/melia-hotels-international/",role:"IT Sourcing / Director de Tecnología"},
+  {n:"Paradores de Turismo",s:"turismo",city:"Madrid",size:"mediana",desc:"Red pública de turismo de lujo. Digitalización de reservas, CRM y experiencia del huésped.",t:["Java",".NET","Python","QA","DevOps","PM"],li:"https://www.linkedin.com/company/paradores-de-turismo/",role:"Responsable de Sistemas / IT Manager"},
+  {n:"Publicis Groupe España",s:"pubtech",city:"Madrid",size:"grande",desc:"Grupo de comunicación y Ad-Tech. Plataformas de AdTech, datos y automatización de campañas.",t:["Python","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/publicisgroupe/",role:"Technology Director / IT Sourcing Manager"},
 ];
 
 let activeTechs = new Set();
@@ -580,6 +642,11 @@ function render() {
     g.innerHTML = '<div class="no-results"><h3>Sin resultados</h3><p>Probá con otros filtros o borrá la búsqueda.</p></div>';
     return;
   }
+  const liSearch = (name, role) => {
+    const q = encodeURIComponent(`"${name}" ${role}`);
+    return `https://www.linkedin.com/search/results/people/?keywords=${q}&origin=GLOBAL_SEARCH_HEADER`;
+  };
+
   g.innerHTML = res.map((d,i) => `
     <div class="card" style="animation-delay:${Math.min(i,15)*20}ms">
       <div class="card-head">
@@ -598,6 +665,20 @@ function render() {
         </span>
       </div>
       <div class="card-tags">${d.t.map(t=>`<span class="tag${activeTechs.has(t)?' hl':''}" onclick="setTech('${t}')">${t}</span>`).join('')}</div>
+      <div class="card-role">
+        <span class="role-label">Decisor</span>
+        <span>${d.role}</span>
+      </div>
+      <div class="card-actions">
+        <a class="btn-action btn-li" href="${d.li}" target="_blank" rel="noopener">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Ver empresa
+        </a>
+        <a class="btn-action btn-search" href="${liSearch(d.n, d.role)}" target="_blank" rel="noopener">
+          <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          Buscar decisor
+        </a>
+      </div>
     </div>
   `).join('');
 }
