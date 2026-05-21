@@ -435,7 +435,11 @@ footer span strong { color: var(--red); }
     </div>
 
     <div>
-      <div class="filter-title">Tecnología</div>
+      <div class="filter-title" style="display:flex;justify-content:space-between;align-items:center;">
+        Tecnología
+        <span id="techCounter" style="font-size:10px;color:var(--red);font-weight:500;letter-spacing:.02em;"></span>
+      </div>
+      <div style="font-size:11px;color:var(--gray2);margin-bottom:7px;">Podés elegir varias</div>
       <div class="tech-pills" id="techPills"></div>
     </div>
 
@@ -523,7 +527,7 @@ const DATA = [
   {n:"Publicis Groupe España",s:"pubtech",city:"Madrid",size:"grande",desc:"Grupo de comunicación y Ad-Tech. Plataformas de AdTech, datos y automatización de campañas.",t:["Python","React","DevOps","QA","IA","PM"]},
 ];
 
-let activeTech = "";
+let activeTechs = new Set();
 
 function buildSelects() {
   const inds = [...new Set(DATA.map(d => d.s))].sort();
@@ -536,13 +540,15 @@ function buildSelects() {
   TECHS.forEach(t => {
     const b = document.createElement('button');
     b.className = 'tp'; b.textContent = t;
-    b.onclick = () => { activeTech = activeTech===t ? "" : t; buildPills(); render(); };
+    b.onclick = () => { activeTechs.has(t) ? activeTechs.delete(t) : activeTechs.add(t); buildPills(); render(); };
     pills.appendChild(b);
   });
 }
 
 function buildPills() {
-  document.querySelectorAll('.tp').forEach(b => b.classList.toggle('active', b.textContent===activeTech));
+  document.querySelectorAll('.tp').forEach(b => b.classList.toggle('active', activeTechs.has(b.textContent)));
+  const counter = document.getElementById('techCounter');
+  if (counter) counter.textContent = activeTechs.size > 0 ? activeTechs.size + ' seleccionada' + (activeTechs.size > 1 ? 's' : '') : '';
 }
 
 function getFiltered() {
@@ -554,7 +560,7 @@ function getFiltered() {
     if (ind && d.s!==ind) return false;
     if (city && d.city!==city) return false;
     if (size && d.size!==size) return false;
-    if (activeTech && !d.t.includes(activeTech)) return false;
+    if (activeTechs.size > 0 && !d.t.some(t => activeTechs.has(t))) return false;
     if (q && !d.n.toLowerCase().includes(q) && !d.desc.toLowerCase().includes(q)) return false;
     return true;
   });
@@ -591,19 +597,19 @@ function render() {
           ${d.size==='grande'?'+10k emp.':'1k–10k emp.'}
         </span>
       </div>
-      <div class="card-tags">${d.t.map(t=>`<span class="tag${activeTech===t?' hl':''}" onclick="setTech('${t}')">${t}</span>`).join('')}</div>
+      <div class="card-tags">${d.t.map(t=>`<span class="tag${activeTechs.has(t)?' hl':''}" onclick="setTech('${t}')">${t}</span>`).join('')}</div>
     </div>
   `).join('');
 }
 
-function setTech(t) { activeTech = activeTech===t?"":t; buildPills(); render(); }
+function setTech(t) { activeTechs.has(t) ? activeTechs.delete(t) : activeTechs.add(t); buildPills(); render(); }
 
 function resetAll() {
   document.getElementById('q').value='';
   document.getElementById('fInd').value='';
   document.getElementById('fCity').value='';
   document.getElementById('fSize').value='';
-  activeTech=''; buildPills(); render();
+  activeTechs.clear(); buildPills(); render();
 }
 
 document.getElementById('q').addEventListener('input', render);
