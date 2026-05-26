@@ -226,6 +226,45 @@ select option { background: #1c1c1c; }
 .tp:hover { border-color: var(--red); color: var(--red); }
 .tp.active { background: var(--red); border-color: var(--red); color: var(--white); font-weight: 500; }
 
+.ibex-btn {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  color: var(--gray);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  padding: 9px 12px;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+}
+.ibex-btn:hover { border-color: #c8a800; color: #f0cc00; }
+.ibex-btn.active { background: rgba(200,168,0,0.12); border-color: #c8a800; color: #f0cc00; }
+.ibex-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  color: #c8a800;
+  letter-spacing: -.02em;
+  white-space: nowrap;
+}
+.ibex-logo sup { font-size: 8px; vertical-align: super; }
+.ibex-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(200,168,0,0.2);
+  color: #f0cc00;
+  border: 1px solid rgba(200,168,0,0.4);
+  letter-spacing: .04em;
+  margin-left: auto;
+  flex-shrink: 0;
+}
 .reset-btn {
   width: 100%;
   background: transparent;
@@ -289,6 +328,10 @@ main { flex: 1; padding: 1.25rem; }
   font-weight: 700;
   color: var(--white);
   line-height: 1.3;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 .sector-badge {
   font-size: 10px;
@@ -449,14 +492,15 @@ footer span strong { color: var(--red); }
     Tech<span class="logo-accent">Dir</span>&nbsp;España
   </div>
   <div class="header-pills">
-    <div class="hpill"><strong>93</strong> empresas</div>
+    <div class="hpill"><strong>112</strong> empresas</div>
+    <div class="hpill">IBEX <strong>35</strong> incluido</div>
     <div class="hpill">Perfiles IT · <strong>2025</strong></div>
   </div>
 </header>
 
 <div class="hero">
   <h1>Directorio de Empresas<br><span>Tech</span> en España</h1>
-  <p>Empresas medianas y grandes que demandan perfiles IT. Filtrá por industria, tecnología y ciudad.</p>
+  <p>50 empresas medianas y grandes que demandan perfiles IT. Filtrá por industria, tecnología y ciudad.</p>
 </div>
 
 <div class="stats-bar">
@@ -468,6 +512,14 @@ footer span strong { color: var(--red); }
 
 <div class="layout">
   <aside class="sidebar">
+
+    <div>
+      <div class="filter-title">Índice bursátil</div>
+      <button class="ibex-btn" id="ibexBtn" onclick="toggleIbex()">
+        <span class="ibex-logo">IBEX <sup>35</sup></span>
+        Solo empresas IBEX 35
+      </button>
+    </div>
 
     <div>
       <div class="filter-title">Buscar</div>
@@ -536,44 +588,44 @@ const SECTOR_LABEL = {
 const TECHS = ["Java","Python","Angular","React","DevOps","QA","IA","Murex",".NET","PM","Data Engineer","BI Developer"];
 
 const DATA = [
-  {n:"Santander",s:"banca",city:"Madrid",size:"grande",desc:"Uno de los mayores bancos del mundo con intensa inversión en transformación digital y plataformas de pagos globales.",t:["Java","Python","Angular","React","DevOps","QA","IA","Murex",".NET","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/banco-santander/",role:"IT Sourcing Manager / Head of Technology Procurement"},
-  {n:"BBVA",s:"banca",city:"Madrid",size:"grande",desc:"Banco global líder en digitalización financiera y desarrollo de APIs abiertas.",t:["Java","Python","Angular","React","DevOps","QA","IA","Murex","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/bbva/",role:"Engineering Manager / Technology Talent Acquisition"},
-  {n:"CaixaBank",s:"banca",city:"Barcelona",size:"grande",desc:"Principal banco doméstico en España con gran inversión en banca móvil y atención omnicanal.",t:["Java","Python","Angular","DevOps","QA","IA","Murex",".NET","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/caixabank/",role:"Responsable de Compras TI / IT Vendor Manager"},
-  {n:"Banco Sabadell",s:"banca",city:"Barcelona",size:"grande",desc:"Banco con fuerte presencia en pymes y banca corporativa en activo proceso de modernización tecnológica.",t:["Java",".NET","Python","QA","DevOps","Murex","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/banco-sabadell/",role:"IT Procurement Manager / CTO Office"},
-  {n:"Bankinter",s:"banca",city:"Madrid",size:"mediana",desc:"Banco especializado en banca privada y pymes con alta apuesta por productos 100% digitales.",t:["Java","Python","Angular","DevOps","QA","IA","Murex","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/bankinter/",role:"Director de Tecnología / IT Sourcing"},
+  {n:"Santander",ibex:true,s:"banca",city:"Madrid",size:"grande",desc:"Uno de los mayores bancos del mundo con intensa inversión en transformación digital y plataformas de pagos globales.",t:["Java","Python","Angular","React","DevOps","QA","IA","Murex",".NET","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/banco-santander/",role:"IT Sourcing Manager / Head of Technology Procurement"},
+  {n:"BBVA",ibex:true,s:"banca",city:"Madrid",size:"grande",desc:"Banco global líder en digitalización financiera y desarrollo de APIs abiertas.",t:["Java","Python","Angular","React","DevOps","QA","IA","Murex","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/bbva/",role:"Engineering Manager / Technology Talent Acquisition"},
+  {n:"CaixaBank",ibex:true,s:"banca",city:"Barcelona",size:"grande",desc:"Principal banco doméstico en España con gran inversión en banca móvil y atención omnicanal.",t:["Java","Python","Angular","DevOps","QA","IA","Murex",".NET","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/caixabank/",role:"Responsable de Compras TI / IT Vendor Manager"},
+  {n:"Banco Sabadell",ibex:true,s:"banca",city:"Barcelona",size:"grande",desc:"Banco con fuerte presencia en pymes y banca corporativa en activo proceso de modernización tecnológica.",t:["Java",".NET","Python","QA","DevOps","Murex","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/banco-sabadell/",role:"IT Procurement Manager / CTO Office"},
+  {n:"Bankinter",ibex:true,s:"banca",city:"Madrid",size:"mediana",desc:"Banco especializado en banca privada y pymes con alta apuesta por productos 100% digitales.",t:["Java","Python","Angular","DevOps","QA","IA","Murex","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/bankinter/",role:"Director de Tecnología / IT Sourcing"},
   {n:"Abanca",s:"banca",city:"A Coruña",size:"mediana",desc:"Banco gallego con creciente presencia nacional. Modernización del core bancario y canales digitales.",t:["Java",".NET","Python","DevOps","QA","Murex","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/abanca/",role:"Responsable TI / IT Vendor Manager"},
-  {n:"Mapfre",s:"seguros",city:"Madrid",size:"grande",desc:"Mayor aseguradora de España con presencia en más de 50 países. Digitalización de productos y atención al cliente.",t:["Java",".NET","Python","Angular","QA","DevOps","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/mapfre/",role:"IT Sourcing Manager / Director de Transformación Digital"},
+  {n:"Mapfre",ibex:true,s:"seguros",city:"Madrid",size:"grande",desc:"Mayor aseguradora de España con presencia en más de 50 países. Digitalización de productos y atención al cliente.",t:["Java",".NET","Python","Angular","QA","DevOps","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/mapfre/",role:"IT Sourcing Manager / Director de Transformación Digital"},
   {n:"Generali España",s:"seguros",city:"Madrid",size:"mediana",desc:"Filial de la aseguradora italiana Generali. Modernización del core de seguros y canales digitales.",t:["Java",".NET","QA","DevOps","Python","PM","BI Developer"],li:"https://www.linkedin.com/company/generali-espana/",role:"Head of IT / Responsable de Compras Tecnológicas"},
   {n:"Grupo AXA España",s:"seguros",city:"Madrid",size:"mediana",desc:"Transformación digital de productos de seguros de vida, auto y salud.",t:["Java",".NET","Python","DevOps","QA","Murex","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/axa/",role:"IT Sourcing / Technology Delivery Manager"},
-  {n:"Telefónica",s:"telco",city:"Madrid",size:"grande",desc:"Telco líder en España y Latinoamérica. Redes, cloud, ciberseguridad e IA aplicada a gran escala.",t:["Java","Python","Angular","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/telefonica/",role:"Technology Procurement / Head of Engineering"},
+  {n:"Telefónica",ibex:true,s:"telco",city:"Madrid",size:"grande",desc:"Telco líder en España y Latinoamérica. Redes, cloud, ciberseguridad e IA aplicada a gran escala.",t:["Java","Python","Angular","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/telefonica/",role:"Technology Procurement / Head of Engineering"},
   {n:"Vodafone España",s:"telco",city:"Madrid",size:"grande",desc:"Operadora con fuerte inversión en 5G, IoT y digitalización de la experiencia de cliente.",t:["Java","Python","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/vodafone-espana/",role:"IT Vendor Manager / Technology Sourcing Lead"},
   {n:"MásMóvil",s:"telco",city:"Madrid",size:"mediana",desc:"Cuarto operador de España en crecimiento acelerado con necesidad de escalar plataformas tecnológicas.",t:["Java","Python","DevOps","React","QA","PM","Data Engineer"],li:"https://www.linkedin.com/company/masmovil/",role:"CTO / Head of Engineering"},
-  {n:"Indra",s:"consulting",city:"Madrid",size:"grande",desc:"Gran empresa de tecnología y defensa. Proyectos en transporte, defensa, administración pública y banca.",t:["Java","Python",".NET","Angular","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/indra/",role:"Talent Acquisition IT / Resource Manager"},
+  {n:"Indra",ibex:true,s:"consulting",city:"Madrid",size:"grande",desc:"Gran empresa de tecnología y defensa. Proyectos en transporte, defensa, administración pública y banca.",t:["Java","Python",".NET","Angular","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/indra/",role:"Talent Acquisition IT / Resource Manager"},
   {n:"Capgemini España",s:"consulting",city:"Madrid",size:"grande",desc:"Consultora tecnológica global. Proyectos de transformación digital para grandes corporaciones.",t:["Java","Python",".NET","Angular","React","DevOps","QA","IA","Murex","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/capgemini/",role:"Talent Acquisition Manager / Staffing Lead"},
   {n:"Accenture España",s:"consulting",city:"Madrid",size:"grande",desc:"Líder mundial en consultoría y servicios tecnológicos. Transformación digital en todos los sectores.",t:["Java","Python",".NET","Angular","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/accenture/",role:"Recruitment Lead / Technology Resourcing Manager"},
   {n:"Everis / NTT Data",s:"consulting",city:"Madrid",size:"grande",desc:"Consultora TI con fuerte presencia en banca, seguros y sector público. Parte del grupo NTT Data.",t:["Java","Python",".NET","Angular","DevOps","QA","Murex","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/ntt-data-europe-latam/",role:"Staffing Manager / Talent Acquisition IT"},
   {n:"Sopra Steria España",s:"consulting",city:"Madrid",size:"mediana",desc:"Consultora europea especialista en sistemas de misión crítica para banca y sector público.",t:["Java",".NET","Python","DevOps","QA","Murex","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/sopra-steria/",role:"Delivery Manager / IT Resourcing Lead"},
   {n:"GMV",s:"consulting",city:"Madrid",size:"mediana",desc:"Empresa tecnológica española especializada en espacio, defensa, transporte y salud.",t:["Java","Python",".NET","DevOps","QA","IA","PM","Data Engineer"],li:"https://www.linkedin.com/company/gmv/",role:"Responsable de RRHH TI / Business Development Manager"},
   {n:"ISDI",s:"consulting",city:"Madrid",size:"mediana",desc:"Escuela de negocios digitales y consultora. Proyectos de transformación digital para medianas y grandes empresas.",t:["Python","React","Angular","DevOps","QA","PM","BI Developer"],li:"https://www.linkedin.com/company/isdi/",role:"Director de Proyectos / Head of Consulting"},
-  {n:"Repsol",s:"energia",city:"Madrid",size:"grande",desc:"Energética global en transición renovable. Digitalización de operaciones, IoT industrial e IA para optimización.",t:["Python","Java","DevOps","IA","Angular","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/repsol/",role:"IT Procurement / Digital Transformation Manager"},
-  {n:"Iberdrola",s:"energia",city:"Bilbao",size:"grande",desc:"Líder mundial en energía renovable. Redes eléctricas inteligentes y plataformas de gestión energética.",t:["Java","Python","DevOps","IA","Angular","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/iberdrola/",role:"Responsable de Compras TI / Digital Solutions Manager"},
-  {n:"Endesa",s:"energia",city:"Madrid",size:"grande",desc:"Segunda eléctrica española. Transformación digital, contadores inteligentes y plataformas de cliente.",t:["Java","Python",".NET","DevOps","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/endesa/",role:"IT Vendor Manager / Compras Tecnológicas"},
-  {n:"Naturgy",s:"energia",city:"Barcelona",size:"grande",desc:"Grupo energético de gas y electricidad. Modernización de sistemas ERP y digitalización del servicio.",t:["Java",".NET","Python","DevOps","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/naturgy/",role:"IT Sourcing Manager / CIO Office"},
+  {n:"Repsol",ibex:true,s:"energia",city:"Madrid",size:"grande",desc:"Energética global en transición renovable. Digitalización de operaciones, IoT industrial e IA para optimización.",t:["Python","Java","DevOps","IA","Angular","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/repsol/",role:"IT Procurement / Digital Transformation Manager"},
+  {n:"Iberdrola",ibex:true,s:"energia",city:"Bilbao",size:"grande",desc:"Líder mundial en energía renovable. Redes eléctricas inteligentes y plataformas de gestión energética.",t:["Java","Python","DevOps","IA","Angular","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/iberdrola/",role:"Responsable de Compras TI / Digital Solutions Manager"},
+  {n:"Endesa",ibex:true,s:"energia",city:"Madrid",size:"grande",desc:"Segunda eléctrica española. Transformación digital, contadores inteligentes y plataformas de cliente.",t:["Java","Python",".NET","DevOps","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/endesa/",role:"IT Vendor Manager / Compras Tecnológicas"},
+  {n:"Naturgy",ibex:true,s:"energia",city:"Barcelona",size:"grande",desc:"Grupo energético de gas y electricidad. Modernización de sistemas ERP y digitalización del servicio.",t:["Java",".NET","Python","DevOps","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/naturgy/",role:"IT Sourcing Manager / CIO Office"},
   {n:"Holaluz",s:"energia",city:"Barcelona",size:"mediana",desc:"Comercializadora de energía renovable 100% digital. Plataforma propia de gestión de contratos y consumo.",t:["Python","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/holaluz/",role:"CTO / Head of Product & Engineering"},
   {n:"El Corte Inglés Tech",s:"retail",city:"Madrid",size:"grande",desc:"Mayor grupo retail de España. Transformación del comercio omnicanal, ecommerce y logística inteligente.",t:["Java",".NET","Python","Angular","React","DevOps","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/el-corte-ingles/",role:"Director de Tecnología / IT Procurement Manager"},
-  {n:"Inditex",s:"retail",city:"A Coruña",size:"grande",desc:"Mayor retailer de moda del mundo. Supply chain, RFID, ecommerce y data analytics a escala global.",t:["Java","Python","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/inditex/",role:"Technology Sourcing / Engineering Lead"},
+  {n:"Inditex",ibex:true,s:"retail",city:"A Coruña",size:"grande",desc:"Mayor retailer de moda del mundo. Supply chain, RFID, ecommerce y data analytics a escala global.",t:["Java","Python","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/inditex/",role:"Technology Sourcing / Engineering Lead"},
   {n:"Mercadona Tech",s:"retail",city:"Valencia",size:"grande",desc:"Supermercado líder con fuerte apuesta tecnológica interna y robotización de almacenes.",t:["Java","Python","DevOps","QA","IA","React","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/mercadona/",role:"Head of Technology / IT Talent Acquisition"},
   {n:"Glovo",s:"retail",city:"Barcelona",size:"grande",desc:"Plataforma de delivery líder en Europa y África. IA para logística y equipos de ingeniería de alto volumen.",t:["Python","Java","React","DevOps","QA","IA","PM","Data Engineer"],li:"https://www.linkedin.com/company/glovoapp/",role:"Engineering Manager / Technical Recruiter"},
-  {n:"Amadeus IT",s:"fintech",city:"Madrid",size:"grande",desc:"Líder mundial en tecnología para la industria de viajes. Reservas, revenue management y distribución.",t:["Java","Python",".NET","Angular","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/amadeus/",role:"IT Vendor Manager / Talent Acquisition Lead"},
+  {n:"Amadeus IT",ibex:true,s:"fintech",city:"Madrid",size:"grande",desc:"Líder mundial en tecnología para la industria de viajes. Reservas, revenue management y distribución.",t:["Java","Python",".NET","Angular","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/amadeus/",role:"IT Vendor Manager / Talent Acquisition Lead"},
   {n:"Wizink Bank",s:"fintech",city:"Madrid",size:"mediana",desc:"Banco digital especializado en tarjetas y depósitos. Operación 100% digital con equipos ágiles.",t:["Java","Python","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/wizink-bank/",role:"CTO / Head of Engineering"},
   {n:"Cabify",s:"fintech",city:"Madrid",size:"mediana",desc:"Plataforma de movilidad urbana. Microservicios e IA para pricing dinámico.",t:["Python","Java","React","DevOps","QA","IA","PM","Data Engineer"],li:"https://www.linkedin.com/company/cabify/",role:"Engineering Manager / Technical Recruiter"},
   {n:"Flywire",s:"fintech",city:"Barcelona",size:"mediana",desc:"Fintech global de pagos internacionales para educación, salud y viajes. Fuerte crecimiento en Europa.",t:["Java","Python","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/flywire/",role:"Head of Engineering / IT Sourcing"},
   {n:"Idealista",s:"fintech",city:"Madrid",size:"mediana",desc:"Plataforma inmobiliaria líder en España e Italia. Data e IA aplicada a valoraciones y experiencia digital.",t:["Python","Java","React","DevOps","QA","IA","PM","Data Engineer"],li:"https://www.linkedin.com/company/idealista/",role:"CTO / Engineering Manager"},
-  {n:"Ferrovial",s:"industria",city:"Madrid",size:"grande",desc:"Infraestructuras globales. Digitalización de autopistas, aeropuertos y proyectos de ciudades inteligentes.",t:["Java","Python",".NET","DevOps","IA","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/ferrovial/",role:"IT Procurement / Digital Innovation Manager"},
+  {n:"Ferrovial",ibex:true,s:"industria",city:"Madrid",size:"grande",desc:"Infraestructuras globales. Digitalización de autopistas, aeropuertos y proyectos de ciudades inteligentes.",t:["Java","Python",".NET","DevOps","IA","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/ferrovial/",role:"IT Procurement / Digital Innovation Manager"},
   {n:"ACS Tecnologías",s:"industria",city:"Madrid",size:"mediana",desc:"División tecnológica del grupo ACS. Sistemas para infraestructuras críticas, transporte y administración.",t:["Java",".NET","Python","DevOps","QA","PM","BI Developer"],li:"https://www.linkedin.com/company/grupo-acs/",role:"Responsable de TI / IT Project Manager"},
   {n:"Sanitas / Bupa",s:"salud",city:"Madrid",size:"mediana",desc:"Aseguradora sanitaria líder. Digitalización clínica, telemedicina y plataformas de gestión de salud.",t:["Java",".NET","Python","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/sanitas/",role:"IT Sourcing Manager / Director Digital"},
   {n:"Fresenius Medical Care",s:"salud",city:"Madrid",size:"mediana",desc:"Líder en tratamientos de diálisis. Monitorización de pacientes, IoT médico e integración con HIS.",t:["Java","Python",".NET","DevOps","QA","PM","BI Developer"],li:"https://www.linkedin.com/company/fresenius-medical-care/",role:"IT Manager / Technology Procurement"},
-  {n:"Logista",s:"logistica",city:"Madrid",size:"grande",desc:"Mayor operador logístico del sur de Europa. Digitalización de cadena de suministro y última milla.",t:["Java",".NET","Python","DevOps","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/logista/",role:"IT Sourcing / Director de Sistemas"},
+  {n:"Logista",ibex:true,s:"logistica",city:"Madrid",size:"grande",desc:"Mayor operador logístico del sur de Europa. Digitalización de cadena de suministro y última milla.",t:["Java",".NET","Python","DevOps","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/logista/",role:"IT Sourcing / Director de Sistemas"},
   {n:"DHL IT Hub España",s:"logistica",city:"Madrid",size:"grande",desc:"Centro tecnológico global de DHL. Plataformas de tracking, IA logística y automatización.",t:["Java","Python","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/dhl/",role:"IT Vendor Manager / Engineering Lead"},
   {n:"Correos",s:"logistica",city:"Madrid",size:"grande",desc:"Operador postal y logístico del Estado. Transformación digital de servicios y ecommerce logístico.",t:["Java",".NET","Python","Angular","DevOps","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/correos/",role:"Responsable de Compras TI / Director de Transformación Digital"},
   {n:"Baleària",s:"logistica",city:"Dénia",size:"mediana",desc:"Naviera y operadora marítima. Digitalización de operaciones, venta online y gestión de flotas con IoT.",t:["Java",".NET","Python","DevOps","QA","PM","BI Developer"],li:"https://www.linkedin.com/company/balearia/",role:"CIO / Responsable de Sistemas"},
@@ -629,9 +681,35 @@ const DATA = [
   {n:"RIU Hotels & Resorts",s:"turismo",city:"Palma",size:"grande",desc:"Cadena hotelera española con más de 100 hoteles en todo el mundo. Digitalización integral de la operación hotelera y canal de venta directa.",t:["Java","Python","React","DevOps","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/riu-hotels-resorts/",role:"CIO / IT Procurement Manager"},
   {n:"Industrias Duero",s:"industria",city:"Valladolid",size:"mediana",desc:"Empresa industrial del sector agroalimentario y maquinaria. Digitalización de procesos de producción e integración de sistemas ERP.",t:["Java",".NET","Python","DevOps","QA","PM","BI Developer"],li:"https://www.linkedin.com/company/industrias-duero/",role:"Responsable de TI / IT Project Manager"},
   {n:"W2M",s:"turismo",city:"Palma",size:"mediana",desc:"Mayorista de servicios turísticos con plataforma B2B para agencias. Reservas de hoteles, traslados y actividades en más de 100 destinos.",t:["Java","Python","React","DevOps","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/w2m/",role:"CTO / Head of Digital Products"},
+  {n:"Acciona",s:"energia",city:"Madrid",size:"grande",ibex:true,desc:"Grupo global de infraestructuras y energías renovables. Digitalización de proyectos de construcción, agua y energía con fuerte inversión en gemelos digitales e IoT.",t:["Java","Python",".NET","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/acciona/",role:"IT Procurement / Digital Transformation Manager"},
+  {n:"Acciona Energía",s:"energia",city:"Madrid",size:"grande",ibex:true,desc:"Filial renovable de Acciona. Gestión de parques eólicos, solares e hidráulicos con plataformas de monitorización en tiempo real e IA para optimización energética.",t:["Python","Java","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/acciona-energia/",role:"Digital Solutions Manager / IT Sourcing"},
+  {n:"Acerinox",s:"industria",city:"Madrid",size:"grande",ibex:true,desc:"Fabricante global de acero inoxidable. Industria 4.0, digitalización de plantas de producción y sistemas MES para manufactura avanzada.",t:["Java",".NET","Python","DevOps","QA","PM","BI Developer"],li:"https://www.linkedin.com/company/acerinox/",role:"IT Manager / Digital Manufacturing Lead"},
+  {n:"ACS",s:"industria",city:"Madrid",size:"grande",ibex:true,desc:"Grupo constructor global líder en concesiones de infraestructuras. Digitalización de obra civil, BIM, gemelos digitales y plataformas de gestión de proyectos.",t:["Java","Python",".NET","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/grupo-acs/",role:"IT Procurement / Digital Innovation Manager"},
+  {n:"AENA",s:"industria",city:"Madrid",size:"grande",ibex:true,desc:"Operador aeroportuario más grande del mundo por número de pasajeros. Digitalización de operaciones aeroportuarias, ciberseguridad y gestión de infraestructuras críticas.",t:["Java","Python",".NET","Angular","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/aena/",role:"IT Sourcing Manager / CIO Office"},
+  {n:"ArcelorMittal España",s:"industria",city:"Madrid",size:"grande",ibex:true,desc:"Mayor productor de acero del mundo. Industria 4.0, automatización de plantas siderúrgicas, IA para control de procesos y plataformas de supply chain.",t:["Java","Python",".NET","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/arcelormittal/",role:"IT Vendor Manager / Digital Manufacturing Manager"},
+  {n:"Cellnex Telecom",s:"telco",city:"Barcelona",size:"grande",ibex:true,desc:"Operador líder europeo de infraestructuras de telecomunicaciones. Gestión de torres de telecomunicaciones y despliegue de redes 5G en toda Europa.",t:["Java","Python","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/cellnex-telecom/",role:"IT Sourcing / Head of Engineering"},
+  {n:"Enagás",s:"energia",city:"Madrid",size:"grande",ibex:true,desc:"Gestor de infraestructuras gasísticas en España. Digitalización de redes de transporte de gas, ciberseguridad industrial e IoT para infraestructuras críticas.",t:["Java","Python",".NET","DevOps","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/enagas/",role:"IT Procurement / Director de Sistemas"},
+  {n:"Fluidra",s:"industria",city:"Barcelona",size:"grande",ibex:true,desc:"Líder mundial en equipamiento de piscinas y bienestar acuático. Plataformas IoT de gestión de piscinas conectadas y digitalización de la cadena de valor.",t:["Java","Python","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/fluidra/",role:"CTO / Head of Digital Products"},
+  {n:"Grifols",s:"salud",city:"Barcelona",size:"grande",ibex:true,desc:"Multinacional farmacéutica especializada en hemoderivados. Digitalización de procesos de fabricación, trazabilidad y sistemas de información hospitalaria.",t:["Java","Python",".NET","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/grifols/",role:"IT Sourcing Manager / Digital Transformation Lead"},
+  {n:"IAG / Iberia",s:"turismo",city:"Madrid",size:"grande",ibex:true,desc:"Grupo aéreo International Airlines Group, propietario de Iberia y Vueling. Digitalización de operaciones aéreas, revenue management y experiencia del pasajero.",t:["Java","Python","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/iag/",role:"IT Vendor Manager / Head of Engineering"},
+  {n:"Inmobiliaria Colonial",s:"industria",city:"Barcelona",size:"grande",ibex:true,desc:"SOCIMI líder en oficinas prime en España y Francia. Digitalización de gestión de activos inmobiliarios y plataformas de proptech.",t:["Java","Python","React","DevOps","QA","PM","BI Developer"],li:"https://www.linkedin.com/company/inmobiliaria-colonial/",role:"IT Manager / Digital Innovation Lead"},
+  {n:"Merlin Properties",s:"industria",city:"Madrid",size:"grande",ibex:true,desc:"Mayor SOCIMI de España. Gestión de activos logísticos, oficinas y centros comerciales con plataformas digitales de proptech y smart buildings.",t:["Java","Python","React","DevOps","QA","PM","BI Developer"],li:"https://www.linkedin.com/company/merlin-properties/",role:"CTO / IT Manager"},
+  {n:"Puig Brands",s:"retail",city:"Barcelona",size:"grande",ibex:true,desc:"Grupo de moda y perfumería con marcas como Carolina Herrera, Rabanne y Jean Paul Gaultier. Ecommerce, digitalización del retail de lujo y data analytics.",t:["Java","Python","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/puig/",role:"Head of Digital / IT Sourcing Manager"},
+  {n:"Redeia (Red Eléctrica)",s:"energia",city:"Madrid",size:"grande",ibex:true,desc:"Operador del sistema eléctrico español. Gestión de la red de transporte de electricidad, ciberseguridad industrial y plataformas de gestión energética.",t:["Java","Python",".NET","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/redeia/",role:"IT Procurement / Director de Sistemas Críticos"},
+  {n:"Rovi",s:"salud",city:"Madrid",size:"mediana",ibex:true,desc:"Laboratorio farmacéutico especializado en heparinas de bajo peso molecular y fabricación para terceros. Digitalización de procesos de fabricación y QA regulatorio.",t:["Java","Python",".NET","DevOps","QA","PM","BI Developer"],li:"https://www.linkedin.com/company/laboratorios-farmaceuticos-rovi/",role:"IT Manager / Responsable de Sistemas"},
+  {n:"Sacyr",s:"industria",city:"Madrid",size:"grande",ibex:true,desc:"Grupo de concesiones e infraestructuras presente en más de 20 países. Digitalización de obra civil, BIM, gestión de concesiones y plataformas de smart mobility.",t:["Java","Python",".NET","DevOps","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/sacyr/",role:"IT Sourcing / Director de Transformación Digital"},
+  {n:"Solaria",s:"energia",city:"Madrid",size:"mediana",ibex:true,desc:"Empresa española de energía solar fotovoltaica de rápido crecimiento. Plataformas de monitorización de plantas solares, IA para optimización de producción.",t:["Python","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/solaria-energia-y-medio-ambiente/",role:"CTO / Head of Digital Operations"},
+  {n:"Unicaja Banco",s:"banca",city:"Málaga",size:"mediana",ibex:true,desc:"Banco mediano con fuerte presencia en Andalucía y Castilla y León. Modernización del core bancario, banca digital y plataformas de atención al cliente.",t:["Java",".NET","Python","DevOps","QA","Murex","PM","BI Developer"],li:"https://www.linkedin.com/company/unicaja-banco/",role:"IT Sourcing / Responsable de Transformación Digital"},
 ];
 
 let activeTechs = new Set();
+let ibexOnly = false;
+
+function toggleIbex() {
+  ibexOnly = !ibexOnly;
+  document.getElementById('ibexBtn').classList.toggle('active', ibexOnly);
+  render();
+}
 
 function buildSelects() {
   const inds = [...new Set(DATA.map(d => d.s))].sort();
@@ -664,6 +742,7 @@ function getFiltered() {
     if (ind && d.s!==ind) return false;
     if (city && d.city!==city) return false;
     if (size && d.size!==size) return false;
+    if (ibexOnly && !d.ibex) return false;
     if (activeTechs.size > 0 && !d.t.some(t => activeTechs.has(t))) return false;
     if (q && !d.n.toLowerCase().includes(q) && !d.desc.toLowerCase().includes(q)) return false;
     return true;
@@ -692,7 +771,7 @@ function render() {
   g.innerHTML = res.map((d,i) => `
     <div class="card" style="animation-delay:${Math.min(i,15)*20}ms">
       <div class="card-head">
-        <div class="card-name">${d.n}</div>
+        <div class="card-name">${d.n}${d.ibex?'<span class="ibex-badge">IBEX 35</span>':''}</div>
         <span class="sector-badge">${SECTOR_LABEL[d.s]||d.s}</span>
       </div>
       <div class="card-desc">${d.desc}</div>
@@ -732,6 +811,8 @@ function resetAll() {
   document.getElementById('fInd').value='';
   document.getElementById('fCity').value='';
   document.getElementById('fSize').value='';
+  ibexOnly = false;
+  document.getElementById('ibexBtn').classList.remove('active');
   activeTechs.clear(); buildPills(); render();
 }
 
