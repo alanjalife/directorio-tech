@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talent Catalog — Mindata</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #e02020;
+    --red-dark: #b01515;
+    --black: #0a0a0a;
+    --dark: #111111;
+    --dark2: #1a1a1a;
+    --dark3: #222222;
+    --gray: #333333;
+    --gray2: #555555;
+    --white: #ffffff;
+    --white2: #cccccc;
+    --white3: #888888;
+    --gold: #f0c040;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--dark);
+    border-bottom: 2px solid var(--red);
+    padding: 0 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-box {
+    background: var(--white);
+    padding: 3px 6px;
+    display: flex;
+    gap: 2px;
+    align-items: center;
+  }
+  .logo-min { background: var(--black); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 13px; padding: 1px 4px; }
+  .logo-data { background: var(--red); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 13px; padding: 1px 4px; }
+  .header-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-left: 16px;
+  }
+  .header-title span { color: var(--red); }
+  .header-badge {
+    background: var(--red);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    text-transform: uppercase;
+  }
+
+  /* HERO STATS */
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, #160000 100%);
+    padding: 32px 40px 24px;
+    border-bottom: 1px solid var(--gray);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .hero-headline h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 48px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .hero-headline h1 span { color: var(--red); }
+  .hero-headline p {
+    color: var(--white3);
+    font-size: 13px;
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .stat-card {
+    text-align: center;
+    background: var(--dark2);
+    border: 1px solid var(--gray);
+    padding: 16px 24px;
+    min-width: 110px;
+  }
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--red);
+  }
+  .stat-num.white { color: var(--white); }
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--white3);
+    margin-top: 4px;
+  }
+
+  /* FILTERS */
+  .filters-bar {
+    background: var(--dark2);
+    border-bottom: 1px solid var(--gray);
+    padding: 16px 40px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 64px;
+    z-index: 90;
+  }
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .filter-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .filter-pills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .pill {
+    background: var(--dark3);
+    border: 1px solid var(--gray);
+    color: var(--white2);
+    padding: 5px 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .pill:hover { border-color: var(--red); color: var(--white); }
+  .pill.active { background: var(--red); border-color: var(--red); color: var(--white); }
+  .pill.country-ar.active { background: #1565c0; border-color: #1565c0; }
+  .pill.country-es.active { background: #c62828; border-color: #c62828; }
+
+  .search-box {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-left: auto;
+  }
+  .search-input {
+    background: var(--dark3);
+    border: 1px solid var(--gray);
+    color: var(--white);
+    padding: 6px 12px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    outline: none;
+    width: 220px;
+    transition: border-color 0.15s;
+  }
+  .search-input::placeholder { color: var(--gray2); }
+  .search-input:focus { border-color: var(--red); }
+
+  /* RESULTS BAR */
+  .results-bar {
+    padding: 10px 40px;
+    background: var(--dark);
+    border-bottom: 1px solid var(--gray);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--white3);
+    letter-spacing: 1px;
+  }
+  .results-count strong { color: var(--white); }
+
+  /* GRID */
+  .catalog-section {
+    padding: 32px 40px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gray);
+  }
+  .section-tech {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .section-count {
+    background: var(--red);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 3px 10px;
+    letter-spacing: 1px;
+  }
+  .section-vt {
+    color: var(--white3);
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  /* CANDIDATE CARD */
+  .card {
+    background: var(--dark2);
+    border: 1px solid var(--gray);
+    padding: 20px;
+    position: relative;
+    transition: border-color 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: default;
+  }
+  .card:hover {
+    border-color: var(--red);
+    transform: translateY(-2px);
+  }
+  .card.vt-approved { border-left: 3px solid var(--red); }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .card-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.2;
+    color: var(--white);
+    flex: 1;
+  }
+  .badge-vt {
+    background: var(--red);
+    color: var(--white);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 2px 6px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .card-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .tag {
+    border: 1px solid var(--gray);
+    color: var(--white2);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    text-transform: uppercase;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+  .tag.seniority { border-color: #555; }
+  .tag.profile { border-color: #444; color: var(--white3); }
+  .tag-country {
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+  .tag-country.AR { background: #0d3b8a; color: #aac4ff; }
+  .tag-country.ES { background: #7a0000; color: #ffaaaa; }
+  .card-stack {
+    font-size: 12px;
+    color: var(--white3);
+    line-height: 1.4;
+  }
+  .card-city {
+    font-size: 11px;
+    color: var(--gray2);
+    letter-spacing: 0.5px;
+  }
+  .card-city::before { content: "📍 "; }
+  .card-link {
+    display: inline-block;
+    background: transparent;
+    border: 1px solid var(--red);
+    color: var(--red);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    padding: 5px 12px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.15s;
+    margin-top: auto;
+    align-self: flex-start;
+  }
+  .card-link:hover { background: var(--red); color: var(--white); }
+  .card-link.no-link { border-color: var(--gray); color: var(--gray2); pointer-events: none; }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 80px 40px;
+    color: var(--white3);
+  }
+  .empty-state h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--dark);
+    border-top: 1px solid var(--gray);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--white3);
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+  .footer span { color: var(--red); }
+
+  @media (max-width: 600px) {
+    .header { padding: 0 16px; }
+    .hero { padding: 20px 16px; }
+    .filters-bar { padding: 12px 16px; }
+    .catalog-section { padding: 20px 16px; }
+    .hero-headline h1 { font-size: 32px; }
+    .hero-stats { gap: 12px; }
+    .stat-card { padding: 12px 16px; min-width: 80px; }
+    .stat-num { font-size: 32px; }
+  }
+
+  .no-section { display: none; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-logo">
+    <div class="logo-box">
+      <span class="logo-min">MIN</span>
+      <span class="logo-data">DATA</span>
+    </div>
+    <span class="header-title">TALENT <span>CATALOG</span></span>
+  </div>
+  <div class="header-badge">Talent On Demand · Mayo 2026</div>
+</header>
+
+<section class="hero">
+  <div class="hero-headline">
+    <h1>DEL TALENTO <span>EN LA BASE</span><br>AL CLIENTE EN 24H.</h1>
+    <p>CATÁLOGO VALIDADO · ARGENTINA &amp; ESPAÑA · USO COMERCIAL EXCLUSIVO</p>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="stat-num white" id="stat-total">464</div>
+      <div class="stat-label">Candidatos<br>Base</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-vt">287</div>
+      <div class="stat-label">VT<br>Aprobados</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num white" id="stat-ar">178</div>
+      <div class="stat-label">Argentina</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num white" id="stat-es">286</div>
+      <div class="stat-label">España</div>
+    </div>
+  </div>
+</section>
+
+<div class="filters-bar">
+  <div class="filter-group">
+    <div class="filter-label">País</div>
+    <div class="filter-pills" id="country-filters">
+      <div class="pill active" data-country="ALL">Todos</div>
+      <div class="pill country-ar" data-country="AR">🇦🇷 Argentina</div>
+      <div class="pill country-es" data-country="ES">🇪🇸 España</div>
+    </div>
+  </div>
+  <div class="filter-group">
+    <div class="filter-label">Tecnología</div>
+    <div class="filter-pills" id="tech-filters">
+      <div class="pill active" data-tech="ALL">Todos</div>
+      <div class="pill" data-tech="Java">Java</div>
+      <div class="pill" data-tech="Angular">Angular</div>
+      <div class="pill" data-tech="React">React</div>
+      <div class="pill" data-tech=".NET">.NET</div>
+      <div class="pill" data-tech="Data">Data</div>
+      <div class="pill" data-tech="Gen AI">Gen AI</div>
+      <div class="pill" data-tech="QA">QA</div>
+      <div class="pill" data-tech="PM/PO">PM/PO</div>
+      <div class="pill" data-tech="SAP">SAP</div>
+      <div class="pill" data-tech="Murex">Murex</div>
+      <div class="pill" data-tech="Salesforce">Salesforce</div>
+      <div class="pill" data-tech="DevOps">DevOps</div>
+    </div>
+  </div>
+  <div class="filter-group">
+    <div class="filter-label">Seniority</div>
+    <div class="filter-pills" id="seniority-filters">
+      <div class="pill active" data-seniority="ALL">Todos</div>
+      <div class="pill" data-seniority="senior">Senior</div>
+      <div class="pill" data-seniority="ssr">SSr</div>
+      <div class="pill" data-seniority="junior">Junior</div>
+      <div class="pill" data-seniority="tech lead">Tech Lead</div>
+    </div>
+  </div>
+  <div class="filter-group">
+    <div class="filter-label">Estado</div>
+    <div class="filter-pills" id="vt-filters">
+      <div class="pill active" data-vt="ALL">Todos</div>
+      <div class="pill" data-vt="true">✓ VT Aprobado</div>
+    </div>
+  </div>
+  <div class="search-box">
+    <div class="filter-label">Buscar</div>
+    <input class="search-input" type="text" id="search-input" placeholder="Nombre, stack, ciudad…">
+  </div>
+</div>
+
+<div class="results-bar">
+  <div class="results-count">Mostrando <strong id="visible-count">0</strong> candidatos</div>
+  <div>Talent On Demand v1.0 · Equipo Comercial Mindata</div>
+</div>
+
+<main id="catalog-main">
+  <div class="catalog-section" id="empty-state" style="display:none">
+    <div class="empty-state">
+      <h2>Sin resultados</h2>
+      <p>Ajustá los filtros para ver candidatos disponibles.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div>MINDATA · <span>TALENT ON DEMAND</span> · USO INTERNO — EQUIPO COMERCIAL</div>
+  <div>Base actualizada: Mayo 2026 · Liderado por Jennifer La Regina</div>
+</footer>
+
+<script>
+const RAW = [{"n":"Jose Luis Alfaro Carretero","t":"Java","st":"Java, SpringBoot, Microservices","sr":"senior","co":"ES","ci":"Albacete","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1d7bpj7FukpxRgIBR4m8Uo43xvk598y4V/view?usp=drivesdk"},{"n":"Alberto Alonso Saavedra","t":"Java","st":"Java, Spring Boot, API REST","sr":"ssr","co":"ES","ci":"Madrid","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1EiSEnSFRnTRNAAhYpqLKFbOnMaM7agZl/view?usp=drivesdk"},{"n":"Ángel Mulero Regidor","t":"Java","st":"Java, Spring Boot, Kafka","sr":"senior","co":"ES","ci":"","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/16OwEiXbUTxn44yNCjZvU3y8o5x6w9gqP/view?usp=drivesdk"},{"n":"Alexis Cartechini","t":"Java","st":"Java, Spring Boot, Microservices","sr":"senior","co":"ES","ci":"Barcelona","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1o5RZ9SHpej1p4yLoDOM5wSNBL1wGkDMs/view?usp=drivesdk"},{"n":"Ángel Manuel García Carmona","t":"Java","st":"Java, Spring Boot, Angular","sr":"ssr","co":"ES","ci":"Madrid","pk":"fullstack","vt":false,"dl":"https://drive.google.com/file/d/1Qqiut723QPT0L270fjJFX6IGq92zo6Ph/view?usp=drivesdk"},{"n":"Ezequiel Martinez","t":"Java","st":"Java, Spring Boot, AWS","sr":"senior","co":"AR","ci":"CABA","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1pNZueG-3uWZpFemnQ4n3LU3q53v4VcsB/view?usp=drivesdk"},{"n":"Ariel (Andrés) Acho","t":"Java","st":"Java, Spring Boot, SQL","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1Mn88sfSOdOz_Uci_auIyp6ZA1Nqe9Jp0/view?usp=drivesdk"},{"n":"Fabian Bauzá","t":"Java","st":"Microservicios, AWS, Java","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"architect","vt":true,"dl":"https://drive.google.com/file/d/1DhrG96Gy-BlAA2JEgMwRnZuAD3fVVMhV/view?usp=drivesdk"},{"n":"Nicolas Garcia","t":"Java","st":"Java, Spring Boot, React","sr":"ssr","co":"AR","ci":"","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1JXqIk9-m9zk-9SddF7L58UPC_XY-FrS-/view?usp=drivesdk"},{"n":"Sergio Rozenberg","t":"Java","st":"Java, Angular, Node.js","sr":"senior","co":"AR","ci":"Capital Federal","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1DPVSOdE71rhWOzk-XTqFQBW7wrh9_X4_/view?usp=drivesdk"},{"n":"Leandro Tula","t":"Java","st":"Java, Golang, Spring Boot","sr":"senior","co":"AR","ci":"Córdoba","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/14GkGm6TEKhhw45XY50sme0CYXdBVw7-q/view?usp=drivesdk"},{"n":"Jorge Ariel Damián Vazquez Kagiagian","t":"Java","st":"Java, Spring Boot, Microservices","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1Q5Qp1K8yvA4Gd2e02KyymO5LBA2-H4k5/view?usp=drivesdk"},{"n":"Rodrigo Mierez Brandana","t":"Java","st":"Java, Spring Boot, Angular","sr":"tech lead","co":"AR","ci":"Buenos Aires","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1oX28cVDoVedYtoCTN4ntQQN2pC-SSNO4/view?usp=drivesdk"},{"n":"Jorge Mendiola","t":"Java","st":"Java, Spring Boot, Kafka","sr":"senior","co":"AR","ci":"Tandil","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1OZTpr0c1E-41xwHWwJQZghbKYcg0VZ8n/view?usp=drivesdk"},{"n":"Bruno Tafarelo","t":"Java","st":"Java, Microservices, AWS","sr":"architect","co":"ES","ci":"Seville","pk":"architect","vt":true,"dl":"https://drive.google.com/file/d/1CSpjdmoi7rSwuww8nVnt8aTE_upc5mVk/view?usp=drivesdk"},{"n":"Facundo Pinazo","t":"Java","st":"Java, Spring Boot, SQL","sr":"junior","co":"AR","ci":"Mendoza","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1ZSr_MXV3yur8Fd4peKpHB1QJLN5YqMNr/view?usp=drivesdk"},{"n":"David Olivera","t":"Java","st":"Java, Quarkus, Spring Boot","sr":"senior","co":"AR","ci":"Comodoro Rivadavia","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1ZiyMO3Pt0m7gYuzx_ZHk3paes7cLa3Y9/view?usp=drivesdk"},{"n":"Cristian David Moraleda","t":"Java","st":"Java, Spring Boot, Salesforce","sr":"ssr","co":"AR","ci":"Mar del Plata","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1Ff3L9E-jkQJCWc98Kc0WGQzGG2EpxfG1/view?usp=drivesdk"},{"n":"Jeremías Rivelli","t":"Java","st":"Java, Spring Boot, React","sr":"ssr","co":"AR","ci":"Buenos Aires","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1tT8ssrokK_C7rXRCs5O6fM5coRaIVAeb/view?usp=drivesdk"},{"n":"Gustavo Martínez","t":"Java","st":"Java, Spring Boot, Angular","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1qIlpAzG5yLa4X9TWxdwh6OAiOVa3TW4P/view?usp=drivesdk"},{"n":"Jesús Gómez Martín","t":"Java","st":"Java, Spring Boot, Microservices","sr":"senior","co":"ES","ci":"","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/10v8ovpBOXXoqP2pVXanVHfWqsMz8Ue99/view?usp=drivesdk"},{"n":"Ricardo Domingo San Andrés","t":"Java","st":"Java, Spring Boot, JavaScript","sr":"ssr","co":"ES","ci":"Valencia","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1DzOchqnByp2QC8DnMzNirp8AYlS1EIkx/view?usp=drivesdk"},{"n":"Jorge Luis Velasquez Sanchez","t":"Java","st":"Java, Python, Golang","sr":"senior","co":"ES","ci":"Valencia","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1wNv_hSkNRHpPTVXgYMDvtJ0vKvT4sak6/view?usp=drivesdk"},{"n":"Emanuel Flores","t":"Java","st":"Java, Spring Boot","sr":"senior","co":"AR","ci":"Córdoba","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1e-8698KlFQUldTrZ6xLeA3GFkypPjG65/view?usp=drivesdk"},{"n":"Alexander Alexis Andrada","t":"Java","st":"Java, React, Angular","sr":"senior","co":"AR","ci":"Ituzaingó","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1cdaJycMU7fi83kOZIo1YQCBtRnGOccTh/view?usp=drivesdk"},{"n":"Brayan Gallardo","t":"Java","st":"Java, Spring Boot, C#","sr":"senior","co":"ES","ci":"Madrid","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1MceSrjM1sRNtjCGR5jwrhqy95H__N6bG/view?usp=drivesdk"},{"n":"Franco Suarez","t":"Java","st":"Java, Spring Boot, Kafka","sr":"senior","co":"AR","ci":"","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1Nr--KEg8KaWqyeW3eIpLMks5-FqifBxk/view?usp=drivesdk"},{"n":"Nicolás Donato","t":"Java","st":"Java, Spring Boot, PostgreSQL","sr":"team lead","co":"AR","ci":"Escobar","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1l3ha3Y3EChWAx-EubXHsGIRYI98WAoxA/view?usp=drivesdk"},{"n":"Lucas Varone","t":"Java","st":"Java, Spring Boot, Angular","sr":"senior","co":"ES","ci":"Madrid","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1gI0GHWfyIh20UbZrv8MxpKDNwXnmmEr6/view?usp=drivesdk"},{"n":"Jenaro Cámara","t":"Java","st":"Java, Spring Boot, Spring Batch","sr":"junior","co":"ES","ci":"Jamilena, Jaén","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/18P9j8wZ7ZuRYIHzhEG1J2HvdamaKpdOx/view?usp=drivesdk"},{"n":"Ignacio Chindasvinto Alcina López","t":"Java","st":"Java, Spring Boot, Microservicios","sr":"senior","co":"ES","ci":"Cádiz","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1qRN51WtkKiMUkZU31zTYqWT5nqSzAA6u/view?usp=drivesdk"},{"n":"Miguel Briceño Goncalves","t":"Java","st":"Java, Spring Boot, Microservicios","sr":"No especificado","co":"ES","ci":"Madrid","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1hw3wA3ooet9TVgR_VGTxK3ipd7ucgGUY/view?usp=drivesdk"},{"n":"Gisella Aramayo","t":"Java","st":"Java, Spring Boot, Angular","sr":"ssr","co":"AR","ci":"Cordoba","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1Z9qQ2shQL8-xuvWxgC3gew_7OoWyxvVw/view?usp=drivesdk"},{"n":"Matías (Matt) Damonte","t":"Angular","st":"Angular, TypeScript, JavaScript","sr":"ssr","co":"AR","ci":"Buenos Aires","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/13tccbuTeiKaQcRo62QmfkTW1czB-Cu-Y/view?usp=drivesdk"},{"n":"Santiago Gauna","t":"Angular","st":"Angular, React, Node.js","sr":"ssr","co":"AR","ci":"Tandil","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1cD_k4hMjhPx0Or7lmwlyBDtEUhjAcfix/view?usp=drivesdk"},{"n":"Damian Aguado","t":"Angular","st":"Angular, TypeScript, RxJS","sr":"senior","co":"AR","ci":"Villa Ascasubi, Córdoba","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/18KmjWkHfRFRnuA4elR67MUOnSdoSM97-/view?usp=drivesdk"},{"n":"Ariel Petri","t":"Angular","st":"Angular, Node.js, .NET","sr":"senior","co":"AR","ci":"Rosario","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1DQT_E4XAKkrOFxUy0I9TAP0ROr3K_K4E/view?usp=drivesdk"},{"n":"Luca Ignacio Monteleone","t":"Java","st":"Java, Spring Boot, Angular","sr":"junior","co":"AR","ci":"Mendoza","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1McNRcukaylWm38Khz2c5H4CMIa35Tdr0/view?usp=drivesdk"},{"n":"Juan Carlos Suárez López","t":"Angular","st":"Angular, Java, Node.js","sr":"ssr","co":"AR","ci":"CABA","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1nTSBhPxevg7cJSPlupp24u-qCrvPlI4j/view?usp=drivesdk"},{"n":"Ariel Odasso","t":"PHP","st":"WordPress, PrestaShop, PHP","sr":"junior","co":"AR","ci":"Tandil","pk":"backend","vt":false,"dl":"https://drive.google.com/file/d/1zf4e4weqd8piwO7lO9l5SxAdXLPDDtfO/view?usp=drivesdk"},{"n":"Martiniano Olivera","t":"Angular","st":"Angular, Typescript, CSS","sr":"senior","co":"AR","ci":"Entre Rios","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1-f8pGL-DKGIQ2Pmw84nGhngGfI0wNLvj/view?usp=drivesdk"},{"n":"Ali Rigol","t":"Angular","st":"Angular, .NET, Rust","sr":"tech lead","co":"AR","ci":"Rosario","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1Dfb4OnupuVCrpp_sZ3wG19TwfYrpKxxE/view?usp=drivesdk"},{"n":"Jonathan Meichtry","t":"Angular","st":"Angular, TailwindCSS, Firebase","sr":"ssr","co":"AR","ci":"Firmat, Santa Fe","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1rhHrItxp6EtO_UV_6gmnvlKKV8rKWGUG/view?usp=drivesdk"},{"n":"Matias Castro","t":"Angular","st":"Angular, Nest.js, Node.js","sr":"ssr","co":"AR","ci":"San Juan","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1DV2g_jk850BFqwCw5NMDAUg8jevdcsZu/view?usp=drivesdk"},{"n":"Sebastián Fernandes","t":"React","st":"React, Angular, TypeScript","sr":"ssr","co":"AR","ci":"Buenos Aires","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/10AExLaikQ2nNtoEKa20vwPeEj28yfmuc/view?usp=drivesdk"},{"n":"Tommy Oliver","t":"Angular","st":"Angular, NestJS, TypeScript","sr":"No especificado","co":"AR","ci":"","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/18TJcAz35ijb3CBfObWO6o4VYk9-XVSRQ/view?usp=drivesdk"},{"n":"Leonardo Diaz","t":"React","st":"React, Angular, JavaScript","sr":"senior","co":"AR","ci":"","pk":"frontend","vt":false,"dl":"https://drive.google.com/file/d/1rGTh25j8IfXLU2AX_Y6JK4mHpvv7LmHo/view?usp=drivesdk"},{"n":"Franco Venezia","t":"Angular","st":"Angular, TypeScript, JavaScript","sr":"junior","co":"AR","ci":"","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1_YSBpWRZfo0j4clejQkfmhZuo0QgckDP/view?usp=drivesdk"},{"n":"Matías Emiliano González","t":"Angular","st":"Angular, React, NestJS","sr":"tech lead","co":"AR","ci":"Córdoba","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1Vc9x7QnaPY3Yg0jJ2cmtTseMNIAKiCRQ/view?usp=drivesdk"},{"n":"Constanza arreche","t":"React","st":"React, Angular, JavaScript","sr":"senior","co":"AR","ci":"CABA","pk":"fullstack","vt":false,"dl":"https://drive.google.com/file/d/145pRpTyjucF6dKfchZyMssHRYdPyl-Mx/view?usp=drivesdk"},{"n":"Andrés Velázquez Boc-Ho","t":"React","st":"React, Angular, NodeJS","sr":"senior","co":"AR","ci":"","pk":"fullstack","vt":false,"dl":"https://drive.google.com/file/d/1PxJw_RS-Z4d3UOFQ5djvXNCZexE9Wamx/view?usp=drivesdk"},{"n":"Andres Murgo","t":"Angular","st":"Angular, Node.js, NestJS","sr":"ssr","co":"AR","ci":"Mendoza","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/18IkhAoeVoUFbsw0hb5SCikr5vh1KlLr_/view?usp=drivesdk"},{"n":"Aldo Gabriel Martinez","t":"Angular","st":"Ionic, Angular, Java","sr":"tech lead","co":"AR","ci":"Mendoza","pk":"fullstack","vt":false,"dl":"https://drive.google.com/file/d/1DofgDT7eRKZV7Mm4bJ7BPeAraMSEwUuh/view?usp=drivesdk"},{"n":"Elias Hernan Rodas","t":"Angular","st":"Angular, TypeScript, JavaScript","sr":"senior","co":"AR","ci":"Rosario","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1tXHrK44P25akDMEEDITWzpF5EgCClHZE/view?usp=drivesdk"},{"n":"Lucas Fabian Gauna","t":"Angular","st":"Angular, Angular Material, Node.js","sr":"tech lead","co":"AR","ci":"","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1Ha6KYJ3LOSmAtKJm-MSE24FQctXZgR6R/view?usp=drivesdk"},{"n":"Sebastian Anea","t":"Angular","st":"Angular, TypeScript, RxJS","sr":"ssr","co":"AR","ci":"Hurlingham","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1kP_rN54MsCgxAgdh9r7dtJElsLw52Ngd/view?usp=drivesdk"},{"n":"Marta Naveira Gorrochategui","t":"Angular","st":"Angular, TypeScript, SCSS","sr":"ssr","co":"ES","ci":"La Coruña","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1sIwBPXVyvGzZkNb416qFol9j-dGBs-Km/view?usp=drivesdk"},{"n":"Claribel Rodríguez Gómez","t":"Angular","st":"Angular, TypeScript, RxJS","sr":"junior","co":"AR","ci":"","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1DNVuFNO2VzT1irdrTh1u1PYITqIPqVvj/view?usp=drivesdk"},{"n":"Federico Godoy","t":".NET","st":"Angular, Flutter, TypeScript","sr":"senior","co":"AR","ci":"San Juan","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1CEwlyn2iY6l06O3g0piIvozYb4T0MkJF/view?usp=drivesdk"},{"n":"Juan Bautista Garcia Rodriguez","t":".NET","st":".NET, C#, Angular","sr":"ssr","co":"ES","ci":"Granada","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/19iUam--wSZwt9d7QXjY9cIgUQ7gWm58c/view?usp=drivesdk"},{"n":"Narcis Cisquella Carbonell","t":".NET","st":".NET, C#, ReactJS","sr":"junior","co":"ES","ci":"Barcelona","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1v81ydXP84cK7QMk18ff_RVyUP-uDVcgp/view?usp=drivesdk"},{"n":"Ivan Benito Ramos","t":".NET","st":".NET, C#, Microservices","sr":"senior","co":"ES","ci":"Barcelona","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1JQt9thpzCPmM4jaRFzpd3zMSbIUACHVk/view?usp=drivesdk"},{"n":"Alberto Simonet","t":"Java","st":".NET, C#, Java","sr":"junior","co":"ES","ci":"Sa Pobla, Islas Baleares","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1Rm8FKPcyqkRDATcW9vOAdIAG1V3bf6m0/view?usp=drivesdk"},{"n":"Vicente Almea Ocampo","t":".NET","st":".NET, .NET, ASP.NET Core, Angular","sr":"senior","co":"ES","ci":"Palma de Mallorca","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1BE9s_Nie5OFEcmUp6pzlHN8XzcuJxsgr/view?usp=drivesdk"},{"n":"Johan Alberto De la cruz Charles","t":".NET","st":".NET, Angular, C#","sr":"senior","co":"ES","ci":"Zaragoza","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1H2PVfJv8PMB5G1g6BM_NfJydgn5cATfS/view?usp=drivesdk"},{"n":"Frederic Cabré Vicens","t":".NET","st":".NET, C#, .NET, SQL Server","sr":"senior","co":"ES","ci":"Tarragona","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1a2oywGYezQN9zuxPwQHDW8rzPC5wTPHJ/view?usp=drivesdk"},{"n":"Adam Josue Colorado Rivas","t":".NET","st":".NET, C#, Angular","sr":"senior","co":"ES","ci":"Barcelona","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1rt6oJLX1qqc-msTU-sKfqYQ9fMYc_tMT/view?usp=drivesdk"},{"n":"David Mora Roca","t":".NET","st":".NET, C#, .NET Core, Angular","sr":"senior","co":"ES","ci":"Arenys De mar","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1v9oqlf1iYFO51qga5RcxvGkhTNmvNylT/view?usp=drivesdk"},{"n":"Miguel Ozonas","t":".NET","st":".NET, C#, .NET, Mendix","sr":"senior","co":"ES","ci":"Palma de Mallorca","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1bX5EKkVi34tUzQzMj-uvvbcEW4h694-A/view?usp=drivesdk"},{"n":"Francisco Javier Sanchez Garcia","t":".NET","st":".NET, C#, Python","sr":"senior","co":"ES","ci":"Sevilla","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/17MIeAPgd54jndbnW3qYQl0OoRVciSUKd/view?usp=drivesdk"},{"n":"Nahuel Mijalovsky","t":".NET","st":".NET, REST APIs, BPM/BPA","sr":"senior","co":"ES","ci":"Barcelona","pk":"product owner","vt":false,"dl":"https://drive.google.com/file/d/1sE2-CpebfyjaVN2lB28XFR1d-qN7Zmk5/view?usp=drivesdk"},{"n":"Javier Mora Chacón","t":".NET","st":".NET, C#, Azure","sr":"tech lead","co":"ES","ci":"Barcelona","pk":"tech lead","vt":true,"dl":"https://drive.google.com/file/d/1w24vCsERJfmYFl1nTI6eWCMP6GmnRpaC/view?usp=drivesdk"},{"n":"Christian Jose Leotaud Blanca","t":"Salesforce","st":"Salesforce, Vlocity, Apex","sr":"tech lead","co":"ES","ci":"","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1XuLxHwmUR1P6OvpTvHHbH67MdwxzAUSG/view?usp=drivesdk"},{"n":"Daniel Pereira Garcia","t":"Salesforce","st":"Salesforce, Apex, LWC","sr":"junior","co":"ES","ci":"","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/14gq3_Q8qC-BU3zimM2HRy_pc0HdX-Okn/view?usp=drivesdk"},{"n":"Nicolás González Cuchí","t":"Salesforce","st":"Salesforce, Apex, LWC","sr":"junior","co":"ES","ci":"","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1UfNXPD0G3glOnDB4nukaSrTDlopxWLvv/view?usp=drivesdk"},{"n":"Thomas Delany","t":"Salesforce","st":"Salesforce, Apex, LWC","sr":"junior","co":"ES","ci":"Barcelona","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1BLAL6gy7uEegva1HM7suW58QnddT23iJ/view?usp=drivesdk"},{"n":"Luis Miguel Yupanqui","t":"Salesforce","st":"Salesforce, Apex, Java","sr":"junior","co":"ES","ci":"","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1Pe77aohjI6mbJonOVgNfdHlcH8zF5f1v/view?usp=drivesdk"},{"n":"José Maria Fernández","t":"React","st":"React, Javascript, Node.js","sr":"senior","co":"ES","ci":"Madrid","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1IyJjOT2zJaaq99f19B3w8o_2sPvIzwbR/view?usp=drivesdk"},{"n":"Lautaro Rodríguez","t":"React","st":"JavaScript, React, Node.js","sr":"junior","co":"AR","ci":"Mendoza","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/12kyBV6Iz2onQcsj3Q2IBzf1yD2jfvZuV/view?usp=drivesdk"},{"n":"Micaela Anabel Cepeda Costa","t":"QA","st":"QA Manual, Playwright, Cypress","sr":"ssr","co":"AR","ci":"Córdoba","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1mYuWU01AdxuyTjvTjUWs7QLUoUyefrI9/view?usp=drivesdk"},{"n":"Víctor Parra","t":"QA","st":"TypeScript, Playwright, K6","sr":"No especificado","co":"ES","ci":"","pk":"sdet","vt":true,"dl":"https://drive.google.com/file/d/1ucBDqCJkZkNjmNmkYc5ut9CNBK8CMMF6/view?usp=drivesdk"},{"n":"Josimar Córdova","t":"QA","st":"QA Automation, AI Testing, Selenium","sr":"senior","co":"ES","ci":"Malaga","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1ChJsccfnLn-9vD5lsZkLfua1rKXwpWhw/view?usp=drivesdk"},{"n":"Cristian Ojeda","t":"QA","st":"Playwright, Postman, SQL Server","sr":"senior","co":"AR","ci":"Monte Grande","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1ql-4ADr73Lhsf9W_HAkQud2V-8nNTxRz/view?usp=drivesdk"},{"n":"Katherine Palencia","t":"QA","st":"Cypress, Jira, SQL","sr":"ssr","co":"AR","ci":"Almagro, Capital Federal","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1l9wSsqUuUpoFW45y9nQHRA7SIX_QRWEn/view?usp=drivesdk"},{"n":"miguel chirino","t":"QA","st":"QA Manual, QA Funcional, Cypress","sr":"senior","co":"AR","ci":"Lanús, Buenos Aires","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1PbWfdIJ2Wy7RtlZNUTKxd9HYAtMn6mIg/view?usp=drivesdk"},{"n":"Luis Garanton","t":"Java","st":"Selenium, Java, Cucumber","sr":"ssr","co":"AR","ci":"Buenos Aires","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1b-5jQFISN9AjTe_zPhnopY1KNKWMj-W7/view?usp=drivesdk"},{"n":"Maraida Tabare","t":"Java","st":"Oracle, SQL, Java","sr":"senior","co":"AR","ci":"CABA","pk":"analista funcional","vt":true,"dl":"https://drive.google.com/file/d/18SxavhBUtH70q87HLhuzbOEyN2yrnS6u/view?usp=drivesdk"},{"n":"Efrain Callisaya","t":"Java","st":"Java, Playwright, Appium","sr":"senior","co":"AR","ci":"CABA","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/158kn49snMk2WC1nx00Mgelja8stwhe-m/view?usp=drivesdk"},{"n":"Federico Pereira","t":"QA","st":"Cypress, Karate, SQL","sr":"senior","co":"AR","ci":"Ramos Mejía","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1YaB_RGaTnSKrKYumZLWeYFHSAZcJN0RC/view?usp=drivesdk"},{"n":"Sebastian Alejandro Tafur Correa","t":"Java","st":"Java, Selenium, Cucumber","sr":"senior","co":"ES","ci":"","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/10ZanD5QcTgM5F8awpFg6NM6kY8Wjf5_Y/view?usp=drivesdk"},{"n":"Diego Regnier","t":"QA","st":"Selenium, Cypress, Playwright","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1DmzSwAJDB8hfFkJWpf_DhIipXZ_Fg-iZ/view?usp=drivesdk"},{"n":"Fernando Caballero","t":"Java","st":"Selenium, Python, Java","sr":"ssr","co":"AR","ci":"Corrientes","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/11MwpirSXnou8CD8EbCO1g7jR9NjUoXZ4/view?usp=drivesdk"},{"n":"Carla Contreras","t":"QA","st":"Cypress, Karate, Playwright","sr":"senior","co":"AR","ci":"","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1WNmz22ntfY4gshGE4eVoqIZcpn5nSUyZ/view?usp=drivesdk"},{"n":"Alvanis Noguera","t":"Java","st":"Java, Selenium, Appium","sr":"No especificado","co":"AR","ci":"Buenos Aires","pk":"qa automation","vt":false,"dl":"https://drive.google.com/file/d/1mn5znBO-OIy0CgPzEB6tdJYqf68iCVde/view?usp=drivesdk"},{"n":"Luis Fuentes","t":"Java","st":"Java, Postman, Karate Framework","sr":"ssr","co":"AR","ci":"La Rioja","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/14awRzRCMCKcRh_d5Sd9HrnL6LpF1FQHo/view?usp=drivesdk"},{"n":"Federico Andrés Danielo","t":"Java","st":"Java, Playwright, RestAssured","sr":"senior","co":"AR","ci":"","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1gWMC5p2s1YnBOSWioI4vkzuGKYlwOhvs/view?usp=drivesdk"},{"n":"Clara Paiva","t":"QA","st":"Postman, Cypress, Selenium","sr":"senior","co":"AR","ci":"Mariano Acosta, Buenos Aires","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1ulHdg9ieZIgcxP4RDst_mCMYOjOrr5A6/view?usp=drivesdk"},{"n":"Mario Schieder","t":"Java","st":"Java, Selenium, Serenity","sr":"ssr","co":"AR","ci":"Munro","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/11JvmNj1Yhvv0ptXo__U4VTpVMKCF2-RW/view?usp=drivesdk"},{"n":"Jesus Useche","t":"QA","st":"Playwright, Selenium, JMeter","sr":"ssr","co":"AR","ci":"Buenos Aires","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/18PYlQEuB501FYgsr4b97gjCjo8-z-ww1/view?usp=drivesdk"},{"n":"Zurirma Rodriguez","t":"QA","st":"Playwright, Cypress, Appium","sr":"senior","co":"AR","ci":"Ciudad de Buenos Aires","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1sm0XXgkWILnT_uixqmI98go_E34RaQy0/view?usp=drivesdk"},{"n":"Federico Daniel Lovatto","t":"Java","st":"Selenium, Java, C#","sr":"senior","co":"AR","ci":"","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1PPNARVMtlD0-vZOiJSbTXHXaLJOi5Bid/view?usp=drivesdk"},{"n":"Nehemías Lione","t":"QA","st":"Serenity BDD, Cypress, Playwright","sr":"senior","co":"AR","ci":"Misiones","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/11wXBwzHznUJZXdnh_tBjLHHA223_7ilX/view?usp=drivesdk"},{"n":"Lucas Astrada","t":"Java","st":"Java, Python, Selenium","sr":"senior","co":"AR","ci":"Alta Gracia","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/11PQpmdlzLYuw_TinTYy57110BVlFVpsH/view?usp=drivesdk"},{"n":"Christian Barrios","t":"QA","st":"Cypress, Playwright, JavaScript","sr":"ssr","co":"AR","ci":"Capital federal","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/17Rn8zBT360tUs_-cDPICg1wFPn0UyAX0/view?usp=drivesdk"},{"n":"Natalia V. (Naty) Jerez","t":"QA","st":"QA Automation, Selenium, Python","sr":"senior","co":"AR","ci":"CABA","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1osn3_BzQCV18fgKZIE40BAPPIP-XOojJ/view?usp=drivesdk"},{"n":"Hernan Moreno","t":"QA","st":"Selenium, Playwright, Cypress","sr":"senior","co":"AR","ci":"Córdoba","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1qg3QuKO7s_leyy6RODbB7XMFbR21Grg5/view?usp=drivesdk"},{"n":"Joel Baigorri","t":"QA","st":"Cypress, Playwright, JMeter","sr":"senior","co":"AR","ci":"Cordoba","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/187Sua-g214gkNTwtHB8zNABH1Q0WdKra/view?usp=drivesdk"},{"n":"Yanina Melina Quinteros","t":"QA","st":"Playwright, Cypress, Postman","sr":"ssr","co":"AR","ci":"Puerto Iguazú","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1F4AE-aI79dytSlBASuoX5TeLRb7IB0dT/view?usp=drivesdk"},{"n":"Romina Olaeta","t":"QA","st":"Appium, Selenium, Cypress","sr":"ssr","co":"AR","ci":"Ramos Mejía","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1GQvKLO_LrZlYKwXlTwrGWNwGx76N3YFc/view?usp=drivesdk"},{"n":"Natalia Passirani","t":"Java","st":"Selenium, Cypress, Java","sr":"junior","co":"AR","ci":"Córdoba","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1gIjBaQ6iCfVtQe501Pu7azJs1DySCLFi/view?usp=drivesdk"},{"n":"Catalina Navarro","t":"QA","st":"QA, Jira, SQL","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"qa manual","vt":true,"dl":"https://drive.google.com/file/d/15lAZbcDNNegc8xVO7c1fx6-bMATSaVcx/view?usp=drivesdk"},{"n":"Milton Yaya","t":"Java","st":"Java, Selenium, WebdriverIO","sr":"ssr","co":"AR","ci":"","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/14vFlsiCUdYNO6cQB5e-UDQzaq26QjHoH/view?usp=drivesdk"},{"n":"Willy Gonzalez","t":"QA","st":"Cypress, JavaScript, Python","sr":"ssr","co":"AR","ci":"Buenos Aires","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1uK8nPmC7QdvVAvxKWvcP3vikbFnxXF3y/view?usp=drivesdk"},{"n":"Juan Manuel Sanchez","t":"QA","st":"Playwright, Pytest, Postman","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1txagfum5zoh-JpUrqxr9oYUmjAg9kRBR/view?usp=drivesdk"},{"n":"Juliana Risso","t":"QA","st":"Playwright, Cypress, TypeScript","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1lcjGnFec5jZWlmMF13ogKeCXZPJc7DEE/view?usp=drivesdk"},{"n":"Florencia Inés Marc","t":"QA","st":"Python, Selenium, SQL","sr":"senior","co":"AR","ci":"Saldan, Cordoba","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1gPckiQwQ1ooNNxKpuanV3b2RlfS2mEtD/view?usp=drivesdk"},{"n":"Valeria Ruggieri","t":"QA","st":"Playwright, Selenium, JBehave","sr":"manager","co":"AR","ci":"Córdoba","pk":"qa automation","vt":false,"dl":"https://drive.google.com/file/d/1g1wglti44-PDZG_QFCa29H3KQ_SInsu2/view?usp=drivesdk"},{"n":"Agustin Soriano","t":"QA","st":"Selenium, Cypress, Postman","sr":"ssr","co":"AR","ci":"Mendoza","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1y1ynwh4591TgOgKS3tt5vDjnWORgTyEw/view?usp=drivesdk"},{"n":"Jose Maria Fantova Sicre","t":"PM/PO","st":"Project Management, Agile, Scrum","sr":"senior","co":"ES","ci":"Madrid","pk":"project manager","vt":true,"dl":"https://drive.google.com/file/d/1nIb3HF5teeKgWRhPEgSnMIU92eVddvJu/view?usp=drivesdk"},{"n":"Maya Alsousli","t":"PM/PO","st":"Project Management, Trade Finance, Treasury","sr":"senior","co":"ES","ci":"Madrid","pk":"project manager","vt":true,"dl":"https://drive.google.com/file/d/14b0kzGjLmnR0nlbazLFFxfl4ByR3geNo/view?usp=drivesdk"},{"n":"David Fazzino","t":"Java","st":"Java, SQL, BPMN","sr":"senior","co":"ES","ci":"Barcelona","pk":"product manager","vt":true,"dl":"https://drive.google.com/file/d/1uTKQzt5YTbFRoU9ZP30rxhQhkS-_tBNF/view?usp=drivesdk"},{"n":"Santiago Massuh","t":"React","st":"JavaScript, TypeScript, React","sr":"senior","co":"AR","ci":"Córdoba","pk":"project manager","vt":true,"dl":"https://drive.google.com/file/d/14Ye4TE3-EK2TJOmEHVUbm1U15bORfFy2/view?usp=drivesdk"},{"n":"Jose Maria Saavedra","t":"PM/PO","st":"Qlik, Power BI, SQL","sr":"senior","co":"ES","ci":"Molina de Segura","pk":"project manager","vt":true,"dl":"https://drive.google.com/file/d/1zc6V7TIl-AkT5wGEBJXVSG9SlDze_QbE/view?usp=drivesdk"},{"n":"Agustina Mompó Noceti","t":"PM/PO","st":"Microsoft Project, Jira, Scrum","sr":"senior","co":"ES","ci":"","pk":"project manager","vt":true,"dl":"https://drive.google.com/file/d/1wqP3iU3TdeTrFIht-kWl-KrrrMYhWkkC/view?usp=drivesdk"},{"n":"Joselyn Garcia","t":"PM/PO","st":"Product Management, Agile, Payments","sr":"senior","co":"ES","ci":"Madrid / Valencia","pk":"product owner","vt":true,"dl":"https://drive.google.com/file/d/1dhdyonNCZPx92-AmTXGPqZg6XbNtt0gK/view?usp=drivesdk"},{"n":"Miquel Àngel Esteban Blanco","t":"PM/PO","st":"Akamai, DNS, Cloud Security","sr":"senior","co":"ES","ci":"Barcelona","pk":"product owner","vt":true,"dl":"https://drive.google.com/file/d/10CGN-FIkBnxPAvDZvGh-HRLL_mB3qF0K/view?usp=drivesdk"},{"n":"Annies Carrasco Padilla","t":"PM/PO","st":"Project Management, Scrum, Waterfall","sr":"senior","co":"ES","ci":"Palma de Mallorca","pk":"project manager","vt":true,"dl":"https://drive.google.com/file/d/1c8Rk03CCyg4m_Q6imFILCTiwIeFkfiwA/view?usp=drivesdk"},{"n":"Catalina Torrens Vidal","t":"PM/PO","st":"SQL, SOAP, XML","sr":"ssr","co":"ES","ci":"Consell, Mallorca","pk":"project manager","vt":true,"dl":"https://drive.google.com/file/d/1f9A3h-GzUryiMg049s2q8-e_uRkQt6_d/view?usp=drivesdk"},{"n":"Carlota Vicente Blanco","t":"PM/PO","st":"Project Management, Scrum, Kanban","sr":"senior","co":"ES","ci":"Rianxo, A Coruña","pk":"project manager","vt":true,"dl":"https://drive.google.com/file/d/14jIFk9sdL-uETfoq-ltseq3BiFJBYJPe/view?usp=drivesdk"},{"n":"Pedrocarbonell Carbonell","t":"PM/PO","st":"Python, AI, Agile","sr":"senior","co":"ES","ci":"","pk":"product manager","vt":true,"dl":"https://drive.google.com/file/d/174SO6OCotzX-DICnsGic2F4PfNT7Wxg-/view?usp=drivesdk"},{"n":"Daniel Germán Lucero","t":"PM/PO","st":"Project Management, Fintech, Agile","sr":"senior","co":"ES","ci":"Madrid","pk":"project manager","vt":true,"dl":"https://drive.google.com/file/d/1Gy6sjMkIkSfHv1az1IQUVpjB8C0uMlJW/view?usp=drivesdk"},{"n":"Yeison Arbey Arbey Carrillo Lemus","t":"PM/PO","st":"Project Management, ITIL, Scrum","sr":"senior","co":"ES","ci":"Oviedo","pk":"project manager","vt":true,"dl":"https://drive.google.com/file/d/1XnRKlLh7Ura145hwr8mkP5PB1lrx3Nbv/view?usp=drivesdk"},{"n":"Marta Ogalla Nache","t":"PM/PO","st":"Change Management, Release Management, ServiceNow","sr":"senior","co":"ES","ci":"Madrid","pk":"otro","vt":true,"dl":"https://drive.google.com/file/d/1qydTZevL5wZi9eaRiNlU6WNao6eEnGEk/view?usp=drivesdk"},{"n":"Rosalia Tenorio Gonzalez","t":"PM/PO","st":"Project Management, AWS, Atlassian","sr":"senior","co":"ES","ci":"Madrid","pk":"project manager","vt":true,"dl":"https://drive.google.com/file/d/1G-k5Kmnd64y9w2GZGp6e1sBsB3UXSfBC/view?usp=drivesdk"},{"n":"Luis María Pérez","t":"PM/PO","st":"Project Management, Digital Transformation, P&L Management","sr":"senior","co":"ES","ci":"Madrid","pk":"project manager","vt":true,"dl":"https://drive.google.com/file/d/1yYZgDUQyLIlgN-cHYQHucYe4iEPmW-on/view?usp=drivesdk"},{"n":"Javier Larrea","t":"PM/PO","st":"Java, AWS, Agile","sr":"senior","co":"ES","ci":"Barcelona","pk":"product owner","vt":true,"dl":"https://drive.google.com/file/d/1oMrWvJYDzGjL9sQp9WnUYnrGCrOjfBPC/view?usp=drivesdk"},{"n":"Salem Mansour Mahrouf","t":"COBOL","st":"COBOL, CICS, DB2","sr":"senior","co":"ES","ci":"Madrid","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1VMVahK9aH8ZAnGOl6CD4WkXYsACaIt6f/view?usp=drivesdk"},{"n":"Matias Montiel","t":"SAP","st":"SQL, SAP, Jira","sr":"ssr","co":"AR","ci":"Córdoba","pk":"analista funcional","vt":true,"dl":"https://drive.google.com/file/d/1LlgagfpOeTHC48EkxKhYc3Pu-k98JQng/view?usp=drivesdk"},{"n":"Ainelen Poloni","t":"Analista Funcional","st":"Analista Funcional, SQL, Jira","sr":"senior","co":"AR","ci":"San Lorenzo","pk":"analista funcional","vt":true,"dl":"https://drive.google.com/file/d/1_-hLkgcTrVzjdqlMz3PV7qgfQ90pBA2A/view?usp=drivesdk"},{"n":"Rachel Montalvao","t":"Analista Funcional","st":"Agile, Scrum, Jira","sr":"senior","co":"AR","ci":"","pk":"delivery manager","vt":true,"dl":"https://drive.google.com/file/d/1HyUF461ijho2yUwivqPrSKsersscG66e/view?usp=drivesdk"},{"n":"Melisa A. Da Rosa","t":"DevOps","st":"Azure DevOps, Jira, SQL","sr":"ssr","co":"AR","ci":"Capital Federal","pk":"analista funcional","vt":true,"dl":"https://drive.google.com/file/d/1VwZVTEDtNsntPXHL2OSm7oe1yPS6JXCP/view?usp=drivesdk"},{"n":"Daniela Capuselli","t":"Analista Funcional","st":"Oracle Cloud, JD Edwards, ERP","sr":"senior","co":"AR","ci":"Olavarría","pk":"analista funcional","vt":true,"dl":"https://drive.google.com/file/d/1iauaUw4LkW6x7i-jIrq5ina2uG7I0_0z/view?usp=drivesdk"},{"n":"Lucas Lopez","t":"Analista Funcional","st":"Oracle Fusion Cloud, Oracle Integration Cloud, SQL","sr":"senior","co":"AR","ci":"Guernica","pk":"analista funcional","vt":true,"dl":"https://drive.google.com/file/d/1vCdWqsW8ZDW31fl_LtXRXADFhrcwKA7C/view?usp=drivesdk"},{"n":"Cesar Sánchez Díaz","t":"Data","st":"Oracle, PL/SQL, Unix","sr":"senior","co":"ES","ci":"","pk":"dba","vt":true,"dl":"https://drive.google.com/file/d/1VmXwBJi02VYp84Lao7i5zZwjGVooeDnn/view?usp=drivesdk"},{"n":"Emilio Sagasta","t":"Data","st":"Power BI, SQL, DAX","sr":"ssr","co":"AR","ci":"La Plata","pk":"data analyst","vt":true,"dl":"https://drive.google.com/file/d/1j9Bsn8DfTat26l9uTSvBnF9LNYNtpBYS/view?usp=drivesdk"},{"n":"Ismael Ayuso Merino","t":"SAP","st":"SAP, QlikView, Qlik Sense","sr":"senior","co":"ES","ci":"Málaga","pk":"data engineer","vt":true,"dl":"https://drive.google.com/file/d/1P-Go0sPmJ3IbIEhws1jJpNMSZ3SxDpGL/view?usp=drivesdk"},{"n":"Carlos De Cabo","t":"RPA","st":"UiPath, Power Platform, RPA","sr":"senior","co":"ES","ci":"Madrid","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1dxHAFwktiW_iuty9vxkwAazh4H-WaYdK/view?usp=drivesdk"},{"n":"Lucas Rodríguez Esteban","t":"Data","st":"Python, SQL, AWS","sr":"ssr","co":"ES","ci":"Barcelona","pk":"data engineer","vt":true,"dl":"https://drive.google.com/file/d/1LxQzpNq5r7MaDwhG-1L4r40acACv0CJ7/view?usp=drivesdk"},{"n":"Lucía García Ramo","t":"Data","st":"Power BI, SQL, ETL","sr":"junior","co":"ES","ci":"Zaragoza","pk":"bi analyst","vt":true,"dl":"https://drive.google.com/file/d/1swq81L5ovvWkZVt6x5_ay4UT3pO3r4Rg/view?usp=drivesdk"},{"n":"Francisco Javier Reina","t":"Gen AI","st":"Python, LLMs, Power BI","sr":"No especificado","co":"ES","ci":"","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1WGCMDo8c2beQ7j0SSoKN63JHT7VBR9Jd/view?usp=drivesdk"},{"n":"César Augusto Toro Chea","t":"Data","st":"Azure Data Factory, SQL Server, Power BI","sr":"senior","co":"ES","ci":"Almería","pk":"data engineer","vt":true,"dl":"https://drive.google.com/file/d/1fTTrRJplktr295Trf0OQlkc5QNgVEXPA/view?usp=drivesdk"},{"n":"Ruth Medrano","t":"Data","st":"Power BI, SQL, Azure","sr":"senior","co":"ES","ci":"Málaga","pk":"data analyst","vt":true,"dl":"https://drive.google.com/file/d/1DIcOxQCnF2n302tuqjgNQRq2Jmh2Kx9Y/view?usp=drivesdk"},{"n":"Maximiliano Berton Albornoz","t":"Data","st":"Python, PySpark, AWS","sr":"senior","co":"ES","ci":"Cambrils","pk":"data engineer","vt":true,"dl":"https://drive.google.com/file/d/1msnxJtON9MSkf7d2nyR4Q9qGNUY1vUeG/view?usp=drivesdk"},{"n":"María Girona Orts","t":"Data","st":"Python, dbt, Airflow","sr":"ssr","co":"ES","ci":"Zaragoza","pk":"data engineer","vt":true,"dl":"https://drive.google.com/file/d/1yR-qTFTXM44vegpcOfjc7N-Gs36RFtvP/view?usp=drivesdk"},{"n":"Fabio Ovidio Bianchini Cano","t":"SAP","st":"AWS, DataBricks, SAP HANA","sr":"senior","co":"ES","ci":"Santa Cruz de Tenerife","pk":"data engineer","vt":true,"dl":"https://drive.google.com/file/d/170MQEYrt4D03r3ubAXNgc4S6Br3hLPki/view?usp=drivesdk"},{"n":"Félix Sánchez Miqueleiz","t":"Data","st":"Power BI, Python, SQL","sr":"junior","co":"ES","ci":"Madrid","pk":"data analyst","vt":true,"dl":"https://drive.google.com/file/d/1lWIjRlUkKK-4M8Qe-RR6Wv5QtHI-ndU_/view?usp=drivesdk"},{"n":"Joan Paz Garcia","t":"Data","st":"Python, SQL, Snowflake","sr":"junior","co":"ES","ci":"Corbera de Llobregat","pk":"data engineer","vt":true,"dl":"https://drive.google.com/file/d/1pxBtxBCt6gbStFpi_nveKkO8tHXN14ml/view?usp=drivesdk"},{"n":"Alvaro Navarro Carvajal","t":"Data","st":"Power BI, SQL, DAX","sr":"junior","co":"ES","ci":"Málaga","pk":"bi analyst","vt":true,"dl":"https://drive.google.com/file/d/13LEIYpNWmanMz3jNfuKB7xHcBttjDIAO/view?usp=drivesdk"},{"n":"Lucía López","t":"Data","st":"Python, SQL, PowerBI","sr":"junior","co":"ES","ci":"","pk":"data analyst","vt":true,"dl":"https://drive.google.com/file/d/1TrzrSYy10igF52gynGECfxZeW16mbKTw/view?usp=drivesdk"},{"n":"Ramón Gallardo","t":"Data","st":"Power BI, SQL, Python","sr":"ssr","co":"ES","ci":"","pk":"data analyst","vt":true,"dl":"https://drive.google.com/file/d/1l5ZCVI9YatHiWBPrKyPUxTyjzVVyJKNi/view?usp=drivesdk"},{"n":"Ignaciana Navarro","t":"Data","st":"Power BI, SQL, Python","sr":"ssr","co":"ES","ci":"Malaga","pk":"data analyst","vt":true,"dl":"https://drive.google.com/file/d/1sBHX3uOcrEpAeQaBJd0uh1_IS1xd_34F/view?usp=drivesdk"},{"n":"Lucia Sanchez Sanchez","t":"Data","st":"Power BI, SQL, Microsoft Fabric","sr":"ssr","co":"ES","ci":"","pk":"data analyst","vt":true,"dl":"https://drive.google.com/file/d/1XxiCdTLpjUklEnXtroKm6CjA8jfwg3SO/view?usp=drivesdk"},{"n":"Romina Carmen Scarazzini","t":"SAP","st":"SAP, SAP PP, SAP S/4HANA","sr":"senior","co":"ES","ci":"Valencia","pk":"analista funcional","vt":true,"dl":"https://drive.google.com/file/d/1yL479bsvvEy6F48-Z-0FUj304fpzm3g6/view?usp=drivesdk"},{"n":"Rafael Urbano Cuadrado","t":"SAP","st":"SAP, SAP MM, ABAP","sr":"senior","co":"ES","ci":"Benalmádena","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1NDbRHWrRzxT8NZ1c391FT7KHrSv9_Nj5/view?usp=drivesdk"},{"n":"Gabriel Leal Naranjo","t":"React","st":"TypeScript, React, Next.js","sr":"junior","co":"AR","ci":"CABA","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1VcEq-9y7wQfDViTVHYpltF02JEsW4W6E/view?usp=drivesdk"},{"n":"Juan Carlos Aguilar","t":"Java","st":"Java, Spring Boot, NodeJS","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1ZOUhmWic0FmB_uhlQwp7YLyC64-J8nfD/view?usp=drivesdk"},{"n":"Carlos Martínez","t":"React","st":"JavaScript, TypeScript, Next.js","sr":"ssr","co":"AR","ci":"Buenos Aires","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1lZXp9hdNYkh_WDWVjUBH_rXeNg4iTvdI/view?usp=drivesdk"},{"n":"Mario Rodriguez Aldaz","t":"Java","st":"Java, Python, Kafka","sr":"ssr","co":"ES","ci":"Madrid","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1zVYYfkkdbyFQ2AFvkliapxgjNUyxT55g/view?usp=drivesdk"},{"n":"Francisco Maussili Perdices","t":"Gen AI","st":"Python, FastAPI, Django","sr":"junior","co":"ES","ci":"Madrid","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1U7l_r6qKa0iWTMZId6taRPLT2G3oztip/view?usp=drivesdk"},{"n":"Jassiel Leon","t":"sys adm","st":"Soporte Técnico, Ciberseguridad, Windows/Linux","sr":"ssr","co":"ES","ci":"Madrid","pk":"technical support","vt":true,"dl":"https://drive.google.com/file/d/1wm85DEKg5ThHnlW3kvjEdke9IoA3mN6V/view?usp=drivesdk"},{"n":"Alejandro Rey Solari","t":"security","st":"ISO 27001, GRC, Magerit","sr":"senior","co":"ES","ci":"Lugones","pk":"cybersecurity","vt":true,"dl":"https://drive.google.com/file/d/1XZBaMIj7TjGbn8ZJkQ7JCGsImuZ9GNxV/view?usp=drivesdk"},{"n":"Irene Reyes","t":"Data","st":"Apache Spark, PySpark, AWS","sr":"senior","co":"ES","ci":"Madrid","pk":"data engineer","vt":true,"dl":"https://drive.google.com/file/d/1hNAIgO1Moph9dCtC8aCOOpXQ3ESuQCkI/view?usp=drivesdk"},{"n":"Ignacio Escursell Moretti","t":"Java","st":"Java, Spring Boot, Kafka","sr":"senior","co":"ES","ci":"Zaragoza","pk":"backend","vt":false,"dl":"https://drive.google.com/file/d/1nubRYimEO9Ifk6hRephp4_7L8J9Cmmju/view?usp=drivesdk"},{"n":"Enmanuel Domínguez Urbáez","t":"Java","st":"Java, Kotlin, Spring Boot","sr":"senior","co":"ES","ci":"Madrid","pk":"backend","vt":false,"dl":"https://drive.google.com/file/d/10qESN747y16uaWh7ZDJ-A5bURfvMYVgd/view?usp=drivesdk"},{"n":"Brayan A. B.","t":"Java","st":"Java, Spring Boot, Microservicios","sr":"tech lead","co":"ES","ci":"Tarragona","pk":"backend","vt":false,"dl":"https://drive.google.com/file/d/1CjxmKC18a729zwHlgCw53tBR_74jOx32/view?usp=drivesdk"},{"n":"Josep Maria Carné Barnaus","t":"Java","st":"Java, J2EE, Arquitectura de Software","sr":"senior","co":"ES","ci":"","pk":"architect","vt":true,"dl":"https://drive.google.com/file/d/1zaca7a1Xos_Om3xx4wWmiyagBlseoUQT/view?usp=drivesdk"},{"n":"Diego Barcena","t":"Java","st":"Java, Spring Boot, Kafka","sr":"senior","co":"ES","ci":"","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1SPMMsq8wwbxh2umtNJn545M5GY1zuy5S/view?usp=drivesdk"},{"n":"Daniel Jansà Sánchez","t":"Java","st":"Java, Spring Boot, Microservices","sr":"architect","co":"ES","ci":"Tarragona","pk":"architect","vt":true,"dl":"https://drive.google.com/file/d/1kQjvOwAjHIWJsXBhk0zmybR_v8Yd-Vsk/view?usp=drivesdk"},{"n":"Guillermo Higueras","t":"PM/PO","st":"Agile, Scrum, Kanban","sr":"senior","co":"ES","ci":"Córdoba","pk":"product owner","vt":false,"dl":"https://drive.google.com/file/d/1ZhGQyH6J1-AYOK6mGc5skXaLeaKW_ka0/view?usp=drivesdk"},{"n":"Maximiliano Ezequiel Kerps","t":"Angular","st":"Angular, TypeScript, JavaScript","sr":"senior","co":"AR","ci":"Entre Ríos","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1oIPsv9m63fNIHsusO9j6geGGdcwvkS2J/view?usp=drivesdk"},{"n":"Daniel Gauna","t":"Angular","st":"Angular, .NET Core","sr":"junior","co":"AR","ci":"Córdoba","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1FrliRb7wbBaBpVwW_yVg5SurCfeHMSld/view?usp=drivesdk"},{"n":"Valentin Carreras Simois","t":"Angular","st":"Angular, TypeScript, JavaScript","sr":"ssr","co":"AR","ci":"Córdoba","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1cU_GBfg8ghqBv1lOJImxAg5GHlHLEExZ/view?usp=drivesdk"},{"n":"Juan Canelon","t":"Angular","st":"Vue, Angular, TypeScript","sr":"senior","co":"AR","ci":"","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1qHjI2SUmEWinYMpSHs8rAstGDy1I5Vv3/view?usp=drivesdk"},{"n":"Virginia Seco","t":"Angular","st":"TypeScript, Angular","sr":"ssr","co":"AR","ci":"Córdoba","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1xiHQfpr69yY8oSV2GgXLJR3icWuEMDew/view?usp=drivesdk"},{"n":"Christian Juhal","t":"Angular","st":"Angular, TypeScript, Node.js","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1P8SQLfMr-_JllnUw1UCbiy2UQJV9sk9S/view?usp=drivesdk"},{"n":"Fernando Julian","t":"Java","st":"Java, Spring Boot, Angular","sr":"ssr","co":"AR","ci":"Buenos Aires","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1kurv-vCoW2zcKUOJlavsWMHcyIlqundE/view?usp=drivesdk"},{"n":"Nohelvis Mendoza","t":"Angular","st":"Angular, .NET Core, React","sr":"senior","co":"AR","ci":"CABA","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/16FWaGNjKV4XfLmitTfhviqqQY6dU_L3H/view?usp=drivesdk"},{"n":"Camila Zupanovich","t":"Angular","st":"Angular, React, TypeScript","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1DnqMZ0er671AADehmgmvlLfhza_5xKCV/view?usp=drivesdk"},{"n":"Lucas Agustín Agustín Pavón","t":"Angular","st":"Angular, Java, Spring Boot","sr":"ssr","co":"AR","ci":"La Plata","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1Vu-lW3gKkrqfApExvqqA54tyU9I5sbul/view?usp=drivesdk"},{"n":"Gonzalo Telesio","t":"Node","st":"Node.js, NestJS, AWS","sr":"architect","co":"AR","ci":"","pk":"architect","vt":true,"dl":"https://drive.google.com/file/d/1NS6s-tZFcgZFY8EiuzF52Vi50SBDNbuz/view?usp=drivesdk"},{"n":"Mathias Brizuela","t":"Java","st":"Java, Spring Boot, React","sr":"tech lead","co":"AR","ci":"San Juan","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1jmsn6gPYzo8RBNREPnCk-_YgyHTFAvH8/view?usp=drivesdk"},{"n":"Sergio Ruben Giron","t":"Java","st":"Java, React, PHP","sr":"senior","co":"AR","ci":"San Salvador de Jujuy","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1yetb-VP25LFKdnAUNHAZM8GjXxcie2J7/view?usp=drivesdk"},{"n":"Tomás Dozo","t":"Java","st":"Java, Spring Boot, AWS","sr":"senior","co":"AR","ci":"La Plata","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1u2ke3GwrsRsFSVqSmtY0v0Z3NMKMA6jK/view?usp=drivesdk"},{"n":"Evelyn Araujo","t":"Java","st":"Java, Spring Boot, AWS","sr":"ssr","co":"AR","ci":"","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1SRbFenoEbs2-bID34WFFpdQCCXaRUf6d/view?usp=drivesdk"},{"n":"Leonardo Gil","t":"Java","st":"Java, Spring Boot, React","sr":"junior","co":"AR","ci":"","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1fJdyJz7PE4KH3ZJyOO-unmHhFisji0V4/view?usp=drivesdk"},{"n":"Adrián Machado","t":"Angular","st":"Angular, TypeScript, JavaScript","sr":"ssr","co":"AR","ci":"Mar del Plata","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1BvH9F5h9fP8u_QDtmxX2HNI1gvcsmK8-/view?usp=drivesdk"},{"n":"Angelica Huertas","t":"Angular","st":"Angular, React, Flutter","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1TxZNyeITs6H4fPOU-zOTMz9lVbzqRqiu/view?usp=drivesdk"},{"n":"Guido Montorfano","t":"Angular","st":"Angular, Python, Java","sr":"ssr","co":"AR","ci":"Quilmes","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1n8fzaUeNBG0L9ZabSMhwICpEhk0Dtcv7/view?usp=drivesdk"},{"n":"Miguel Angel Sánchez Murillo","t":"React","st":"Figma, React JS, Angular","sr":"ssr","co":"AR","ci":"C.A.B.A.","pk":"ux designer","vt":true,"dl":"https://drive.google.com/file/d/1qmrCKqTLY8MlnR6kODOJydnyY3t7ltvF/view?usp=drivesdk"},{"n":"Emilio Chiarlone","t":"Angular","st":"Angular, TypeScript, Node.js","sr":"ssr","co":"AR","ci":"Buenos Aires","pk":"fullstack","vt":false,"dl":"https://drive.google.com/file/d/1uTRpeh84FgMqYy_gY3lna_U6x2QZ6sY6/view?usp=drivesdk"},{"n":"Ignacio Joaquin Diaz","t":"maquetador","st":"HTML, CSS, Figma","sr":"senior","co":"AR","ci":"","pk":"ui designer","vt":true,"dl":"https://drive.google.com/file/d/1-gxsQW6y4Hk5QqZLQvH5XLRowS3Z2McY/view?usp=drivesdk"},{"n":"Agustín Basterra","t":"Angular","st":"Angular, Vue, TypeScript","sr":"senior","co":"AR","ci":"Córdoba","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/12kUg4HuJ9U8nc9yL5WALHEpVz6d199_P/view?usp=drivesdk"},{"n":"Gabriel Jeremias Kahan","t":"Angular","st":"Angular, Typescript, AWS","sr":"ssr","co":"AR","ci":"Cordoba","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1iOG5GYyoyIW689TJ6Neg2gKTh_WMWzEU/view?usp=drivesdk"},{"n":"Julián Fernández Valdés","t":"React","st":"JavaScript, TypeScript, React, Angular","sr":"senior","co":"AR","ci":"Tandil","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1FyDEc_5eo-GZrL3vO0GhnTbAUzsSDQbX/view?usp=drivesdk"},{"n":"Eva Hernández González","t":"Angular","st":"HTML, CSS3, Angular","sr":"senior","co":"ES","ci":"Móstoles, Madrid","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1nYqzJVA3nML1NPqg4-naQQJcJGHx0T5M/view?usp=drivesdk"},{"n":"Victoria Da Luz","t":"Angular","st":"Angular, React, TypeScript","sr":"ssr","co":"AR","ci":"","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1Mvc5WTlEEO39aDru0-1_mZIUa8p-Q0Xa/view?usp=drivesdk"},{"n":"Juan Cruz Fernandez Lago","t":"React","st":"JavaScript, TypeScript, React","sr":"ssr","co":"AR","ci":"","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1d1zxBM68tv23ywv3CFgODucHfdosRTmH/view?usp=drivesdk"},{"n":"Carlos Delgado","t":"Angular","st":"Angular, React, JavaScript","sr":"senior","co":"ES","ci":"Madrid","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1noaps_NUCljckYEIIsH-FQX4NSkYL3Aq/view?usp=drivesdk"},{"n":"Estrella Cholod","t":"React","st":"React, TypeScript, JavaScript","sr":"tech lead","co":"AR","ci":"Cordoba","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1--MCzUiZXfSNCOItcLrQXq5Bn2hzdkuW/view?usp=drivesdk"},{"n":"Pablo Mega","t":"React","st":"React, React Native, Angular","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1d0t88wIkAsEm_lwYoe5C3R2MFMN_Hj7w/view?usp=drivesdk"},{"n":"Alvaro Martin","t":"Angular","st":"Figma, Angular, React","sr":"tech lead","co":"ES","ci":"Madrid","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1gObMYzxKyOVGiXad-kLCcYNTW51cDU5K/view?usp=drivesdk"},{"n":"Leonar Estupiñan Quiñonez","t":"React","st":"React, Angular, JavaScript","sr":"junior","co":"ES","ci":"Vigo","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1PR1cL6ZvhR2yFAKvAgWwXyjfgVR2JYQE/view?usp=drivesdk"},{"n":"Christian Algarin","t":"Angular","st":"Angular, TypeScript, RxJS","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1lieriMb4Btx4mr2G7KtRILg688GzVXqU/view?usp=drivesdk"},{"n":"Leire Aguirre Eguiluz","t":"React","st":"JavaScript, Vue.js, Nuxt.js","sr":"senior","co":"ES","ci":"","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1PJSNGK1rliHQbaQ-WAsRLGxBs6JS7ZyJ/view?usp=drivesdk"},{"n":"Jonhy Sánchez","t":"React","st":"AEM, ReactJS, JavaScript","sr":"senior","co":"AR","ci":"","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1KgLZDwPvFrZEOugh-EIkchsVWwMd4_iD/view?usp=drivesdk"},{"n":"Juan Francisco Lencinas","t":"React","st":"React, Next.js, TypeScript","sr":"senior","co":"AR","ci":"Mendoza","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1lVkGBzsvkkJFbf8slbs8q4_ZtbofjZDR/view?usp=drivesdk"},{"n":"Alexis Tinti","t":"React","st":"React, Angular, TypeScript","sr":"ssr","co":"AR","ci":"Buenos Aires","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1CptQj5r-vhrOWSeprl1OKzdMmIg5acpb/view?usp=drivesdk"},{"n":"Asier Herranz Valbuena","t":"Gen AI","st":"Python, PyTorch, AWS","sr":"ssr","co":"ES","ci":"Bilbao","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1euViv3ZO_Ov54_dWfEn1UyEz64R9Qv6S/view?usp=drivesdk"},{"n":"Miguel Ángel ÁNGEL VILLAR TRIGO","t":"Data","st":"Data Engineering, ETL, Business Intelligence","sr":"senior","co":"ES","ci":"Madrid","pk":"data engineer","vt":true,"dl":"https://drive.google.com/file/d/1qkgD4puI8GHeRs6oOYqXSgzFHEtxNak_/view?usp=drivesdk"},{"n":"Anuar Iziani","t":"Gen AI","st":"Python, OpenAI, LangChain","sr":"junior","co":"ES","ci":"","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1TOqbx4O9QFOgY0xq3Uo6Cak_wi42QmnA/view?usp=drivesdk"},{"n":"Adrián González Chaminade","t":"Gen AI","st":"Python, PyTorch, Transformers","sr":"senior","co":"ES","ci":"Madrid","pk":"ai engineer","vt":false,"dl":"https://drive.google.com/file/d/1O-j92-A4gx9bPlnTrRbI0UAwCuOcWPCo/view?usp=drivesdk"},{"n":"Adrián Zambrana Acquaroni","t":"Gen AI","st":"Python, Machine Learning, LLMs","sr":"junior","co":"ES","ci":"Málaga","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1PWQqs18scHipXHMEW9dlMMiU2jtAHMpk/view?usp=drivesdk"},{"n":"Vicente Pomares Pérez","t":"Gen AI","st":"Generative AI, RAG, AI Agents","sr":"senior","co":"ES","ci":"Valencia","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1JoTwhzfDbTDA-R8VRP-Yvn8pKPHDtOpv/view?usp=drivesdk"},{"n":"Marius Cristian URSU","t":"Java","st":"Azure OpenAI, Python, Java","sr":"senior","co":"ES","ci":"Málaga","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1RPktxXYFjOh2AIhgDjYgJmJKMlbb54GO/view?usp=drivesdk"},{"n":"Jesus Adolfo De La Ossa Diaz","t":"React","st":"React, Next.js, Python","sr":"senior","co":"ES","ci":"Valencia","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/16CEaX9v3smOSsECpq9uN11gwwub0VSsX/view?usp=drivesdk"},{"n":"Manuel Alejandro Quesada Martínez","t":"Gen AI","st":"Python, LLM, RAG","sr":"ssr","co":"ES","ci":"Málaga","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1WXKCERyfAjxQsv6yDQQBlMTtKm_T8bOO/view?usp=drivesdk"},{"n":"Carlos Pino Padilla","t":"Gen AI","st":"Python, TypeScript, AI","sr":"junior","co":"ES","ci":"Málaga","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1BInqhJo5DUz8AHZ4X6Xd7bQrDqYBMmOU/view?usp=drivesdk"},{"n":"Carlos Carrazoni Pérez","t":"Gen AI","st":"Python, GenAI, LangChain","sr":"ssr","co":"ES","ci":"Alicante","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1APmR8dOB1vQt6lggrB_E4iIMYkFCkiFw/view?usp=drivesdk"},{"n":"Juan José Velasco Manzanares","t":"React","st":"Python, React, TypeScript","sr":"tech lead","co":"ES","ci":"","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1tNEjxtqoLzSvdJxSCouQjAxs3d3BL98I/view?usp=drivesdk"},{"n":"José Guitart","t":"Java","st":"Java, Python, AI Integration","sr":"senior","co":"ES","ci":"Barcelona","pk":"architect","vt":true,"dl":"https://drive.google.com/file/d/1nuTXNZB5ymJwEk9KvwdD2rkxaHkEdOwB/view?usp=drivesdk"},{"n":"Carlos Corcoles","t":"Data","st":"Python, AWS, Machine Learning","sr":"senior","co":"ES","ci":"Málaga","pk":"data scientist","vt":true,"dl":"https://drive.google.com/file/d/1APKkWJbCxwLudiQr9YzzR1WsHQcwsJ5T/view?usp=drivesdk"},{"n":"Rubén Moyano Palazón","t":"Data","st":"LLMs, RAG, Python","sr":"ssr","co":"ES","ci":"Albacete","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/15MI3zWxFTEgky9MwhzYgpcEJVwxkySoZ/view?usp=drivesdk"},{"n":"Manuel Somoza Bilbao","t":"Gen AI","st":"Python, LangChain, RAG","sr":"senior","co":"ES","ci":"Madrid","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1yfNSF2SxvIJa5UcH5_3VzPIzwbKrrXqQ/view?usp=drivesdk"},{"n":"Alejandro Benito Trujillo","t":"Gen AI","st":"Python, LLMs, RAG","sr":"junior","co":"ES","ci":"Madrid","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1F657blHHSzjwnqx-_5wdn1UOg0H2ahLi/view?usp=drivesdk"},{"n":"Juan José Torres Palomo","t":".NET","st":".NET, C#, Python, ","sr":"junior","co":"ES","ci":"Málaga","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1eNqSygp9DX9YRxYiKUkdxSfHh2V-E-Td/view?usp=drivesdk"},{"n":"Francisco (Paco) Borrego Ortega","t":"Data","st":"Python, Azure, SQL","sr":"junior","co":"ES","ci":"Málaga","pk":"data engineer","vt":true,"dl":"https://drive.google.com/file/d/1AwnAYRgLd73iiqSSWgSDTLWyiPvNPs2E/view?usp=drivesdk"},{"n":"Miguel Muñoz Blat","t":"Gen AI","st":"Python, LLMs, RAG","sr":"junior","co":"ES","ci":"Valencia","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1DIYtxhl_wuVKvDnSrbxJGVL0Q7JsX6uT/view?usp=drivesdk"},{"n":"Alonso De La Fuente Chávez","t":"Gen AI","st":"Python, PyTorch, GenAI","sr":"ssr","co":"ES","ci":"Madrid","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1Gx9YsuK-yrzdmUqo4HMpzvHrlOi8GmVu/view?usp=drivesdk"},{"n":"Guillermo Montero Cordal","t":"Gen AI","st":"Python, Gen AI, LLMs","sr":"senior","co":"ES","ci":"Madrid","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1cdxZupDjjjp0stKgueiW_QM_7hjBIakP/view?usp=drivesdk"},{"n":"Andrea Argudo","t":"PM/PO","st":"Fintech, AI, AWS","sr":"senior","co":"ES","ci":"Madrid / Canary Islands","pk":"product owner","vt":false,"dl":"https://drive.google.com/file/d/1wB1a0LOSk4XMX5vnhoMcC0ob3oz6Pm7K/view?usp=drivesdk"},{"n":"Patricio Da Silva Gillon","t":"Gen AI","st":"Python, LangChain, AWS Bedrock","sr":"junior","co":"ES","ci":"Málaga","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/17GWuhQctIvXAlyX_rSfbZ09-EaDZeKx4/view?usp=drivesdk"},{"n":"Zakaria Wakrim","t":".NET","st":".NET, C#, AI/ML","sr":"senior","co":"ES","ci":"Málaga","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1NWA118ZE9euHDrqGYIMCB2ibYmViu-Cc/view?usp=drivesdk"},{"n":"JAIME ALEXANDER. MONTOYA VALENCIA","t":"SAP","st":"SAP, SAP MM, SAP WM","sr":"senior","co":"ES","ci":"","pk":"otro","vt":false,"dl":"https://drive.google.com/file/d/1WSY8wK-s-U1qkxDvvZ7XMz6mDTOE_AI7/view?usp=drivesdk"},{"n":"Jose Daniel Araujo Perez","t":"SAP","st":"SAP, SAP SD, S/4HANA","sr":"ssr","co":"ES","ci":"Valencia","pk":"otro","vt":false,"dl":"https://drive.google.com/file/d/1O0aEIjdCkoIM5SNMGBbmdC-ZD74roWUN/view?usp=drivesdk"},{"n":"Javier Muñoz Flores","t":"Gen AI","st":"Python, PySpark, AWS","sr":"senior","co":"ES","ci":"","pk":"machine learning engineer","vt":false,"dl":"https://drive.google.com/file/d/1RmbAKu74eE410BgdIXgCjbSGXlm3UwMO/view?usp=drivesdk"},{"n":"Jose Tejero Carretero","t":"Gen AI","st":"Python, OpenAI, Azure","sr":"ssr","co":"ES","ci":"Sevilla","pk":"ai engineer","vt":false,"dl":"https://drive.google.com/file/d/1zFyDQ_zPlU14WpoD2nSWCSuTo0oOGFok/view?usp=drivesdk"},{"n":"Marco Baturan García","t":"Gen AI","st":"AI, ML, Python","sr":"senior","co":"ES","ci":"","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1iq8SoZ7L4mL9G3NCQpH0jNrl35bmmc4b/view?usp=drivesdk"},{"n":"Fernando Moreno Molina","t":"Data","st":"Python, Azure, RAG","sr":"junior","co":"ES","ci":"","pk":"data scientist","vt":true,"dl":"https://drive.google.com/file/d/1bH_7rgwJ3RWFh2rGSt91HMcxiNLXm-HF/view?usp=drivesdk"},{"n":"Raquel Francisco Fernández","t":"Gen AI","st":"Python, LLMs, Vertex AI","sr":"ssr","co":"ES","ci":"Seville","pk":"ai engineer","vt":false,"dl":"https://drive.google.com/file/d/1-J7UxJj6Lw8IBGsjn8DeK93ZLEVjfH18/view?usp=drivesdk"},{"n":"Alejandro Hurtado Redondo","t":"DevOps","st":"Python, FastAPI, Google Cloud Platform","sr":"ssr","co":"ES","ci":"Madrid","pk":"cloud engineer","vt":false,"dl":"https://drive.google.com/file/d/1cQDzbNlcFU5XSWJeGfL5iHhvrKZ00vpe/view?usp=drivesdk"},{"n":"Luis Valbuena","t":"Gen AI","st":"Python, Django, Flask","sr":"senior","co":"ES","ci":"Foz","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1e8T2E7bC9-6FQ7t5OsRmrACpKnUG7ItL/view?usp=drivesdk"},{"n":"José Arturo Gómez Díaz","t":"Gen AI","st":"Python, Azure, FastAPI","sr":"junior","co":"ES","ci":"Málaga","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1w0-JTHOH0vy1bC7gjc0FPmCUB0B5j8fP/view?usp=drivesdk"},{"n":"Laura del Pino Diaz","t":"Gen AI","st":"IA, NLP, .NET","sr":"senior","co":"ES","ci":"","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1ZnWMmNrjrrG_JG6gCS9v9RTYvDW1AeIT/view?usp=drivesdk"},{"n":"Eduardo Nuez Wehbe","t":"Gen AI","st":"Python, Django, AWS","sr":"ssr","co":"ES","ci":"","pk":"backend","vt":false,"dl":"https://drive.google.com/file/d/1cxOs5fkAiTIGFV2Yqq5aFog_AKgLbwGQ/view?usp=drivesdk"},{"n":"Serdar AKYOL","t":"Java","st":"Java, Python, Go","sr":"ssr","co":"ES","ci":"A Coruña","pk":"backend","vt":false,"dl":"https://drive.google.com/file/d/1dSZTxSPhYwmNOfmzqNPwM0RAxSfiXdjC/view?usp=drivesdk"},{"n":"Luis Alcalde García","t":"PM/PO","st":"IA, Machine Learning, Python","sr":"junior","co":"ES","ci":"","pk":"product manager","vt":false,"dl":"https://drive.google.com/file/d/1bMnTADlkJ_TO_7JEziPuK0QLkTkueR13/view?usp=drivesdk"},{"n":"Gustavo Vargas","t":"Salesforce","st":"Salesforce Marketing Cloud, Oracle Siebel CRM, PowerBI","sr":"senior","co":"AR","ci":"Lanús","pk":"analista funcional","vt":true,"dl":"https://drive.google.com/file/d/1YnonHklZWyO_aR8XMgdxllxvpCSyKhf3/view?usp=drivesdk"},{"n":"Jose Gregorio Martinez Rodriguez","t":"Analista Funcional","st":"Scrum, SQL Server, Jira","sr":"senior","co":"AR","ci":"Lanús Oeste","pk":"analista funcional","vt":true,"dl":"https://drive.google.com/file/d/1w8PmsdyZ9t7xBS6uPFpsGOtMWHZJpLyK/view?usp=drivesdk"},{"n":"Alejo Giaimo","t":"Analista Funcional","st":"SQL, Jira, BPMN","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"analista funcional","vt":true,"dl":"https://drive.google.com/file/d/1UyiMMZfIAZ0gITyj9dV-nTSJWJs-jGem/view?usp=drivesdk"},{"n":"Darwin Alejandro Villanueva Cardoza","t":"Analista Funcional","st":"Figma, SQL, Agile/Scrum","sr":"ssr","co":"AR","ci":"Buenos Aires","pk":"analista funcional","vt":true,"dl":"https://drive.google.com/file/d/1t59oWcv0s3ELDIvbut0eDTQ2KcSau4q9/view?usp=drivesdk"},{"n":"Adrian Leonardo Checchia","t":"Analista Funcional","st":"SQL Server, Jira, Figma","sr":"ssr","co":"AR","ci":"Caballito, CABA","pk":"analista funcional","vt":true,"dl":"https://drive.google.com/file/d/1XiNpxtP7pgJtSe8ZH3Sfkw4lCClYZVD8/view?usp=drivesdk"},{"n":"Maria Laura Padin","t":"BA","st":"Business Analysis, Product Management, Scrum","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"business analyst","vt":true,"dl":"https://drive.google.com/file/d/1XGxo0KKFEeCoIpPc43xElweOkm57W-Zv/view?usp=drivesdk"},{"n":"Maria Fernanda Gatto","t":"Analista Funcional","st":"Análisis de procesos, SQL, Power BI","sr":"senior","co":"AR","ci":"CABA","pk":"analista funcional","vt":true,"dl":"https://drive.google.com/file/d/1X5u8G6pmx1UVdkhAy_oeLWhn3iJ8I_jN/view?usp=drivesdk"},{"n":"Andrés Fernando Rossi","t":"Analista Funcional","st":"Análisis funcional, Scrum, SQL","sr":"senior","co":"AR","ci":"Córdoba","pk":"analista funcional","vt":true,"dl":"https://drive.google.com/file/d/1L9nbGMkykUFOhnmk4FiXRqKxREURXFHb/view?usp=drivesdk"},{"n":"Camila Baetti Musitano","t":"Analista Funcional","st":"JIRA, SCRUM, Angular","sr":"ssr","co":"ES","ci":"","pk":"analista funcional","vt":true,"dl":"https://drive.google.com/file/d/1gsTL_yPhlHWgS3TO2-aorPvSDYuYFEXz/view?usp=drivesdk"},{"n":"Guillermo Serrano Lauroba","t":"Data","st":"Python, SQL, ETL","sr":"junior","co":"ES","ci":"","pk":"data engineer","vt":false,"dl":"https://drive.google.com/file/d/1FOKQzMZ8NDdoyJIgCDCwjsslKLE9W5qG/view?usp=drivesdk"},{"n":"Ariana Pis","t":"Murex","st":"Murex, SQL, AWS","sr":"junior","co":"ES","ci":"Madrid","pk":"middle office","vt":true,"dl":"https://drive.google.com/file/d/1XR8elt3QGus-EMxR6YxA52RG7RdBfB9N/view?usp=drivesdk"},{"n":"Manuel Coto Moreno","t":"Murex","st":"Murex, SQL, SAP Banking","sr":"senior","co":"ES","ci":"Madrid","pk":"back office","vt":false,"dl":"https://drive.google.com/file/d/1a2HD0hw65UauOVlsRArOjZOif2MAg6p-/view?usp=drivesdk"},{"n":"Iván González Vila","t":"Murex","st":"SysAdmin, SQL, Murex","sr":"ssr","co":"ES","ci":"Salceda de Caselas","pk":"sysadmin","vt":true,"dl":"https://drive.google.com/file/d/1scf-c6AP9POo_TFZprOmwRl7BTsQtyFY/view?usp=drivesdk"},{"n":"Mª Carmen Ortiz Garcia","t":"Murex","st":"Excel, Bloomberg, Murex","sr":"senior","co":"ES","ci":"","pk":"back office","vt":false,"dl":"https://drive.google.com/file/d/1Ii1H0ZWUW76CEejSRjaaJ4Bf9rzAMToK/view?usp=drivesdk"},{"n":"Álvaro Isai Lazo Rizo","t":"Murex","st":"Murex, Accounting, SQL","sr":"senior","co":"ES","ci":"","pk":"analista funcional","vt":false,"dl":"https://drive.google.com/file/d/1YER3IFcumNa_gTJ0AQuyDoew6eHOZMNI/view?usp=drivesdk"},{"n":"Rafael Gutierrez","t":"Murex","st":"Accounting, Financial Analysis, Murex","sr":"senior","co":"ES","ci":"Madrid","pk":"back office","vt":true,"dl":"https://drive.google.com/file/d/1DBl5rpV-ZynMsJMIf7xi4Fhzg50vKz8O/view?usp=drivesdk"},{"n":"Tobias Lombardo Larrain","t":"Java","st":"Java, Spring Boot, Calypso","sr":"junior","co":"AR","ci":"La Plata","pk":"backend","vt":false,"dl":"https://drive.google.com/file/d/1lQHzXlSeu-0QNttBzyJNGBbIXM124BMH/view?usp=drivesdk"},{"n":"Rodrigo Tenorio Marquez","t":"Data","st":"Python, SQL, ETL/ELT","sr":"senior","co":"ES","ci":"Palma","pk":"data engineer","vt":false,"dl":"https://drive.google.com/file/d/16xuPjYjVEPB_xEcEQpd_ZJJQI5tWSGJD/view?usp=drivesdk"},{"n":"Adrián Fernández Bermejo","t":"Java","st":"Java, Spring Boot, AWS","sr":"ssr","co":"ES","ci":"Madrid","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1NKRNnaJPrWjxgrN4ZRLDVUbWjS3zaSol/view?usp=drivesdk"},{"n":"Jesús de la Fuente","t":"sys adm","st":"ITIL, Service Now, Active Directory","sr":"ssr","co":"ES","ci":"Madrid","pk":"technical support","vt":false,"dl":"https://drive.google.com/file/d/1dA1DxGF20MGUfqQwXTrdhuX3WexgTCvD/view?usp=drivesdk"},{"n":"Rodica Tabuncic Guzun","t":"Murex","st":"SAS, Qlik Sense, Bloomberg","sr":"senior","co":"ES","ci":"Madrid","pk":"back office","vt":false,"dl":"https://drive.google.com/file/d/1-uWHooBkYIclmHLyWWZpraqHkfYeT7vZ/view?usp=drivesdk"},{"n":"Pablo Mayorca Peraza","t":"DevOps","st":"Linux, SQL, Python","sr":"senior","co":"ES","ci":"Madrid","pk":"devops","vt":false,"dl":"https://drive.google.com/file/d/1l5O4M15IMxoNC36YtjWOdMbnEQMIRLnY/view?usp=drivesdk"},{"n":"Antonio Naim Corujo","t":"Java","st":"Java, Spring Boot, Kafka","sr":"ssr","co":"AR","ci":"Córdoba","pk":"backend","vt":false,"dl":"https://drive.google.com/file/d/14SItQBduy3o1_EI6U_VUIfiF2Q-NGbci/view?usp=drivesdk"},{"n":"Jose Manuel Garrido Martín","t":".NET","st":".NET, C#, .NET, React","sr":"senior","co":"ES","ci":"Barcelona","pk":"fullstack","vt":false,"dl":"https://drive.google.com/file/d/1Exj_5SfQdGo3_y9yrnFTDhh-osuwWEDh/view?usp=drivesdk"},{"n":"Antonella Iglesias","t":"PM/PO","st":"Product Management, Agile, APIs","sr":"senior","co":"AR","ci":"CABA","pk":"product owner","vt":true,"dl":"https://drive.google.com/file/d/1UVD8aSmhqvYIlyWTzs3T7wcTauh7P41l/view?usp=drivesdk"},{"n":"Osvaldo Gaspar Espino González","t":"PM/PO","st":"Jira, Confluence, Azure DevOps","sr":"senior","co":"ES","ci":"Salamanca","pk":"product owner","vt":true,"dl":"https://drive.google.com/file/d/1zatQ7rcCnbHr3h5Xsac9yHk2TOTacXab/view?usp=drivesdk"},{"n":"Micaela Belén Larraburu","t":"PM/PO","st":"Jira, SQL, Tableau","sr":"senior","co":"ES","ci":"","pk":"project manager","vt":true,"dl":"https://drive.google.com/file/d/1ocfa0g6imELjbvdcMjB563CAsvv4aJPz/view?usp=drivesdk"},{"n":"Antonio González Blanco","t":"PM/PO","st":"Product Strategy, Data-Driven Decision Making, API integrations","sr":"senior","co":"ES","ci":"Barcelona","pk":"product manager","vt":true,"dl":"https://drive.google.com/file/d/1mcNbcK5s4qPGD4ieqCikJtr6RowaaPFr/view?usp=drivesdk"},{"n":"Alejandro Ruiz Aranda","t":"Java","st":"Java, Golang, Python","sr":"senior","co":"ES","ci":"","pk":"backend","vt":false,"dl":"https://drive.google.com/file/d/1n2_-_DlA7nw3Eo-qTF-PUSSIxwa2M_Ku/view?usp=drivesdk"},{"n":"Pablo Marrero","t":"Java","st":"Java, Spring Boot, Microservices","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1e7ZCRqXmoMorV2YCjLoivzf5y-w8HdlP/view?usp=drivesdk"},{"n":"Daniel Moreno Arevalo","t":"Java","st":"Java, Spring Boot, Angular","sr":"senior","co":"ES","ci":"Madrid","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1RhiYDy16zfcEHeRrao-tivSE2o8VjWLq/view?usp=drivesdk"},{"n":"Francisco Rivero Molina Molina","t":"Murex","st":"Microsoft Excel, SQL, CRM","sr":"ssr","co":"ES","ci":"Málaga","pk":"back office","vt":false,"dl":"https://drive.google.com/file/d/1IJh8pvnu1iu83_IBG6C-Sud-cba4pmbz/view?usp=drivesdk"},{"n":"Francisco Jiménez Espejo","t":"SAP","st":"WordPress, SAP Business One, SQL Server","sr":"senior","co":"ES","ci":"Málaga","pk":"fullstack","vt":false,"dl":"https://drive.google.com/file/d/1TH9tybUCzdwxBkv39H59GC_foTOgk72L/view?usp=drivesdk"},{"n":"Dayron Rey Obregon Colina","t":".NET","st":".NET, C#, Azure","sr":"senior","co":"ES","ci":"Murcia","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1MLSnecujW36D0ISEZPnZVLQWGdf92qtY/view?usp=drivesdk"},{"n":"Eric Aldas","t":"DevOps","st":"Cloud, Software Architecture, AI/LLMs","sr":"architect","co":"ES","ci":"Madrid","pk":"architect","vt":true,"dl":"https://drive.google.com/file/d/1EVQljJNHvVTRAzchYUwNjojnk-Vf5KYb/view?usp=drivesdk"},{"n":"Rafael Berral Cardeñosa","t":"SAP","st":"ABAP, SAP, Java","sr":"senior","co":"ES","ci":"Puente Genil","pk":"backend","vt":false,"dl":"https://drive.google.com/file/d/1ncfsVz3cqvKolaVGIHerZuESttrxE1CY/view?usp=drivesdk"},{"n":"Robin Puerta","t":"PM","st":"Product Strategy, Agile, OKR","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"product manager","vt":false,"dl":"https://drive.google.com/file/d/1PSem8MMYKZ9MRVPuMqdvkJTuV3Z9DoQa/view?usp=drivesdk"},{"n":"Yulia Horal Dovgoshyia","t":"BA","st":"Power BI, Excel, Jira","sr":"ssr","co":"ES","ci":"Madrid","pk":"business analyst","vt":false,"dl":"https://drive.google.com/file/d/1OwTwBUtXkLKIm1j2z_r2dG6dIFl4yEjL/view?usp=drivesdk"},{"n":"Arturo Peñalver Martín","t":"PM/PO","st":"Project Management, PMO, Business Consulting","sr":"senior","co":"ES","ci":"Madrid","pk":"project manager","vt":false,"dl":"https://drive.google.com/file/d/1YtManJpmQw1pSjaccksDy31L7VjcXRLb/view?usp=drivesdk"},{"n":"Jaime Garcia Casas","t":"BA","st":"AML, KYC, VBA","sr":"senior","co":"ES","ci":"Madrid","pk":"business analyst","vt":false,"dl":"https://drive.google.com/file/d/1j7Qv2U2FD2Doy_j3ySkUiTjWYw4k8zdB/view?usp=drivesdk"},{"n":"Sebastian Pujol","t":"security","st":"SQL, BigQuery, Power BI","sr":"senior","co":"ES","ci":"","pk":"product owner","vt":false,"dl":"https://drive.google.com/file/d/1TpuHLn3SylioudukmINHUAcqLo81l7Q2/view?usp=drivesdk"},{"n":"Alfonso Russo","t":"SAP","st":"SAP, Salesforce, Jira","sr":"senior","co":"ES","ci":"","pk":"product manager","vt":false,"dl":"https://drive.google.com/file/d/1tfgqX5H6adkfE09gOrGnlmcD1Kwq-_Ie/view?usp=drivesdk"},{"n":"Alberto González Rojas","t":"PM/PO","st":"Product Owner, UI/UX, Banking","sr":"senior","co":"ES","ci":"Madrid","pk":"product owner","vt":false,"dl":"https://drive.google.com/file/d/1BF8k3j3W-5NWBMllMlr2PwrH5VzA8xNG/view?usp=drivesdk"},{"n":"Tomas Garbarino","t":"React","st":"React.js, TypeScript, JavaScript","sr":"ssr","co":"AR","ci":"Buenos Aires","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/131yinncbScYjU0XQf6-QnK9PX6sYfnRP/view?usp=drivesdk"},{"n":"Federico Ciociano","t":"Angular","st":"Angular, React, Node.js","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1Jmg5ySNsb5HoEJ36PgtHu-mq7QHCdTH5/view?usp=drivesdk"},{"n":"Hanan El Hmaidi","t":"BA","st":"SQL, ETL, Jira","sr":"ssr","co":"ES","ci":"","pk":"business analyst","vt":false,"dl":"https://drive.google.com/file/d/1PfpKcG3bjyzbMPIizbQtlAewvOYQFPsI/view?usp=drivesdk"},{"n":"Josep Salvador Lopez","t":"Gen AI","st":"Python, GenAI, RAG","sr":"senior","co":"ES","ci":"","pk":"ai engineer","vt":false,"dl":"https://drive.google.com/file/d/1wTuYmNbfh7tfKvfVx91FQaRPaJe4DpWu/view?usp=drivesdk"},{"n":"David Quintana Cobaleda","t":"Gen AI","st":"Python, LangChain, C++","sr":"ssr","co":"ES","ci":"Elche","pk":"ai engineer","vt":false,"dl":"https://drive.google.com/file/d/19wA8_4WvvxGveW0QO62h4SfxEfMdNxHL/view?usp=drivesdk"},{"n":"Martin Centurion","t":"Data","st":"Python, Power BI, AWS","sr":"ssr","co":"ES","ci":"Madrid","pk":"data engineer","vt":true,"dl":"https://drive.google.com/file/d/1xZS1NMiLEuT7iDLPSADoWZxNgtS32_RQ/view?usp=drivesdk"},{"n":"Diego Benjamín Vargas Castro","t":"Data","st":"DOMO, SQL, Python","sr":"ssr","co":"ES","ci":"Madrid","pk":"data analyst","vt":false,"dl":"https://drive.google.com/file/d/1VFYHXRSsDdnrSmVxMON2tr21MHRg2fy1/view?usp=drivesdk"},{"n":"Ignacio Ramos","t":"Angular","st":"JavaScript, Angular, HTML5/CSS3","sr":"senior","co":"ES","ci":"","pk":"frontend","vt":true,"dl":"https://drive.google.com/file/d/1Cpg6sslIbtDCMefZf-RxD19MgaOiCBt-/view?usp=drivesdk"},{"n":"Marina Mínguez de la Chica","t":"Angular","st":"Svelte, Angular, JavaScript","sr":"No especificado","co":"ES","ci":"","pk":"ui developer","vt":true,"dl":"https://drive.google.com/file/d/17qzd77uMMBZPyGBMjRmd5eYWinc5httl/view?usp=drivesdk"},{"n":"Xisca Camps","t":"Data","st":"WordPress, Agile, SEO","sr":"senior","co":"ES","ci":"Palma","pk":"project manager","vt":false,"dl":"https://drive.google.com/file/d/1BD4qB_DicypdPUGmsoB3TsZkRndT8X_r/view?usp=drivesdk"},{"n":"LYES TAIBI KEBOUCHI","t":"Data","st":"Python, SQL, Power BI","sr":"junior","co":"ES","ci":"Málaga","pk":"data analyst","vt":false,"dl":"https://drive.google.com/file/d/1hI0w2YJjbgNEi3Z2LXRYSH1zwOClqsfe/view?usp=drivesdk"},{"n":"Jesús Aldana Martín","t":"Data","st":"Python, SQL, Machine Learning","sr":"junior","co":"ES","ci":"Barcelona","pk":"data scientist","vt":false,"dl":"https://drive.google.com/file/d/1DBt_bIPRyPQXx1K3KmjuEqDCWtGXsTCu/view?usp=drivesdk"},{"n":"Sergio Torres","t":"Data","st":"Python, ML, AWS","sr":"ssr","co":"ES","ci":"Huelva","pk":"data scientist","vt":false,"dl":"https://drive.google.com/file/d/1X0oBp8ObMUN9_xYTq5XK_urqtwBTlCfG/view?usp=drivesdk"},{"n":"Roberto Ruiz Sánchez","t":"Gen AI","st":"Python, AWS, Machine Learning","sr":"ssr","co":"ES","ci":"Sevilla/Cádiz","pk":"ai engineer","vt":false,"dl":"https://drive.google.com/file/d/1wmkHocUIjbMi2xIZqJ9C36UXEgv460er/view?usp=drivesdk"},{"n":"José María García Ortiz","t":"Data","st":"Python, Machine Learning, Deep Learning","sr":"junior","co":"ES","ci":"Málaga","pk":"data scientist","vt":false,"dl":"https://drive.google.com/file/d/1HiL0j6UcM4OiV5A5gry1W7-wRd5gue-p/view?usp=drivesdk"},{"n":"Nazmul Farooquee , MBA","t":"Data","st":"Python, SQL, Spark","sr":"senior","co":"ES","ci":"Barcelona","pk":"data scientist","vt":false,"dl":"https://drive.google.com/file/d/1JISmP8DeAWWffoI2s5S0lCAGw7WW5v2w/view?usp=drivesdk"},{"n":"Juan Diego SAQUICORAY","t":"Data","st":"Python, SQL, Power BI","sr":"senior","co":"ES","ci":"Madrid","pk":"data scientist","vt":false,"dl":"https://drive.google.com/file/d/1wt9Vdq0RTbHw3VbN0fBL3dKEJyMCDIbb/view?usp=drivesdk"},{"n":"Kiko Becerra","t":"Node","st":"Python, FastAPI, Node.js","sr":"junior","co":"ES","ci":"Málaga","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1r64s2Bo4WCVthUjalOoWOfxaFVtZ0IRv/view?usp=drivesdk"},{"n":"Todor Zugic","t":"Gen AI","st":"Python, C++, Unity","sr":"ssr","co":"ES","ci":"Alicante","pk":"fullstack","vt":false,"dl":"https://drive.google.com/file/d/1rBz4MabGsT52e9DIwRR2oD3b37sjdVg0/view?usp=drivesdk"},{"n":"Xavi Gonzalez Arriola","t":"QA","st":"JavaScript, Playwright, Cypress","sr":"senior","co":"ES","ci":"Barcelona","pk":"qa automation","vt":true,"dl":"https://drive.google.com/file/d/1F4nlz7GYraYphbsLYOcHByBhUk5brcxn/view?usp=drivesdk"},{"n":"Natalia Gallego Ternero","t":"QA","st":"Python, Selenium, Jenkins","sr":"senior","co":"ES","ci":"","pk":"qa automation","vt":false,"dl":"https://drive.google.com/file/d/1zldKijySFOoHDPbQQakB03BuRRx5a3R0/view?usp=drivesdk"},{"n":"Claudia Lozada Vazquez","t":"QA","st":"Selenium, Postman, Karate","sr":"ssr","co":"ES","ci":"Madrid","pk":"qa automation","vt":false,"dl":"https://drive.google.com/file/d/1Lkm_0G1MHwF0t8a9diw-7sKO67US4o9c/view?usp=drivesdk"},{"n":"Marcos González Sanz","t":"Gen AI","st":"Python, LangChain, AWS","sr":"ssr","co":"ES","ci":"Madrid","pk":"ai engineer","vt":false,"dl":"https://drive.google.com/file/d/1L8bX4j8zPwZhlI5gqrXdkRac3nvTlF4r/view?usp=drivesdk"},{"n":"Miguel Leiva Padilla","t":"Gen AI","st":"AI, Node.js, React","sr":"ssr","co":"ES","ci":"Barcelona","pk":"ai engineer","vt":false,"dl":"https://drive.google.com/file/d/1yeW2isQdDl-fudCk-KJtKciy8-Co25BU/view?usp=drivesdk"},{"n":"Javier Membrive Riera","t":"Data","st":"SQL, Python, AWS","sr":"ssr","co":"ES","ci":"Madrid","pk":"data engineer","vt":false,"dl":"https://drive.google.com/file/d/1tnsF4tQ5VAH38gZ2rySuOOXGCHzCL_gM/view?usp=drivesdk"},{"n":"Nestor Bravo Camacho","t":"SAP","st":"SAP, SAP SD, SAP S/4HANA","sr":"senior","co":"ES","ci":"Madrid","pk":"otro","vt":true,"dl":"https://drive.google.com/file/d/1LaSxj_kAk6z524O8pIqMui3X2gOyNQpm/view?usp=drivesdk"},{"n":"Lucas Milovich","t":"SAP","st":"SAP, SAP QM, SAP MM","sr":"senior","co":"ES","ci":"Sevilla","pk":"analista funcional","vt":true,"dl":"https://drive.google.com/file/d/1Me_6jI9NlZPSwyijdTJgJQjV7VEoIAJ6/view?usp=drivesdk"},{"n":"Maria Ines Mohamad","t":"recruiter","st":"IT Recruitment, LinkedIn Recruiter, ATS","sr":"ssr","co":"ES","ci":"Malaga","pk":"tech recruiter","vt":false,"dl":"https://drive.google.com/file/d/1VGSd-ZrL1tvGMtbpji1LOOK8LaiDcE3b/view?usp=drivesdk"},{"n":"Nicolas Bustamante","t":"Java","st":"Java, Spring Boot, SQL","sr":"junior","co":"AR","ci":"Buenos Aires","pk":"backend","vt":false,"dl":"https://drive.google.com/file/d/1ptVnZ29vkGckjee56hYmcY96xDN8fJ89/view?usp=drivesdk"},{"n":"Felix Farias","t":"Java","st":"Java, Spring Boot, SOA","sr":"senior","co":"AR","ci":"Córdoba","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1wJC5vFa_c8tCLcnD5Q3gYT535uJJ7wdM/view?usp=drivesdk"},{"n":"Roberto Sanchez Leiva","t":"Java","st":"Java, Spring Boot, Oracle PL/SQL","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1clXm6LAdjStDpEWKWx4t7LbsoLLrKtKN/view?usp=drivesdk"},{"n":"Carlos Damian Andrada","t":"Data","st":"Oracle Integration Cloud, PL/SQL, Oracle APEX","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1LWUZbRTihKvjX_5fjFZW2bpkwaYpzal0/view?usp=drivesdk"},{"n":"Emilio Gonzalez","t":"DevOps","st":"Oracle Fusion Middleware, OCI, Linux","sr":"senior","co":"AR","ci":"Buenos Aires","pk":"cloud engineer","vt":true,"dl":"https://drive.google.com/file/d/1WwPU81dsA7oDHOoH3xOjBefyH0y0Sbld/view?usp=drivesdk"},{"n":"Alba Gaitan","t":"Java","st":"Playwright, Selenium, Java","sr":"ssr","co":"AR","ci":"Cordoba","pk":"qa automation","vt":false,"dl":"https://drive.google.com/file/d/1wKIks7-LNTDBJWNjAXNqcyixHKFdn_aE/view?usp=drivesdk"},{"n":"Felix S.","t":"Java","st":"Java, Spring Boot, AWS","sr":"tech lead","co":"AR","ci":"Buenos Aires","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1QoT8a_g0gLIfj68BOOIG3_onw2Kr9QwJ/view?usp=drivesdk"},{"n":"Mauro Daniel (Mau) Peñaloza","t":"Java","st":"Java, Spring Boot, Angular","sr":"senior","co":"AR","ci":"San Juan","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1JO8MrRBi0wLhRkpA_3-4-56TF2XzjbKW/view?usp=drivesdk"},{"n":"Alejandro Calderon","t":"Java","st":"Java, Spring Boot, Kafka","sr":"senior","co":"AR","ci":"","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1ghuw2lCHf5UFZCnvUtRBj3Icguwq3gDu/view?usp=drivesdk"},{"n":"Raul Geomar Peña","t":"Java","st":"Java, Spring Boot, Kubernetes","sr":"architect","co":"AR","ci":"Pilar","pk":"architect","vt":true,"dl":"https://drive.google.com/file/d/1Tf5yR4Ta-Sf643AJwL16QaCaWuNf-lUx/view?usp=drivesdk"},{"n":"Lautaro Carranza","t":"Java","st":"Java, Spring Boot, C#","sr":"ssr","co":"AR","ci":"Bahía Blanca","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1MX5GkrbDIrUkTm4-5_J62ssghpbvJH1i/view?usp=drivesdk"},{"n":"Victor Emanuel Sodero","t":"Java","st":"Java, Spring Boot, Angular","sr":"senior","co":"AR","ci":"Córdoba","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1WDNQZKaequQ0ttQaCUw9nNEqACJnahaH/view?usp=drivesdk"},{"n":"Lucio Felipe Molina","t":"Java","st":"Java, Spring Boot, Oracle","sr":"ssr","co":"AR","ci":"La Plata","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1EtQAapT1tMJQ-1VOtwfTIqRDdmPTKb3i/view?usp=drivesdk"},{"n":"Romerd Garcia","t":"Java","st":"Java, Spring Boot, AWS","sr":"senior","co":"AR","ci":"","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1fQV4r5_h0mZSty-JAHTwm0TcXhmEp87t/view?usp=drivesdk"},{"n":"Marcela Griet","t":"Java","st":"Java, Spring Boot, Microservices","sr":"ssr","co":"AR","ci":"Bariloche","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1LAje1IS-kwNrkyA6m7WVLeGZH5Xl5I3P/view?usp=drivesdk"},{"n":"Lucas Martínez","t":"Java","st":"Java, Spring Boot, AWS","sr":"ssr","co":"AR","ci":"Tandil","pk":"backend","vt":true,"dl":"https://drive.google.com/file/d/1_rjNEsaAXnypqhA360LZrl6xiJLLTb5m/view?usp=drivesdk"},{"n":"Sergio Ros Giménez","t":"support","st":"Azure, Microsoft 365, Helpdesk","sr":"junior","co":"ES","ci":"Móstoles, Madrid","pk":"technical support","vt":false,"dl":"https://drive.google.com/file/d/14FqJleKaGT5Mf0NgIJIquIUOP6D9sG0S/view?usp=drivesdk"},{"n":"Kevin Vera Palacios","t":"sys adm","st":"Active Directory, Azure Entra ID, PowerShell","sr":"ssr","co":"ES","ci":"Colmenar Viejo","pk":"sysadmin","vt":false,"dl":"https://drive.google.com/file/d/1nr9BF1cZjjl8lsNsh6YJj1Akdjcm-ZPf/view?usp=drivesdk"},{"n":"Ruben Jimenez De la Torre","t":"support","st":"Microsoft 365, Microsoft Intune, Entra ID","sr":"junior","co":"ES","ci":"Madrid","pk":"technical support","vt":true,"dl":"https://drive.google.com/file/d/1IFBeNlqRTorrCeaFKtTE-PUp9-YAUPeB/view?usp=drivesdk"},{"n":"Facundo Cruceño","t":"Angular","st":"Angular, Ionic, TypeScript","sr":"senior","co":"AR","ci":"Moreno, Buenos Aires","pk":"frontend","vt":false,"dl":"https://drive.google.com/file/d/1wBltzZMs_ncfAS2FdK5BpXEOJZz0Jdb4/view?usp=drivesdk"},{"n":"Marisa Martín","t":"Angular","st":"Angular, C#, .NET","sr":"senior","co":"AR","ci":"Luján de Cuyo, Mendoza","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1IlUr2O5UsCyScDPLRxsjL-W_hlPpdTd3/view?usp=drivesdk"},{"n":"Fernando Roldan Calderon","t":"Angular","st":"Angular, .Net, C#","sr":"ssr","co":"AR","ci":"Córdoba","pk":"fullstack","vt":false,"dl":"https://drive.google.com/file/d/1J8n0-wO06kxnGURs7UicKdvhMkqXlH-V/view?usp=drivesdk"},{"n":"Marcos Peña Del Olmo","t":"Gen AI","st":"Python, FastAPI, LangChain","sr":"junior","co":"ES","ci":"","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1A2ta_FgIVGw4j6Ffmwsx0_1fTEW0vcTU/view?usp=drivesdk"},{"n":"javier giralte","t":"Gen AI","st":"Python, OpenAI API, LLMs","sr":"junior","co":"ES","ci":"Alcorcón, Madrid","pk":"ai engineer","vt":true,"dl":"https://drive.google.com/file/d/1AkBOBivS1_JNAUZMvD6F22-x0xY42kvU/view?usp=drivesdk"},{"n":"Cesar Daniel Diaz Fernández","t":"Gen AI","st":"Python, Django, Vue.js","sr":"senior","co":"ES","ci":"Vigo","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/13m1hFpLxUAYcqvcdHWjrRFZJqJkdi5A9/view?usp=drivesdk"},{"n":"Guillermo Cerveró","t":"support","st":"Hardware, Windows Server, Active Directory","sr":"junior","co":"ES","ci":"Valencia","pk":"technical support","vt":false,"dl":"https://drive.google.com/file/d/1ESa2b-R8deFKv2wgbC7tT3hBtT2oKZht/view?usp=drivesdk"},{"n":"Antonio Espinosa Moreno","t":"sys adm","st":"Linux, Windows Server, Ciberseguridad","sr":"junior","co":"ES","ci":"Algeciras","pk":"sysadmin","vt":false,"dl":"https://drive.google.com/file/d/1d7GHTKRbbkXpEinIyZpUHfaiuYAlMf2v/view?usp=drivesdk"},{"n":"David Goldero Gabarda","t":"support","st":"Sistemas, Redes, Ticketing","sr":"junior","co":"ES","ci":"Moncada, Valencia","pk":"technical support","vt":false,"dl":"https://drive.google.com/file/d/1gisLzJlQAsxA1GtYgHYPehmVUi2TmJSH/view?usp=drivesdk"},{"n":"Arturo Rivera Paniza","t":"sys adm","st":"Microsoft 365, Power BI, Azure AD","sr":"senior","co":"ES","ci":"Valencia","pk":"sysadmin","vt":true,"dl":"https://drive.google.com/file/d/11eu_EA5Lphq21FoAEq__qstAxIGxGe1N/view?usp=drivesdk"},{"n":"Daniel Cejalvo Perete","t":"sys adm","st":"Windows Server, Redes, Oracle","sr":"junior","co":"ES","ci":"Quart de Poblet (Valencia)","pk":"sysadmin","vt":false,"dl":"https://drive.google.com/file/d/1D1QmkxU7TLoyTaXXxJVNnH-6JhVTS3XJ/view?usp=drivesdk"},{"n":"Cassiopea Acebes Prado","t":"sys adm","st":"Windows, Linux, SQL Server","sr":"junior","co":"ES","ci":"Valencia","pk":"technical support","vt":true,"dl":"https://drive.google.com/file/d/1AGeHK2PtSwZTvktIR3j74hmJL5-WFXru/view?usp=drivesdk"},{"n":"Yeison Fernando Loaiza Perez","t":"DevOps","st":"AWS, Linux, Windows Server","sr":"ssr","co":"ES","ci":"Valencia","pk":"cloud engineer","vt":false,"dl":"https://drive.google.com/file/d/1hWBQej2HpEI6FKQwZEMWPc7viPAD8Mum/view?usp=drivesdk"},{"n":"Enzo Gabriel Guido","t":"Java","st":"Java, Spring Boot, AWS","sr":"senior","co":"AR","ci":"","pk":"backend","vt":false,"dl":"https://drive.google.com/file/d/1jOzylIf57G1_pXrW5DjoZLsKVnF3vXM3/view?usp=drivesdk"},{"n":"Andrea Jiménez Villatoro","t":"React","st":"React, TypeScript, .NET","sr":"junior","co":"ES","ci":"Mallorca","pk":"fullstack","vt":true,"dl":"https://drive.google.com/file/d/1WbvJSp2a13OeLp2lq_1qOBO6zOqHyrRe/view?usp=drivesdk"},{"n":"Ilias Ben Azzouz Ammari","t":"SAP","st":"Ingeniería Mecánica, Gestión de Mantenimiento, SAP","sr":"ssr","co":"ES","ci":"Vecindario","pk":"otro","vt":true,"dl":"https://drive.google.com/file/d/1D-7YvjyEaVXi8o-Kf_R_kUqx7P05RDSj/view?usp=drivesdk"},{"n":"Antonio Calderín Castro","t":"Data","st":"Matlab, Solidworks, Autocad","sr":"ssr","co":"ES","ci":"Las Palmas de Gran Canaria","pk":"otro","vt":false,"dl":"https://drive.google.com/file/d/1o1bCtKZoxSBIUQX_-vOnoFcDammJH5LN/view?usp=drivesdk"},{"n":"Alejandro Morales Melian","t":"PM/PO","st":"Project Management, EPC, Instalaciones Industriales","sr":"senior","co":"ES","ci":"Las Palmas de Gran Canaria","pk":"project manager","vt":true,"dl":"https://drive.google.com/file/d/1eWPK37O4xplsBrmnIFVvKcURakAM6o35/view?usp=drivesdk"},{"n":"Diego Chirico","t":"PM/PO","st":"Project Management, Agile, IT Governance","sr":"senior","co":"ES","ci":"Madrid","pk":"project manager","vt":false,"dl":"https://drive.google.com/file/d/1-0MKZcQdmEenf68Ps8iWOHmN4L9EGT8g/view?usp=drivesdk"},{"n":"Alberto Puebla Martin","t":"PM/PO","st":"Agile, Scrum, Product Lifecycle","sr":"senior","co":"ES","ci":"Madrid","pk":"product owner","vt":false,"dl":"https://drive.google.com/file/d/1pXk2K_gEGZLs7FQuEJVG-PMCA80fbnEa/view?usp=drivesdk"},{"n":"Joaquín Pérez Carrasco","t":"Data","st":"Azure, Databricks, PySpark","sr":"ssr","co":"ES","ci":"Algeciras","pk":"data engineer","vt":true,"dl":"https://drive.google.com/file/d/1RsofOhC4LeSw4LqmrnLWJmGXoiccpjaf/view?usp=drivesdk"},{"n":"Antonio Gonzalez Chicano","t":"support","st":"Google Tag Manager, SQL, JavaScript","sr":"ssr","co":"ES","ci":"Palma","pk":"technical support","vt":true,"dl":"https://drive.google.com/file/d/1-MplSVSV9Jn1FwFIG_TxeUw4kqZdn6kx/view?usp=drivesdk"},{"n":"Diego Andrés Barrero Torres","t":".NET","st":".NET, .NET Core, C#, Azure","sr":"senior","co":"ES","ci":"","pk":"architect","vt":false,"dl":"https://drive.google.com/file/d/1Du3w40TSG7rvRwaMhkxA0rjopqFL6btv/view?usp=drivesdk"},{"n":"David Andrés Otero","t":"Java","st":"Java, Spring Boot, React","sr":"junior","co":"ES","ci":"Valladolid","pk":"fullstack","vt":false,"dl":"https://drive.google.com/file/d/1eiPJvDD8UDwv4pC2Cd2CSdj5Mk34CYX4/view?usp=drivesdk"},{"n":"Azahara Manuel Azcaray","t":"Data","st":"Python, SQL, Power BI","sr":"junior","co":"ES","ci":"Salamanca","pk":"data analyst","vt":false,"dl":"https://drive.google.com/file/d/1UOCmojJYROnABtDVyxRjka_aBdI4hrXI/view?usp=drivesdk"}];
+
+const TECH_ORDER = ['Java','Angular','React','.NET','Data','Gen AI','QA','PM/PO','SAP','Murex','Salesforce','DevOps','Analista Funcional','Node','sys adm','support','BA','security','DevOps','ux/ui','PHP','COBOL','RPA','maquetador','recruiter','PM','Otro'];
+
+let activeCountry = 'ALL';
+let activeTech = 'ALL';
+let activeSeniority = 'ALL';
+let activeVt = 'ALL';
+let searchQuery = '';
+
+function normalize(s) {
+  return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function getVisible() {
+  return RAW.filter(c => {
+    if (activeCountry !== 'ALL' && c.co !== activeCountry) return false;
+    if (activeTech !== 'ALL' && c.t !== activeTech) return false;
+    if (activeSeniority !== 'ALL' && c.sr !== activeSeniority) return false;
+    if (activeVt !== 'ALL' && String(c.vt) !== activeVt) return false;
+    if (searchQuery) {
+      const q = normalize(searchQuery);
+      const hay = normalize(c.n + ' ' + c.st + ' ' + c.ci + ' ' + c.pk);
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+function seniorityLabel(s) {
+  const map = {senior:'SENIOR', ssr:'SSr', junior:'JUNIOR', 'tech lead':'TECH LEAD', architect:'ARCHITECT', director:'DIRECTOR', manager:'MANAGER', 'No especificado':'—'};
+  return map[s] || s.toUpperCase();
+}
+
+function renderCard(c) {
+  const hasLink = c.dl && c.dl.startsWith('http');
+  return `<div class="card${c.vt ? ' vt-approved' : ''}">
+    <div class="card-top">
+      <div class="card-name">${c.n}</div>
+      ${c.vt ? '<span class="badge-vt">✓ VT</span>' : ''}
+    </div>
+    <div class="card-meta">
+      <span class="tag-country ${c.co}">${c.co === 'AR' ? '🇦🇷 ARG' : '🇪🇸 ESP'}</span>
+      <span class="tag seniority">${seniorityLabel(c.sr)}</span>
+      ${c.pk ? `<span class="tag profile">${c.pk}</span>` : ''}
+    </div>
+    ${c.st ? `<div class="card-stack">${c.st}</div>` : ''}
+    ${c.ci ? `<div class="card-city">${c.ci}</div>` : ''}
+    <a class="card-link${hasLink ? '' : ' no-link'}" ${hasLink ? `href="${c.dl}" target="_blank" rel="noopener"` : ''}>
+      ${hasLink ? 'Ver CV →' : 'Sin CV'}
+    </a>
+  </div>`;
+}
+
+function render() {
+  const visible = getVisible();
+  document.getElementById('visible-count').textContent = visible.length;
+
+  const main = document.getElementById('catalog-main');
+
+  if (visible.length === 0) {
+    main.innerHTML = `<div class="catalog-section"><div class="empty-state"><h2>Sin resultados</h2><p>Ajustá los filtros para ver candidatos disponibles.</p></div></div>`;
+    return;
+  }
+
+  // Group by tech
+  const byTech = {};
+  visible.forEach(c => {
+    if (!byTech[c.t]) byTech[c.t] = [];
+    byTech[c.t].push(c);
+  });
+
+  // Sort tech by count
+  const techs = Object.keys(byTech).sort((a, b) => byTech[b].length - byTech[a].length);
+
+  let html = '';
+  techs.forEach(tech => {
+    const candidates = byTech[tech];
+    const vtCount = candidates.filter(c => c.vt).length;
+    const arCount = candidates.filter(c => c.co === 'AR').length;
+    const esCount = candidates.filter(c => c.co === 'ES').length;
+
+    html += `<div class="catalog-section">
+      <div class="section-header">
+        <div class="section-tech">${tech}</div>
+        <div class="section-count">${candidates.length}</div>
+        <div class="section-vt">✓ ${vtCount} VT APROBADOS · 🇦🇷 ${arCount} · 🇪🇸 ${esCount}</div>
+      </div>
+      <div class="cards-grid">
+        ${candidates.map(renderCard).join('')}
+      </div>
+    </div>`;
+  });
+
+  main.innerHTML = html;
+}
+
+// Filter logic
+document.querySelectorAll('[data-country]').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('[data-country]').forEach(e => e.classList.remove('active'));
+    el.classList.add('active');
+    activeCountry = el.dataset.country;
+    render();
+  });
+});
+
+document.querySelectorAll('[data-tech]').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('[data-tech]').forEach(e => e.classList.remove('active'));
+    el.classList.add('active');
+    activeTech = el.dataset.tech;
+    render();
+  });
+});
+
+document.querySelectorAll('[data-seniority]').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('[data-seniority]').forEach(e => e.classList.remove('active'));
+    el.classList.add('active');
+    activeSeniority = el.dataset.seniority;
+    render();
+  });
+});
+
+document.querySelectorAll('[data-vt]').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('[data-vt]').forEach(e => e.classList.remove('active'));
+    el.classList.add('active');
+    activeVt = el.dataset.vt;
+    render();
+  });
+});
+
+let searchTimer;
+document.getElementById('search-input').addEventListener('input', e => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    searchQuery = e.target.value.trim();
+    render();
+  }, 200);
+});
+
+render();
+</script>
+</body>
+</html>
