@@ -387,18 +387,17 @@
 
   <div class="analytics-grid">
 
-    <!-- CHART 1: Candidatos por tecnología x país -->
-    <div class="chart-block">
-      <div class="chart-title">CANDIDATOS POR TECNOLOGÍA <span>× PAÍS</span></div>
-      <div class="chart-subtitle">TOTAL DE CANDIDATOS DISPONIBLES · ARGENTINA VS ESPAÑA</div>
-      <div class="chart-legend">
-        <div class="legend-item"><div class="legend-dot" style="background:var(--ar-color)"></div>Argentina – Total</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--ar-vt)"></div>Argentina – VT ✓</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--es-color)"></div>España – Total</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--es-vt)"></div>España – VT ✓</div>
+    <!-- CHART 1: VT aprobados por país — dos gráficos separados -->
+    <div class="two-col">
+      <div class="chart-block">
+        <div class="chart-title" style="color:var(--ar-color)">🇦🇷 ARGENTINA</div>
+        <div class="chart-subtitle">VT APROBADOS POR TECNOLOGÍA · ORDENADOS POR CANTIDAD</div>
+        <div id="chart-ar"></div>
       </div>
-      <div class="bar-chart-wrap">
-        <div class="bar-chart" id="main-bar-chart"></div>
+      <div class="chart-block">
+        <div class="chart-title" style="color:var(--es-color)">🇪🇸 ESPAÑA</div>
+        <div class="chart-subtitle">VT APROBADOS POR TECNOLOGÍA · ORDENADOS POR CANTIDAD</div>
+        <div id="chart-es"></div>
       </div>
     </div>
 
@@ -427,15 +426,6 @@
         <div class="chart-title">PERFILES <span>🇪🇸 ESP</span></div>
         <div class="chart-subtitle">TOP TIPOS DE PERFIL DISPONIBLES</div>
         <div class="hbar-chart" id="hbar-es"></div>
-      </div>
-    </div>
-
-    <!-- CHART 4: VT Rate by tech -->
-    <div class="chart-block">
-      <div class="chart-title">TASA DE <span>VT APROBADA</span> POR TECNOLOGÍA</div>
-      <div class="chart-subtitle">% DE CANDIDATOS CON VALIDACIÓN TÉCNICA APROBADA · COMBINADO AR + ES</div>
-      <div class="bar-chart-wrap">
-        <div class="bar-chart" id="vt-rate-chart"></div>
       </div>
     </div>
 
@@ -554,69 +544,32 @@ function renderAnalytics() {
   if (analyticsRendered) return;
   analyticsRendered = true;
 
-  // 1. MAIN BAR CHART: tech x country
+  // 1. COUNTRY CHARTS: separate horizontal bars per country, VT only
   const techData = ANALYTICS.techByCountry;
-  const maxVal = Math.max(...techData.map(d => Math.max(d.AR, d.ES)));
-  const chartHeight = 210;
 
-  const mainChart = document.getElementById('main-bar-chart');
-  mainChart.innerHTML = techData.map(d => {
-    const arH  = Math.max(3, Math.round((d.AR / maxVal) * chartHeight));
-    const arVH = Math.max(0, Math.round((d.vt_AR / maxVal) * chartHeight));
-    const esH  = Math.max(3, Math.round((d.ES / maxVal) * chartHeight));
-    const esVH = Math.max(0, Math.round((d.vt_ES / maxVal) * chartHeight));
-    return `<div class="bar-group">
-      <div class="bar-group-bars">
-        <div class="bar-wrap">
-          <div class="bar ar-total" style="height:${arH}px" title="AR Total: ${d.AR}">
-            <span class="bar-val">${d.AR||''}</span>
-          </div>
+  function renderCountryBars(containerId, field, color) {
+    const sorted = [...techData]
+      .filter(d => d[field] > 0)
+      .sort((a, b) => b[field] - a[field]);
+    const maxVal = sorted[0][field];
+    const el = document.getElementById(containerId);
+    el.style.cssText = 'display:flex;flex-direction:column;gap:8px;margin-top:8px;';
+    el.innerHTML = sorted.map(d => {
+      const pct = Math.round((d[field] / maxVal) * 100);
+      return `<div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:110px;flex-shrink:0;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--white2);">${d.tech}</div>
+        <div style="flex:1;display:flex;align-items:center;gap:8px;">
+          <div style="width:${pct}%;height:30px;background:${color};min-width:4px;"></div>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--white);flex-shrink:0;">${d[field]}</span>
         </div>
-        <div class="bar-wrap">
-          <div class="bar ar-vt" style="height:${arVH}px" title="AR VT: ${d.vt_AR}">
-            ${arVH>14?`<span class="bar-val">${d.vt_AR}</span>`:''}
-          </div>
-        </div>
-        <div class="bar-wrap">
-          <div class="bar es-total" style="height:${esH}px" title="ES Total: ${d.ES}">
-            <span class="bar-val">${d.ES||''}</span>
-          </div>
-        </div>
-        <div class="bar-wrap">
-          <div class="bar es-vt" style="height:${esVH}px" title="ES VT: ${d.vt_ES}">
-            ${esVH>14?`<span class="bar-val">${d.vt_ES}</span>`:''}
-          </div>
-        </div>
-      </div>
-      <div class="bar-group-label">${d.tech}</div>
-    </div>`;
-  }).join('');
+      </div>`;
+    }).join('');
+  }
 
-  // 2. VT RATE CHART
-  const vtChart = document.getElementById('vt-rate-chart');
-  const rateData = techData
-    .map(d => ({ tech: d.tech, total: d.AR+d.ES, vt: d.vt_AR+d.vt_ES }))
-    .filter(d => d.total >= 3)
-    .sort((a,b) => (b.vt/b.total)-(a.vt/a.total));
-  const maxPct = 100;
-  const rateHeight = 200;
-  vtChart.innerHTML = rateData.map(d => {
-    const pct = Math.round((d.vt/d.total)*100);
-    const h = Math.max(4, Math.round((pct/maxPct)*rateHeight));
-    const color = pct>=80?'#e02020':pct>=60?'#e06020':'#555';
-    return `<div class="bar-group">
-      <div class="bar-group-bars">
-        <div class="bar-wrap">
-          <div class="bar" style="height:${h}px;background:${color};width:36px" title="${pct}%">
-            <span class="bar-val">${pct}%</span>
-          </div>
-        </div>
-      </div>
-      <div class="bar-group-label">${d.tech}<br><span style="color:var(--white3);font-weight:400">${d.vt}/${d.total}</span></div>
-    </div>`;
-  }).join('');
+  renderCountryBars('chart-ar', 'vt_AR', 'var(--ar-color)');
+  renderCountryBars('chart-es', 'vt_ES', 'var(--es-color)');
 
-  // 3. SENIORITY DONUTS
+  // 2. SENIORITY DONUTS
   function renderDonut(containerId, senData, color, total) {
     const container = document.getElementById(containerId);
     const senColors = {senior:'#e02020', ssr:'#1e88e5', junior:'#43a047', 'tech lead':'#f9a825', architect:'#8e24aa', 'No especificado':'#555', manager:'#777', 'team lead':'#777'};
@@ -663,7 +616,7 @@ function renderAnalytics() {
   renderDonut('donut-ar', ANALYTICS.seniorityAR, 'var(--ar-color)');
   renderDonut('donut-es', ANALYTICS.seniorityES, 'var(--es-color)');
 
-  // 4. HORIZONTAL BAR CHARTS
+  // 3. HORIZONTAL BAR CHARTS
   function renderHBar(containerId, profileData, colorClass) {
     const container = document.getElementById(containerId);
     const maxV = Math.max(...profileData.map(d=>d.v));
