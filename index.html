@@ -9,27 +9,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --red: #CC0000;
-  --red-dark: #990000;
-  --red-dim: rgba(204,0,0,0.12);
-  --red-dim2: rgba(204,0,0,0.22);
-  --black: #0a0a0a;
-  --black2: #141414;
-  --black3: #1c1c1c;
-  --black4: #242424;
+  --red: #D62F2F;
+  --red-dark: #A82323;
+  --red-dim: rgba(214,47,47,0.08);
+  --red-dim2: rgba(214,47,47,0.18);
+  --black: #1A1A1A;
+  --ink: #1A1A1A;
   --white: #ffffff;
-  --white2: #f5f5f5;
-  --gray: #999999;
-  --gray2: #666666;
-  --border: rgba(255,255,255,0.08);
-  --border2: rgba(255,255,255,0.15);
+  --offwhite: #F7F5F2;
+  --panel: #ffffff;
+  --panel2: #F7F5F2;
+  --panel3: #EFECE6;
+  --gray: #6B6B6B;
+  --gray2: #4A4A4A;
+  --border: rgba(26,26,26,0.10);
+  --border2: rgba(26,26,26,0.18);
   --radius: 8px;
   --radius-lg: 12px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  background: var(--black);
-  color: var(--white);
+  background: var(--offwhite);
+  color: var(--ink);
   font-family: 'DM Sans', sans-serif;
   font-size: 15px;
   min-height: 100vh;
@@ -37,7 +38,7 @@ body {
 
 /* HEADER */
 header {
-  background: var(--black2);
+  background: var(--white);
   border-bottom: 1px solid var(--border);
   padding: 0 2rem;
   display: flex;
@@ -53,15 +54,15 @@ header {
   font-weight: 800;
   font-size: 18px;
   letter-spacing: -.02em;
-  color: var(--white);
+  color: var(--ink);
   display: flex;
   align-items: center;
   gap: 10px;
 }
 .logo-accent { color: var(--red); }
 .logo-bar {
-  width: 3px;
-  height: 20px;
+  width: 4px;
+  height: 22px;
   background: var(--red);
   border-radius: 2px;
 }
@@ -70,7 +71,7 @@ header {
   gap: 8px;
 }
 .hpill {
-  background: var(--black4);
+  background: var(--panel2);
   border: 1px solid var(--border);
   border-radius: 20px;
   padding: 4px 12px;
@@ -78,11 +79,11 @@ header {
   color: var(--gray);
   letter-spacing: .03em;
 }
-.hpill strong { color: var(--red); font-weight: 500; }
+.hpill strong { color: var(--red); font-weight: 600; }
 
 /* HERO */
 .hero {
-  background: var(--black2);
+  background: var(--white);
   border-bottom: 1px solid var(--border);
   padding: 2.5rem 2rem 2rem;
   position: relative;
@@ -92,8 +93,8 @@ header {
   content: '';
   position: absolute;
   top: -60px; right: -60px;
-  width: 300px; height: 300px;
-  background: radial-gradient(circle, rgba(204,0,0,0.08) 0%, transparent 70%);
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(214,47,47,0.06) 0%, transparent 70%);
   pointer-events: none;
 }
 .hero h1 {
@@ -103,7 +104,7 @@ header {
   letter-spacing: -.03em;
   line-height: 1.1;
   margin-bottom: .6rem;
-  color: var(--white);
+  color: var(--ink);
 }
 .hero h1 span { color: var(--red); }
 .hero p {
@@ -117,7 +118,7 @@ header {
 /* STATS BAR */
 .stats-bar {
   display: flex;
-  background: var(--black2);
+  background: var(--white);
   border-bottom: 1px solid var(--border);
   overflow-x: auto;
 }
@@ -129,7 +130,7 @@ header {
   transition: background .15s;
 }
 .stat-item:last-child { border-right: none; }
-.stat-item:hover { background: var(--black3); }
+.stat-item:hover { background: var(--panel2); }
 .stat-val {
   font-family: 'Syne', sans-serif;
   font-size: 26px;
@@ -140,7 +141,7 @@ header {
 }
 .stat-label {
   font-size: 10px;
-  color: var(--gray2);
+  color: var(--gray);
   text-transform: uppercase;
   letter-spacing: .1em;
 }
@@ -152,7 +153,7 @@ header {
 .sidebar {
   width: 230px;
   flex-shrink: 0;
-  background: var(--black2);
+  background: var(--white);
   border-right: 1px solid var(--border);
   padding: 1.25rem;
   display: flex;
@@ -163,9 +164,9 @@ header {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: .1em;
-  color: var(--gray2);
+  color: var(--gray);
   margin-bottom: 7px;
-  font-weight: 500;
+  font-weight: 600;
 }
 .search-wrap { position: relative; }
 .search-wrap svg {
@@ -173,54 +174,54 @@ header {
   left: 10px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--gray2);
+  color: var(--gray);
   pointer-events: none;
 }
 input[type=text] {
   width: 100%;
-  background: var(--black3);
+  background: var(--panel2);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 8px 10px 8px 34px;
-  color: var(--white);
+  color: var(--ink);
   font-family: 'DM Sans', sans-serif;
   font-size: 13px;
   outline: none;
   transition: border-color .2s;
 }
 input[type=text]:focus { border-color: var(--red); }
-input[type=text]::placeholder { color: var(--gray2); }
+input[type=text]::placeholder { color: var(--gray); }
 
 select {
   width: 100%;
-  background: var(--black3);
+  background: var(--panel2);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 8px 28px 8px 10px;
-  color: var(--white);
+  color: var(--ink);
   font-family: 'DM Sans', sans-serif;
   font-size: 13px;
   outline: none;
   cursor: pointer;
   transition: border-color .2s;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B6B6B' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 10px center;
 }
 select:focus { border-color: var(--red); }
-select option { background: #1c1c1c; }
+select option { background: #ffffff; }
 
 .tech-pills { display: flex; flex-wrap: wrap; gap: 5px; }
 .tp {
   font-size: 11px;
   padding: 3px 9px;
   border-radius: 20px;
-  border: 1px solid var(--border);
-  color: var(--gray);
+  border: 1px solid var(--border2);
+  color: var(--gray2);
   cursor: pointer;
   transition: all .15s;
-  background: transparent;
+  background: var(--white);
   font-family: 'DM Sans', sans-serif;
 }
 .tp:hover { border-color: var(--red); color: var(--red); }
@@ -228,10 +229,10 @@ select option { background: #1c1c1c; }
 
 .ibex-btn {
   width: 100%;
-  background: transparent;
+  background: var(--white);
   border: 1px solid var(--border2);
   border-radius: var(--radius);
-  color: var(--gray);
+  color: var(--gray2);
   font-family: 'DM Sans', sans-serif;
   font-size: 12px;
   padding: 9px 12px;
@@ -242,13 +243,13 @@ select option { background: #1c1c1c; }
   gap: 8px;
   text-align: left;
 }
-.ibex-btn:hover { border-color: #c8a800; color: #f0cc00; }
-.ibex-btn.active { background: rgba(200,168,0,0.12); border-color: #c8a800; color: #f0cc00; }
+.ibex-btn:hover { border-color: #c8a800; color: #a88600; }
+.ibex-btn.active { background: rgba(200,168,0,0.10); border-color: #c8a800; color: #a88600; }
 .ibex-logo {
   font-family: 'Syne', sans-serif;
   font-weight: 800;
   font-size: 13px;
-  color: #c8a800;
+  color: #b3950a;
   letter-spacing: -.02em;
   white-space: nowrap;
 }
@@ -258,8 +259,8 @@ select option { background: #1c1c1c; }
   font-weight: 700;
   padding: 1px 5px;
   border-radius: 3px;
-  background: rgba(200,168,0,0.2);
-  color: #f0cc00;
+  background: rgba(200,168,0,0.15);
+  color: #8a7000;
   border: 1px solid rgba(200,168,0,0.4);
   letter-spacing: .04em;
   margin-left: auto;
@@ -292,7 +293,7 @@ main { flex: 1; padding: 1.25rem; }
   margin-bottom: 1rem;
 }
 .results-count { font-size: 13px; color: var(--gray); }
-.results-count strong { color: var(--white); }
+.results-count strong { color: var(--ink); }
 
 .grid {
   display: grid;
@@ -302,23 +303,24 @@ main { flex: 1; padding: 1.25rem; }
 
 /* CARD */
 .card {
-  background: var(--black2);
+  background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 1.1rem 1.2rem;
-  transition: border-color .2s, transform .15s;
+  transition: border-color .2s, transform .15s, box-shadow .2s;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 1px 2px rgba(26,26,26,0.04);
 }
 .card::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 2px;
+  height: 3px;
   background: transparent;
   transition: background .2s;
 }
-.card:hover { border-color: rgba(204,0,0,0.4); transform: translateY(-1px); }
+.card:hover { border-color: rgba(214,47,47,0.35); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(26,26,26,0.08); }
 .card:hover::before { background: var(--red); }
 
 .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
@@ -326,7 +328,7 @@ main { flex: 1; padding: 1.25rem; }
   font-family: 'Syne', sans-serif;
   font-size: 14px;
   font-weight: 700;
-  color: var(--white);
+  color: var(--ink);
   line-height: 1.3;
   display: flex;
   align-items: center;
@@ -339,10 +341,10 @@ main { flex: 1; padding: 1.25rem; }
   border-radius: 20px;
   white-space: nowrap;
   flex-shrink: 0;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: .02em;
   background: var(--red-dim);
-  color: #ff6666;
+  color: var(--red-dark);
   border: 1px solid var(--red-dim2);
 }
 .card-desc {
@@ -350,12 +352,12 @@ main { flex: 1; padding: 1.25rem; }
   color: var(--gray);
   line-height: 1.6;
   margin-bottom: 10px;
-  font-weight: 300;
+  font-weight: 400;
 }
 .card-meta { display: flex; gap: 12px; margin-bottom: 10px; }
 .meta-item {
   font-size: 11px;
-  color: var(--gray2);
+  color: var(--gray);
   display: flex;
   align-items: center;
   gap: 4px;
@@ -366,14 +368,14 @@ main { flex: 1; padding: 1.25rem; }
   font-size: 10px;
   padding: 2px 7px;
   border-radius: 4px;
-  background: var(--black4);
-  color: var(--gray);
+  background: var(--panel2);
+  color: var(--gray2);
   border: 1px solid var(--border);
   cursor: pointer;
   transition: all .12s;
 }
-.tag:hover{border-color:var(--red);color:var(--red)}
-.tag.hl { background: var(--red-dim); border-color: var(--red-dim2); color: #ff6666; }
+.tag:hover { border-color: var(--red); color: var(--red); }
+.tag.hl { background: var(--red-dim); border-color: var(--red-dim2); color: var(--red-dark); }
 
 .card-actions {
   display: flex;
@@ -399,24 +401,24 @@ main { flex: 1; padding: 1.25rem; }
   border: 1px solid var(--border);
 }
 .btn-li {
-  background: transparent;
-  color: var(--gray);
+  background: var(--panel2);
+  color: var(--gray2);
   border-color: var(--border);
 }
 .btn-li:hover {
-  background: rgba(10,102,194,0.15);
-  border-color: rgba(10,102,194,0.5);
-  color: #5badff;
+  background: rgba(10,102,194,0.08);
+  border-color: rgba(10,102,194,0.4);
+  color: #0a66c2;
 }
 .btn-search {
   background: var(--red-dim);
-  color: #ff6666;
+  color: var(--red-dark);
   border-color: var(--red-dim2);
 }
 .btn-search:hover {
-  background: rgba(204,0,0,0.25);
-  border-color: rgba(204,0,0,0.5);
-  color: #ff4444;
+  background: rgba(214,47,47,0.18);
+  border-color: rgba(214,47,47,0.45);
+  color: var(--red-dark);
 }
 .card-role {
   font-size: 11px;
@@ -431,7 +433,7 @@ main { flex: 1; padding: 1.25rem; }
 .role-label {
   color: var(--red);
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 600;
   white-space: nowrap;
   text-transform: uppercase;
   letter-spacing: .04em;
@@ -441,13 +443,13 @@ main { flex: 1; padding: 1.25rem; }
   grid-column: 1/-1;
   text-align: center;
   padding: 4rem 2rem;
-  color: var(--gray2);
+  color: var(--gray);
 }
 .no-results h3 {
   font-family: 'Syne', sans-serif;
   font-size: 18px;
   margin-bottom: 6px;
-  color: var(--white);
+  color: var(--ink);
 }
 .no-results p { font-size: 13px; }
 
@@ -459,8 +461,8 @@ footer {
   align-items: center;
   justify-content: space-between;
   font-size: 12px;
-  color: var(--gray2);
-  background: var(--black2);
+  color: var(--gray);
+  background: var(--white);
 }
 footer span strong { color: var(--red); }
 
@@ -492,15 +494,15 @@ footer span strong { color: var(--red); }
     Tech<span class="logo-accent">Dir</span>&nbsp;España
   </div>
   <div class="header-pills">
-    <div class="hpill"><strong>112</strong> empresas</div>
+    <div class="hpill"><strong>142</strong> empresas</div>
     <div class="hpill">IBEX <strong>35</strong> incluido</div>
-    <div class="hpill">Perfiles IT · <strong>2026</strong></div>
+    <div class="hpill">Perfiles IT · <strong>2025</strong></div>
   </div>
 </header>
 
 <div class="hero">
   <h1>Directorio de Empresas<br><span>Tech</span> en España</h1>
-  <p>Empresas medianas y grandes que demandan perfiles IT. Filtrá por industria, IBEX35, tecnología y ciudad.</p>
+  <p>50 empresas medianas y grandes que demandan perfiles IT. Filtrá por industria, tecnología y ciudad.</p>
 </div>
 
 <div class="stats-bar">
@@ -545,6 +547,7 @@ footer span strong { color: var(--red); }
         <option value="">Todos los tamaños</option>
         <option value="grande">Grande (+10.000 empleados)</option>
         <option value="mediana">Mediana (1.000–10.000)</option>
+        <option value="pequeña">Pequeña (-1.000)</option>
       </select>
     </div>
 
@@ -700,6 +703,36 @@ const DATA = [
   {n:"Sacyr",s:"industria",city:"Madrid",size:"grande",ibex:true,desc:"Grupo de concesiones e infraestructuras presente en más de 20 países. Digitalización de obra civil, BIM, gestión de concesiones y plataformas de smart mobility.",t:["Java","Python",".NET","DevOps","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/sacyr/",role:"IT Sourcing / Director de Transformación Digital"},
   {n:"Solaria",s:"energia",city:"Madrid",size:"mediana",ibex:true,desc:"Empresa española de energía solar fotovoltaica de rápido crecimiento. Plataformas de monitorización de plantas solares, IA para optimización de producción.",t:["Python","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/solaria-energia-y-medio-ambiente/",role:"CTO / Head of Digital Operations"},
   {n:"Unicaja Banco",s:"banca",city:"Málaga",size:"mediana",ibex:true,desc:"Banco mediano con fuerte presencia en Andalucía y Castilla y León. Modernización del core bancario, banca digital y plataformas de atención al cliente.",t:["Java",".NET","Python","DevOps","QA","Murex","PM","BI Developer"],li:"https://www.linkedin.com/company/unicaja-banco/",role:"IT Sourcing / Responsable de Transformación Digital"},
+  {n:"Bluetab",s:"consulting",city:"Madrid",size:"pequeña",desc:"Consultora especializada en arquitectura de datos, cloud y analítica avanzada. Partner de IBM y referente en proyectos de data platform para banca y telecomunicaciones.",t:["Python","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/bluetab/",role:"Head of Data / Data Engineering Lead"},
+  {n:"Paradigma Digital",s:"consulting",city:"Madrid",size:"pequeña",desc:"Consultora digital española con foco en agilidad, cloud y transformación de producto. Conocida por su cultura técnica y proyectos de alto impacto en retail y banca.",t:["Java","Python","React","Angular","DevOps","QA","PM"],li:"https://www.linkedin.com/company/paradigma-digital/",role:"CTO / Head of Engineering"},
+  {n:"Serbatic",s:"consulting",city:"Madrid",size:"pequeña",desc:"Empresa tecnológica especializada en servicios IT gestionados, ciberseguridad y transformación digital para grandes cuentas del sector público y privado.",t:["Java",".NET","Python","DevOps","QA","PM","BI Developer"],li:"https://www.linkedin.com/company/serbatic/",role:"IT Manager / Delivery Lead"},
+  {n:"Seidor",s:"consulting",city:"Barcelona",size:"mediana",desc:"Partner global de SAP con más de 3.000 empleados. Implementaciones ERP, transformación digital y servicios cloud para medianas y grandes empresas.",t:["Java",".NET","Python","DevOps","QA","PM","BI Developer"],li:"https://www.linkedin.com/company/seidor/",role:"SAP Practice Lead / IT Resourcing Manager"},
+  {n:"Babel",s:"consulting",city:"Madrid",size:"pequeña",desc:"Consultora tecnológica española con más de 20 años. Proyectos de desarrollo, integración y transformación digital para banca, seguros y sector público.",t:["Java",".NET","Python","Angular","DevOps","QA","PM"],li:"https://www.linkedin.com/company/babel-sistemas-de-informacion/",role:"Responsable de Proyectos / IT Staffing Manager"},
+  {n:"Hiberus",s:"consulting",city:"Zaragoza",size:"pequeña",desc:"Empresa tecnológica aragonesa con presencia nacional. Consultoría, desarrollo de software y transformación digital para sectores como retail, salud y banca.",t:["Java","Python","React","Angular","DevOps","QA","PM"],li:"https://www.linkedin.com/company/hiberus/",role:"Director de Proyectos / Head of Engineering"},
+  {n:"Neoris",s:"consulting",city:"Madrid",size:"mediana",desc:"Consultora tecnológica global con fuerte presencia en España y Latinoamérica. Digital transformation, cloud y agile para grandes corporaciones industriales.",t:["Java","Python",".NET","React","DevOps","QA","PM","Data Engineer"],li:"https://www.linkedin.com/company/neoris/",role:"Delivery Manager / IT Resourcing Lead"},
+  {n:"Devoteam",s:"consulting",city:"Madrid",size:"mediana",desc:"Consultora tecnológica europea centrada en cloud, ciberseguridad y IA. Partner de Google Cloud y AWS con proyectos en banca, retail y sector público.",t:["Python","Java","React","DevOps","QA","IA","PM","Data Engineer"],li:"https://www.linkedin.com/company/devoteam/",role:"Cloud Practice Lead / IT Sourcing Manager"},
+  {n:"Plain Concepts",s:"consulting",city:"Madrid",size:"pequeña",desc:"Consultora de innovación tecnológica especializada en Microsoft Azure, IA y desarrollo de software. Proyectos de transformación digital en Europa.",t:["Python",".NET","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/plain-concepts/",role:"CTO / Head of Engineering"},
+  {n:"Berger-Levrault España",s:"consulting",city:"Barcelona",size:"pequeña",desc:"Filial española del grupo francés especializado en software para administración pública. Gestión municipal, sanidad y educación.",t:["Java",".NET","Python","Angular","DevOps","QA","PM"],li:"https://www.linkedin.com/company/berger-levrault/",role:"IT Manager / Head of Product"},
+  {n:"Bitnami",s:"fintech",city:"Sevilla",size:"pequeña",desc:"Empresa sevillana de software con proyectos globales de distribución de aplicaciones cloud. Adquirida por VMware, mantiene equipo en España.",t:["Python","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/bitnami/",role:"Engineering Manager / Head of DevOps"},
+  {n:"Carto",s:"fintech",city:"Madrid",size:"pequeña",desc:"Plataforma SaaS de análisis de datos geoespaciales. Usada por empresas del Fortune 500 para inteligencia de ubicación y análisis de datos territoriales.",t:["Python","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/carto/",role:"CTO / Head of Engineering"},
+  {n:"Travelperk",s:"fintech",city:"Barcelona",size:"mediana",desc:"Plataforma SaaS de gestión de viajes corporativos. Unicornio español con más de 1.200 empleados y fuerte equipo de ingeniería en Barcelona.",t:["Python","React","DevOps","QA","IA","PM","Data Engineer"],li:"https://www.linkedin.com/company/travelperk/",role:"Engineering Manager / Technical Recruiter"},
+  {n:"Typeform",s:"fintech",city:"Barcelona",size:"pequeña",desc:"Plataforma SaaS de formularios y encuestas interactivas. Producto global con equipo de ingeniería en Barcelona y fuerte cultura de producto digital.",t:["Python","React","DevOps","QA","PM","Data Engineer"],li:"https://www.linkedin.com/company/typeform/",role:"Engineering Manager / Head of Product"},
+  {n:"Factorial HR",s:"fintech",city:"Barcelona",size:"pequeña",desc:"Startup española de software HR en hipercrecimiento. Plataforma de gestión de RRHH para pymes con más de 7.000 clientes en Europa.",t:["Python","React","DevOps","QA","IA","PM","Data Engineer"],li:"https://www.linkedin.com/company/factorial-hr/",role:"CTO / Engineering Manager"},
+  {n:"Holded",s:"fintech",city:"Barcelona",size:"pequeña",desc:"Software de gestión empresarial (ERP) para pymes en la nube. Plataforma de contabilidad, facturación e inventario con fuerte crecimiento en España.",t:["Python","React","DevOps","QA","PM"],li:"https://www.linkedin.com/company/holded/",role:"CTO / Head of Product"},
+  {n:"Sesame HR",s:"fintech",city:"Valencia",size:"pequeña",desc:"Plataforma de gestión de personas y control horario para pymes. En fuerte crecimiento con presencia en más de 80 países.",t:["Python","React","DevOps","QA","PM"],li:"https://www.linkedin.com/company/sesame-hr/",role:"CTO / Head of Engineering"},
+  {n:"Lanzadera",s:"consulting",city:"Valencia",size:"pequeña",desc:"Aceleradora de startups tecnológicas impulsada por Juan Roig (Mercadona). Ecosistema de más de 300 startups con alta demanda de perfiles técnicos.",t:["Python","React","DevOps","QA","IA","PM","Data Engineer"],li:"https://www.linkedin.com/company/lanzadera/",role:"CTO / Head of Engineering"},
+  {n:"Packlink",s:"logistica",city:"Madrid",size:"pequeña",desc:"Plataforma de comparación y gestión de envíos para ecommerce y pymes. Adquirida por Auctane, mantiene su sede y equipo tecnológico en Madrid.",t:["Java","Python","React","DevOps","QA","PM","Data Engineer"],li:"https://www.linkedin.com/company/packlink/",role:"Engineering Manager / Head of Product"},
+  {n:"Stuart",s:"logistica",city:"Barcelona",size:"pequeña",desc:"Plataforma de última milla para retail y ecommerce. Logística urbana con algoritmos de optimización de rutas e IA aplicada al reparto.",t:["Python","React","DevOps","QA","IA","PM","Data Engineer"],li:"https://www.linkedin.com/company/stuart-delivery/",role:"Engineering Manager / Head of Operations Tech"},
+  {n:"Multiverse Computing",s:"consulting",city:"San Sebastián",size:"pequeña",desc:"Empresa española pionera en computación cuántica aplicada a finanzas, energía y logística. Alta demanda de perfiles de software avanzado e IA.",t:["Python","DevOps","QA","IA","PM","Data Engineer"],li:"https://www.linkedin.com/company/multiverse-computing/",role:"CTO / Head of Quantum Engineering"},
+  {n:"Nextail",s:"retail",city:"Madrid",size:"pequeña",desc:"Startup de IA para retail. Plataforma de optimización de inventario y merchandising usada por grandes cadenas de moda como Pepe Jeans y Tendam.",t:["Python","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/nextail/",role:"CTO / Head of Data Science"},
+  {n:"Coverfy",s:"seguros",city:"Madrid",size:"pequeña",desc:"Insurtech española especializada en la gestión digital de seguros personales. Plataforma de agregación y gestión de pólizas con fuerte componente tecnológico.",t:["Python","React","DevOps","QA","PM"],li:"https://www.linkedin.com/company/coverfy/",role:"CTO / Head of Product"},
+  {n:"Bdeo",s:"seguros",city:"Madrid",size:"pequeña",desc:"Startup de IA visual para el sector asegurador. Automatización de peritaciones y gestión de siniestros mediante visión artificial.",t:["Python","React","DevOps","QA","IA","PM","Data Engineer"],li:"https://www.linkedin.com/company/bdeo/",role:"CTO / Head of AI Engineering"},
+  {n:"Clarity AI",s:"fintech",city:"Madrid",size:"pequeña",desc:"Plataforma de análisis de sostenibilidad e impacto ESG para inversores institucionales. IA aplicada a datos financieros y medioambientales.",t:["Python","React","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/clarity-ai/",role:"CTO / Head of Data Engineering"},
+  {n:"Nuclio Venture Builder",s:"consulting",city:"Barcelona",size:"pequeña",desc:"Builder de startups tecnológicas con foco en IA, fintech y proptech. Crea y acelera empresas digitales con equipos de ingeniería propios.",t:["Python","React","DevOps","QA","IA","PM"],li:"https://www.linkedin.com/company/nuclio/",role:"CTO / Head of Engineering"},
+  {n:"Singular Bank",s:"banca",city:"Madrid",size:"pequeña",desc:"Banco privado digital con foco en gestión patrimonial y banca de inversión. Plataforma 100% digital con alta demanda de perfiles fintech y data.",t:["Java","Python","React","DevOps","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/singular-bank/",role:"CTO / Head of Digital"},
+  {n:"Fintonic",s:"fintech",city:"Madrid",size:"pequeña",desc:"App de finanzas personales y comparador de productos financieros. Plataforma open banking con análisis de datos financieros y motor de recomendaciones.",t:["Python","React","DevOps","QA","IA","PM","Data Engineer"],li:"https://www.linkedin.com/company/fintonic/",role:"CTO / Head of Product"},
+  {n:"Deyde",s:"consulting",city:"Madrid",size:"pequeña",desc:"Empresa española de calidad del dato, marketing data y soluciones de información empresarial. Proyectos de data quality y master data management.",t:["Python",".NET","DevOps","QA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/deyde/",role:"Head of Data / IT Manager"},
+  {n:"Telefónica Tech",s:"consulting",city:"Madrid",size:"mediana",desc:"Filial tecnológica de Telefónica especializada en ciberseguridad, cloud e IoT. Servicios gestionados de tecnología para grandes empresas y sector público.",t:["Java","Python",".NET","DevOps","QA","IA","PM","Data Engineer","BI Developer"],li:"https://www.linkedin.com/company/telefonica-tech/",role:"IT Sourcing / Delivery Manager"},
 ];
 
 let activeTechs = new Set();
@@ -782,7 +815,7 @@ function render() {
         </span>
         <span class="meta-item">
           <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          ${d.size==='grande'?'+10k emp.':'1k–10k emp.'}
+          ${d.size==='grande'?'+10k emp.':d.size==='mediana'?'1k–10k emp.':'-1k emp.'}
         </span>
       </div>
       <div class="card-tags">${d.t.map(t=>`<span class="tag${activeTechs.has(t)?' hl':''}" onclick="setTech('${t}')">${t}</span>`).join('')}</div>
