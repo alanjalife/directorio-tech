@@ -219,8 +219,8 @@
 
   /* HORIZONTAL BAR for profile */
   .hbar-chart { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
-  .hbar-row { display: flex; align-items: center; gap: 10px; }
-  .hbar-label { font-size: 11px; color: var(--white2); width: 120px; flex-shrink: 0; text-align: right; letter-spacing: 0.3px; }
+  .hbar-row { display: flex; align-items: center; gap: 16px; }
+  .hbar-label { font-size: 11px; color: var(--white2); width: 110px; min-width: 0; max-width: 110px; flex-shrink: 0; text-align: right; letter-spacing: 0.3px; white-space: normal; overflow-wrap: break-word; word-break: break-word; line-height: 1.3; box-sizing: border-box; }
   .hbar-track { flex: 1; height: 20px; background: var(--panel3); position: relative; border-radius: 3px; overflow: hidden; }
   .hbar-fill { height: 100%; transition: width 0.5s; }
   .hbar-fill.ar { background: var(--ar-color); }
@@ -515,15 +515,22 @@ function renderAnalytics() {
   // 1. COUNTRY CHARTS: total con VT overlay + Gen AI subtypes expandidos
   const techData = ANALYTICS.techByCountry;
 
+  const HYPHEN_MAP = {
+    'cybersecurity': 'Cyber Security',
+    'network engineer': 'Network Engineer',
+  };
+
   function renderBar(tech, total, maxVal, color, indent, isHeader) {
     if (total === 0) return '';
+    const displayTech = HYPHEN_MAP[tech.toLowerCase()] || tech;
     const totalPct = Math.round((total / maxVal) * 100);
     const labelColor = isHeader ? 'var(--white2)' : 'var(--white3)';
     const labelSize  = isHeader ? '13px' : '11px';
     const barHeight  = isHeader ? '30px' : '22px';
     const indentPx   = indent ? '16px' : '0px';
+    const labelWidth = indent ? 114 : 130; // 114+16=130, so bars align with header rows
     return `<div style="display:flex;align-items:center;gap:10px;padding-left:${indentPx};">
-      <div style="width:${indent?94:110}px;flex-shrink:0;text-align:right;font-family:'Syne',sans-serif;font-weight:700;font-size:${labelSize};letter-spacing:1px;text-transform:uppercase;color:${labelColor};">${tech}</div>
+      <div style="width:${labelWidth}px;flex-shrink:0;text-align:right;font-family:'Syne',sans-serif;font-weight:700;font-size:${labelSize};letter-spacing:1px;text-transform:uppercase;color:${labelColor};white-space:normal;overflow-wrap:break-word;word-break:break-word;line-height:1.25;">${displayTech}</div>
       <div style="flex:1;display:flex;align-items:center;gap:8px;">
         <div style="width:${totalPct}%;height:${barHeight};min-width:4px;background:${color};opacity:${isHeader?1:0.55};"></div>
         <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:${isHeader?'15px':'13px'};color:${isHeader?'var(--white)':'var(--white3)'};flex-shrink:0;">${total}</span>
@@ -609,14 +616,32 @@ function renderAnalytics() {
   function renderHBar(containerId, profileData, colorClass) {
     const container = document.getElementById(containerId);
     const maxV = Math.max(...profileData.map(d=>d.v));
-    container.innerHTML = profileData.map(d=>`
+    const KNOWN_BREAKS = {
+      'cybersecurity': 'cyber-<br>security',
+      'cloudengineer': 'cloud<br>engineer',
+    };
+    container.innerHTML = profileData.map(d=>{
+      let label = d.p;
+      const key = label.toLowerCase().replace(/\s+/g, '');
+      if (KNOWN_BREAKS[key]) {
+        label = KNOWN_BREAKS[key];
+      } else {
+        const words = label.split(' ');
+        if (words.length === 1 && words[0].length > 11) {
+          const w = words[0];
+          const mid = Math.ceil(w.length / 2);
+          label = w.slice(0, mid) + '-<br>' + w.slice(mid);
+        }
+      }
+      return `
       <div class="hbar-row">
-        <div class="hbar-label">${d.p}</div>
+        <div class="hbar-label">${label}</div>
         <div class="hbar-track">
           <div class="hbar-fill ${colorClass}" style="width:${Math.round((d.v/maxV)*100)}%"></div>
         </div>
         <div class="hbar-num">${d.v}</div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   }
   renderHBar('hbar-ar', ANALYTICS.profileAR, 'ar');
   renderHBar('hbar-es', ANALYTICS.profileES, 'es');
