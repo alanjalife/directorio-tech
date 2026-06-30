@@ -291,7 +291,167 @@ main { flex: 1; padding: 1.25rem; }
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 10px;
 }
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.export-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border2);
+  background: var(--white);
+  color: var(--gray2);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .15s;
+}
+.export-btn:hover {
+  background: rgba(34,139,69,0.08);
+  border-color: rgba(34,139,69,0.4);
+  color: #1f7a3d;
+}
+.view-toggle {
+  display: flex;
+  gap: 4px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3px;
+}
+.view-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--gray);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .15s;
+}
+.view-btn:hover { color: var(--ink); }
+.view-btn.active { background: var(--white); color: var(--red); box-shadow: 0 1px 3px rgba(26,26,26,0.1); }
+
+.table-wrap {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: auto;
+  box-shadow: 0 1px 2px rgba(26,26,26,0.04);
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.data-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--panel3);
+  color: var(--gray2);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border2);
+  white-space: nowrap;
+  z-index: 1;
+}
+.data-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background .12s;
+}
+.data-table tbody tr:hover { background: var(--panel2); }
+.data-table tbody tr:last-child { border-bottom: none; }
+.data-table td {
+  padding: 10px 14px;
+  vertical-align: middle;
+  color: var(--gray2);
+}
+.td-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.td-name .ibex-mini {
+  font-size: 8px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(200,168,0,0.15);
+  color: #8a7000;
+  border: 1px solid rgba(200,168,0,0.4);
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.td-sector {
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+  background: var(--red-dim);
+  color: var(--red-dark);
+  border: 1px solid var(--red-dim2);
+  white-space: nowrap;
+}
+.td-techs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  max-width: 280px;
+}
+.td-tag {
+  font-size: 9.5px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--panel2);
+  color: var(--gray2);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+.td-role {
+  font-size: 11px;
+  color: var(--gray);
+  max-width: 220px;
+}
+.td-actions {
+  display: flex;
+  gap: 5px;
+  white-space: nowrap;
+}
+.td-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  color: var(--gray2);
+  text-decoration: none;
+  transition: all .15s;
+  flex-shrink: 0;
+}
+.td-btn.li:hover { background: rgba(10,102,194,0.1); border-color: rgba(10,102,194,0.4); color: #0a66c2; }
+.td-btn.search:hover { background: var(--red-dim); border-color: var(--red-dim2); color: var(--red-dark); }
 .results-count { font-size: 13px; color: var(--gray); }
 .results-count strong { color: var(--ink); }
 
@@ -485,6 +645,7 @@ footer span strong { color: var(--red); }
 }
 .card { animation: fadeUp .2s ease both; }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -570,8 +731,40 @@ footer span strong { color: var(--red); }
   <main>
     <div class="results-header">
       <div class="results-count"><strong id="rCount">50</strong> empresas encontradas</div>
+      <div class="header-actions">
+        <button class="export-btn" id="exportBtn" onclick="exportToExcel()" style="display:none;">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Exportar a Excel
+        </button>
+        <div class="view-toggle">
+          <button class="view-btn active" id="viewCardsBtn" onclick="setView('cards')">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            Tarjetas
+          </button>
+          <button class="view-btn" id="viewTableBtn" onclick="setView('table')">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            Tabla
+          </button>
+        </div>
+      </div>
     </div>
     <div class="grid" id="grid"></div>
+    <div class="table-wrap" id="tableWrap" style="display:none;">
+      <table class="data-table" id="dataTable">
+        <thead>
+          <tr>
+            <th>Empresa</th>
+            <th>Industria</th>
+            <th>Ciudad</th>
+            <th>Tamaño</th>
+            <th>Tecnologías</th>
+            <th>Decisor</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
   </main>
 </div>
 
@@ -737,6 +930,43 @@ const DATA = [
 
 let activeTechs = new Set();
 let ibexOnly = false;
+let currentView = 'cards';
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('viewCardsBtn').classList.toggle('active', v === 'cards');
+  document.getElementById('viewTableBtn').classList.toggle('active', v === 'table');
+  document.getElementById('grid').style.display = v === 'cards' ? 'grid' : 'none';
+  document.getElementById('tableWrap').style.display = v === 'table' ? 'block' : 'none';
+  document.getElementById('exportBtn').style.display = v === 'table' ? 'flex' : 'none';
+  render();
+}
+
+function exportToExcel() {
+  const res = getFiltered();
+  const sizeLabel = (s) => s==='grande' ? '+10.000' : s==='mediana' ? '1.000–10.000' : '-1.000';
+  const rows = res.map(d => ({
+    'Empresa': d.n,
+    'IBEX 35': d.ibex ? 'Sí' : 'No',
+    'Industria': SECTOR_LABEL[d.s] || d.s,
+    'Ciudad': d.city,
+    'Tamaño (empleados)': sizeLabel(d.size),
+    'Tecnologías': d.t.join(', '),
+    'Decisor': d.role,
+    'LinkedIn empresa': d.li,
+    'Descripción': d.desc,
+  }));
+
+  const ws = XLSX.utils.json_to_sheet(rows);
+  ws['!cols'] = [
+    { wch: 26 }, { wch: 9 }, { wch: 16 }, { wch: 16 },
+    { wch: 18 }, { wch: 42 }, { wch: 40 }, { wch: 46 }, { wch: 60 },
+  ];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "TechDir España");
+  const today = new Date().toISOString().slice(0,10);
+  XLSX.writeFile(wb, `TechDir-Espana-${today}.xlsx`);
+}
 
 function toggleIbex() {
   ibexOnly = !ibexOnly;
@@ -791,6 +1021,11 @@ function render() {
   document.getElementById('rCount').textContent = res.length;
   document.getElementById('fCount').textContent = res.length + ' empresa' + (res.length!==1?'s':'') + ' en total';
 
+  if (currentView === 'table') {
+    renderTable(res);
+    return;
+  }
+
   const g = document.getElementById('grid');
   if (!res.length) {
     g.innerHTML = '<div class="no-results"><h3>Sin resultados</h3><p>Probá con otros filtros o borrá la búsqueda.</p></div>';
@@ -834,6 +1069,40 @@ function render() {
         </a>
       </div>
     </div>
+  `).join('');
+}
+
+function renderTable(res) {
+  const tbody = document.getElementById('tableBody');
+  if (!res.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="padding:3rem;text-align:center;color:var(--gray);">Sin resultados. Probá con otros filtros.</td></tr>';
+    return;
+  }
+  const liSearch = (name, role) => {
+    const q = encodeURIComponent(`"${name}" ${role}`);
+    return `https://www.linkedin.com/search/results/people/?keywords=${q}&origin=GLOBAL_SEARCH_HEADER`;
+  };
+  const sizeLabel = (s) => s==='grande' ? '+10k' : s==='mediana' ? '1k–10k' : '-1k';
+
+  tbody.innerHTML = res.map(d => `
+    <tr>
+      <td class="td-name">${d.n}${d.ibex?'<span class="ibex-mini">IBEX</span>':''}</td>
+      <td><span class="td-sector">${SECTOR_LABEL[d.s]||d.s}</span></td>
+      <td>${d.city}</td>
+      <td>${sizeLabel(d.size)}</td>
+      <td><div class="td-techs">${d.t.map(t=>`<span class="td-tag">${t}</span>`).join('')}</div></td>
+      <td class="td-role">${d.role}</td>
+      <td>
+        <div class="td-actions">
+          <a class="td-btn li" href="${d.li}" target="_blank" rel="noopener" title="Ver empresa en LinkedIn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a class="td-btn search" href="${liSearch(d.n, d.role)}" target="_blank" rel="noopener" title="Buscar decisor">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          </a>
+        </div>
+      </td>
+    </tr>
   `).join('');
 }
 
