@@ -97,7 +97,34 @@
   .pill.country-ar.active { background: var(--blue); border-color: var(--blue); color: var(--pure-white); }
   .pill.country-es.active { background: var(--red); border-color: var(--red); color: var(--pure-white); }
   .search-box { display: flex; flex-direction: column; gap: 5px; margin-left: auto; }
-  .search-input {
+  /* ── Salary histogram slider ── */
+  .salary-filter { display: flex; flex-direction: column; gap: 4px; min-width: 260px; }
+  .salary-filter.disabled { opacity: 0.35; pointer-events: none; }
+  .salary-filter.hidden { display: none; }
+  .salary-filter-inner { background: var(--panel); border: 1px solid var(--border2); border-radius: 10px; padding: 12px 14px 10px; }
+  .salary-histogram { display: flex; align-items: flex-end; gap: 2px; height: 48px; margin-bottom: 6px; }
+  .sal-bar { flex: 1; background: var(--red); opacity: 0.25; border-radius: 2px 2px 0 0; min-height: 2px; transition: opacity 0.15s; }
+  .sal-bar.active { opacity: 1; }
+  .salary-slider-wrap { position: relative; height: 20px; }
+  .salary-track { position: absolute; top: 50%; left: 0; right: 0; height: 3px; background: var(--panel3); border-radius: 2px; transform: translateY(-50%); }
+  .salary-track-fill { position: absolute; height: 100%; background: var(--red); border-radius: 2px; }
+  .salary-thumb {
+    position: absolute; top: 50%; width: 22px; height: 22px;
+    background: var(--panel); border: 2px solid var(--red); border-radius: 50%;
+    transform: translate(-50%, -50%); cursor: grab; box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    transition: box-shadow 0.15s; z-index: 2;
+  }
+  .salary-thumb:active { cursor: grabbing; box-shadow: 0 2px 8px rgba(214,47,47,0.3); }
+  .salary-labels { display: flex; justify-content: space-between; margin-top: 8px; }
+  .salary-lbl-group { display: flex; flex-direction: column; gap: 2px; }
+  .salary-lbl-title { font-size: 9px; letter-spacing: 1px; color: var(--white3); text-transform: uppercase; font-family: 'Syne', sans-serif; }
+  .salary-lbl-val {
+    background: var(--panel3); border: 1px solid var(--border); border-radius: 20px;
+    padding: 3px 10px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12px; color: var(--ink);
+    min-width: 72px; text-align: center;
+  }
+  .salary-clear-link { font-size: 10px; color: var(--white3); cursor: pointer; text-decoration: underline; text-align: right; margin-top: 4px; }
+  .salary-clear-link:hover { color: var(--red); }
     background: var(--panel); border: 1px solid var(--border2); color: var(--ink);
     padding: 5px 12px; font-family: 'DM Sans', sans-serif; font-size: 13px;
     outline: none; width: 220px; transition: border-color 0.15s; border-radius: 6px;
@@ -353,6 +380,29 @@
       <div class="filter-label">Buscar</div>
       <input class="search-input" type="text" id="search-input" placeholder="Nombre, stack, ciudad…">
     </div>
+    <div class="salary-filter hidden" id="salary-filter-group">
+      <div class="filter-label">Salario <span class="salary-currency" id="salary-currency-label">USD</span></div>
+      <div class="salary-filter-inner">
+        <div class="salary-slider-wrap" id="sal-slider-wrap">
+          <div class="salary-track">
+            <div class="salary-track-fill" id="sal-track-fill"></div>
+          </div>
+          <div class="salary-thumb" id="sal-thumb-min"></div>
+          <div class="salary-thumb" id="sal-thumb-max"></div>
+        </div>
+        <div class="salary-labels">
+          <div class="salary-lbl-group">
+            <span class="salary-lbl-title">Mínimo</span>
+            <span class="salary-lbl-val" id="sal-lbl-min">—</span>
+          </div>
+          <div class="salary-lbl-group" style="text-align:right">
+            <span class="salary-lbl-title">Máximo</span>
+            <span class="salary-lbl-val" id="sal-lbl-max">—</span>
+          </div>
+        </div>
+      </div>
+      <span class="salary-clear-link" onclick="clearSalary()">Limpiar filtro</span>
+    </div>
   </div>
 
   <div class="results-bar">
@@ -439,6 +489,125 @@ function switchTab(tab) {
 // ─── CATALOG LOGIC ───
 let activeCountry = 'ALL', activeTech = 'ALL', activeSeniority = 'ALL', searchQuery = '';
 
+// ─── SALARY HISTOGRAM SLIDER ───
+const SAL_DATA = {
+  AR: { min:800,  max:8000,  buckets:[7,3,21,42,67,72,68,59,54,44,38,34,27,22,18,16,14,11,9,8,6,5,4,3,3,3,2,2,1,2] },
+  ES: { min:16000, max:150000, buckets:[24,48,114,124,116,108,100,90,83,72,65,55,48,40,34,29,24,20,16,13,10,8,6,5,4,3,2,2,1,1] },
+  ALL:{ min:800,  max:150000, buckets:[30,51,135,166,183,180,168,149,137,116,103,89,75,62,52,45,36,31,25,21,16,13,10,8,7,6,4,4,2,3] },
+};
+
+let salCurData = SAL_DATA.ALL;
+let salMinPct = 0, salMaxPct = 100;
+let salMin = null, salMax = null;
+let dragging = null;
+
+function parseSal(s) {
+  if (!s) return null;
+  try { return parseInt(s.replace(/[^\d]/g,'')); } catch { return null; }
+}
+
+function pctToVal(pct) {
+  return Math.round(salCurData.min + (pct/100) * (salCurData.max - salCurData.min));
+}
+
+function fmtSalLabel(val) {
+  const cur = activeCountry==='AR' ? 'USD ' : activeCountry==='ES' ? '€' : '';
+  const suffix = val >= salCurData.max ? '+' : '';
+  return cur + val.toLocaleString('es-AR') + suffix;
+}
+
+function updateHistogram() {
+  const hist = document.getElementById('sal-histogram');
+  if (!hist) return;
+  const buckets = salCurData.buckets;
+  const maxC = Math.max(...buckets);
+  const lo = pctToVal(salMinPct), hi = pctToVal(salMaxPct);
+  const bucketSize = (salCurData.max - salCurData.min) / buckets.length;
+  hist.innerHTML = buckets.map((c, i) => {
+    const bLo = salCurData.min + i * bucketSize;
+    const bHi = bLo + bucketSize;
+    const active = bHi > lo && bLo < hi;
+    const h = Math.max(3, Math.round((c / maxC) * 44));
+    return `<div class="sal-bar${active?' active':''}" style="height:${h}px"></div>`;
+  }).join('');
+}
+
+function updateSliderUI() {
+  const fill = document.getElementById('sal-track-fill');
+  const tMin = document.getElementById('sal-thumb-min');
+  const tMax = document.getElementById('sal-thumb-max');
+  const lblMin = document.getElementById('sal-lbl-min');
+  const lblMax = document.getElementById('sal-lbl-max');
+  if (!fill) return;
+  fill.style.left  = salMinPct + '%';
+  fill.style.width = (salMaxPct - salMinPct) + '%';
+  tMin.style.left = salMinPct + '%';
+  tMax.style.left = salMaxPct + '%';
+  const vMin = pctToVal(salMinPct);
+  const vMax = pctToVal(salMaxPct);
+  lblMin.textContent = fmtSalLabel(vMin);
+  lblMax.textContent = fmtSalLabel(vMax);
+  salMin = salMinPct <= 0 ? null : vMin;
+  salMax = salMaxPct >= 100 ? null : vMax;
+  updateHistogram();
+}
+
+function initSlider() {
+  const wrap = document.getElementById('sal-slider-wrap');
+  if (!wrap) return;
+
+  function onDrag(e) {
+    if (!dragging) return;
+    const rect = wrap.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    let pct = Math.round(((clientX - rect.left) / rect.width) * 100);
+    pct = Math.max(0, Math.min(100, pct));
+    if (dragging === 'min') {
+      salMinPct = Math.min(pct, salMaxPct - 2);
+    } else {
+      salMaxPct = Math.max(pct, salMinPct + 2);
+    }
+    updateSliderUI();
+    renderCatalog();
+  }
+
+  ['sal-thumb-min','sal-thumb-max'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('mousedown', e => { dragging = id==='sal-thumb-min'?'min':'max'; e.preventDefault(); });
+    el.addEventListener('touchstart', e => { dragging = id==='sal-thumb-min'?'min':'max'; }, {passive:true});
+  });
+  document.addEventListener('mousemove', onDrag);
+  document.addEventListener('touchmove', e => onDrag(e), {passive:true});
+  document.addEventListener('mouseup', () => { dragging = null; });
+  document.addEventListener('touchend', () => { dragging = null; });
+}
+
+function clearSalary() {
+  salMinPct = 0; salMaxPct = 100;
+  salMin = null; salMax = null;
+  updateSliderUI();
+  renderCatalog();
+}
+
+function updateSalaryCurrency() {
+  const label = document.getElementById('salary-currency-label');
+  const group = document.getElementById('salary-filter-group');
+  if (!label || !group) return;
+  if (activeCountry === 'AR') {
+    label.textContent = 'USD'; salCurData = SAL_DATA.AR;
+    group.classList.remove('hidden');
+  } else if (activeCountry === 'ES') {
+    label.textContent = 'EUR'; salCurData = SAL_DATA.ES;
+    group.classList.remove('hidden');
+  } else {
+    // "Todos" — hide filter and reset
+    group.classList.add('hidden');
+    salCurData = SAL_DATA.ALL;
+  }
+  salMinPct = 0; salMaxPct = 100; salMin = null; salMax = null;
+  updateSliderUI();
+}
+
 function normalize(s) { return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
 
 function getVisible() {
@@ -449,6 +618,12 @@ function getVisible() {
     if (searchQuery) {
       const q = normalize(searchQuery);
       if (!normalize(c.n+' '+c.st+' '+c.ci+' '+c.pk).includes(q)) return false;
+    }
+    if (salMin !== null || salMax !== null) {
+      const cv = parseSal(c.sal);
+      if (cv === null) return false;
+      if (salMin !== null && cv < salMin) return false;
+      if (salMax !== null && cv > salMax) return false;
     }
     return true;
   });
@@ -506,7 +681,9 @@ function renderCatalog() {
 // Filter pill handlers
 document.querySelectorAll('[data-country]').forEach(el => el.addEventListener('click', () => {
   document.querySelectorAll('[data-country]').forEach(e=>e.classList.remove('active'));
-  el.classList.add('active'); activeCountry=el.dataset.country; renderCatalog();
+  el.classList.add('active'); activeCountry=el.dataset.country;
+  updateSalaryCurrency();
+  renderCatalog();
 }));
 document.querySelectorAll('[data-tech]').forEach(el => el.addEventListener('click', () => {
   document.querySelectorAll('[data-tech]').forEach(e=>e.classList.remove('active'));
@@ -520,6 +697,8 @@ let st;
 document.getElementById('search-input').addEventListener('input', e => {
   clearTimeout(st); st=setTimeout(()=>{ searchQuery=e.target.value.trim(); renderCatalog(); },200);
 });
+
+// Salary handled by slider — no input listeners needed
 
 // ─── ANALYTICS RENDERING ───
 let analyticsRendered = false;
@@ -663,6 +842,9 @@ function renderAnalytics() {
 }
 
 // Init
+updateSalaryCurrency();
+initSlider();
+updateSliderUI();
 renderCatalog();
 </script>
 </body>
